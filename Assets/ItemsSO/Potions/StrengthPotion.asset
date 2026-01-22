@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 799449bd4a666194e818c8f73d508a92, type: 3}
+  m_Name: StrengthPotion
+  m_EditorClassIdentifier: Assembly-CSharp::ItemSO
+  itemName: Strength Potion
+  statToChange: 3
+  amountToChangeStat: 10
+  sprite: {fileID: -8229276084762733448, guid: 5a12fae0aa7f64f4d988555805f2a0ec, type: 3}
+  itemDescription: "O conte\xFAdo vermelho desta po\xE7\xE3o percorre-te ferozmente,
+    como se os antigos esp\xEDritos da floresta te fortalecessem. "
+  isCurrency: 0
+  isAbility: 0
+  isKeyItem: 0
+  coinValue: 1
+  purchaseLimit: 5

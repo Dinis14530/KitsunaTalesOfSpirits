@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ad480844de953c4ba12efdb6fde9565, type: 3}
+  m_Name: RacoonDialog
+  m_EditorClassIdentifier: Assembly-CSharp::NpcDialog
+  npcName: Racoon
+  npcPortrait: {fileID: -17354137338108556, guid: 514534df58e285a468faa5b88c6e6413, type: 3}
+  dialogLines:
+  - "Ol\xE1 Viajante, finalmente acordaste..."
+  - "Quando tiveres algumas moedas vem c\xE1 gastar..."
+  - Vou deixar de te chatear...
+  - Adeus, tem cuidado...
+  typingSpeed: 0.05
+  voiceSound: {fileID: 0}
+  voicePitch: 1
+  autoProgressLines: 01010101
+  autoProgressDelay: 0.5
