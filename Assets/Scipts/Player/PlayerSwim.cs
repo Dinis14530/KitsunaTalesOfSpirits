@@ -22,12 +22,14 @@ public class PlayerSwim : MonoBehaviour
     private PlayerHealth playerHealth;
     private float damageTimer;
     private bool isDrowning;
+    private PlayerKnockBack knockback;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         playerController = GetComponent<PlayerController>();
         playerHealth = GetComponent<PlayerHealth>();
+        knockback = GetComponent<PlayerKnockBack>();
         originalGravity = rb.gravityScale;
     }
 
@@ -41,6 +43,8 @@ public class PlayerSwim : MonoBehaviour
 
     private void HandleSwimming()
     {
+        if (knockback != null && knockback.IsKnockback) return;
+
         float xInput = Input.GetAxisRaw("Horizontal");
         float yInput = 0f;
 

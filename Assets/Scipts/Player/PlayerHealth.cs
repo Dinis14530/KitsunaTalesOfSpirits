@@ -1,43 +1,48 @@
 using UnityEngine;
 
-// Vida Player
 public class PlayerHealth : MonoBehaviour
 {
-    public float maxHealth = 5; // Vida maxima
-    public float currentHealth; // Vida atual
-    public HealthDisplay healthDisplay; // LifeBar
-    public bool isInvincible = false; // Flag player invencível
+    public float maxHealth = 5;
+    public float currentHealth;
+    public HealthDisplay healthDisplay;
+    public bool isInvincible = false;
+
+    private Vector3 checkpointPosition; // posição do checkpoint
 
     void Start()
     {
-        currentHealth = maxHealth; // Comeca com a vida maxima
-        healthDisplay.UpdateHealth(currentHealth); // Display vida
+        currentHealth = maxHealth;
+        checkpointPosition = transform.position; // checkpoint inicial
+        healthDisplay.UpdateHealth(currentHealth);
     }
+
+    public void SetCheckpoint(Vector3 newCheckpoint)
+    {
+        checkpointPosition = newCheckpoint;
+        Debug.Log("Checkpoint guardado em: " + checkpointPosition);
+    }
+
     public void TakeDamage(float amount)
     {
-        if (isInvincible) // Se esta invencivel nao toma dano
-        {
-            return;
-        }
+        if (isInvincible) return;
 
-        Debug.Log(gameObject.name + " took 1 damage Remaining health: " + currentHealth); // Debug
-        currentHealth -= amount;  // Atualiza vida apos tomar dano
-        if (currentHealth < 0) currentHealth = 0; // Vida nao pode ser menor que 0
+        currentHealth -= amount;
+        if (currentHealth < 0) currentHealth = 0;
 
-        // Morre
-        if (currentHealth == 0) // Se vida for 0
+        healthDisplay.UpdateHealth(currentHealth);
+
+        if (currentHealth == 0)
         {
             Die();
         }
+    }
 
-        void Die()
-        {
-            Debug.Log($"{gameObject.name} died");
-            transform.position = new  Vector3(0f, 0f, 0f); // Reinicia posição do player
-            currentHealth = maxHealth; // Reseta a vida
-            healthDisplay.UpdateHealth(currentHealth); // Update na UI
-        }
+    void Die()
+    {
+        Debug.Log($"{gameObject.name} died");
 
-        healthDisplay.UpdateHealth(currentHealth); // Display vida 
+        transform.position = checkpointPosition; 
+        currentHealth = maxHealth;
+        healthDisplay.UpdateHealth(currentHealth);
     }
 }

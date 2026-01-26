@@ -10,6 +10,8 @@ public class PlayerKnockBack : MonoBehaviour
     private Rigidbody2D rb;
     private PlayerController movement; // Para desativar o movimento durante knockback
 
+    public bool IsKnockback => KBCounter > 0;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
