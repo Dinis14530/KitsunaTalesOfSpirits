@@ -6,5 +6,6 @@ public class MainMenu : MonoBehaviour
     public void StartGame()
     {
         SceneManager.LoadScene(0);
+        Debug.Log(Application.persistentDataPath);
     }
 }

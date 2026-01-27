@@ -37,11 +37,9 @@ public class EnemySpawner : MonoBehaviour
 
         if (!enemy && !waitingForReenter && dist >= spawnDistance)
             Spawn();
-            Debug.Log("Spawned Enemy");
 
         if (enemy && dist >= despawnDistance)
             Despawn();
-            Debug.Log("Despawned Enemy");
     }
 
     void Spawn()
