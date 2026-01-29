@@ -19,16 +19,6 @@ public class PlayerSave : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        // teclas de teste
-        if (Input.GetKeyDown(KeyCode.F5))
-            SaveGame();
-
-        if (Input.GetKeyDown(KeyCode.F9))
-            LoadGame();
-    }
-
     public void SaveGame()
     {
         SaveData data = new SaveData();

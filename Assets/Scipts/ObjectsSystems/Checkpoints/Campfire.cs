@@ -1,5 +1,7 @@
 using UnityEngine;
 
+[System.Obsolete]
+
 public class CampfireCheckpoint : MonoBehaviour, IInterectable
 {
     private static CampfireCheckpoint activeCheckpoint = null; 
@@ -11,6 +13,7 @@ public class CampfireCheckpoint : MonoBehaviour, IInterectable
         animator = GetComponent<Animator>();
         SetInactive(); // começa apagado
     }
+
 
     private void Start()
     {

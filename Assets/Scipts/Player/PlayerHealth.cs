@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -6,6 +7,10 @@ public class PlayerHealth : MonoBehaviour
     public float currentHealth;
     public HealthDisplay healthDisplay;
     public bool isInvincible = false;
+    private SpriteRenderer spriteRenderer;
+    public Color hitColor = Color.red;       // Cor do flash
+    public float flashDuration = 0.1f;       // Duração de cada flash
+    
 
     private Vector3 checkpointPosition; // posição do checkpoint
 
@@ -14,6 +19,7 @@ public class PlayerHealth : MonoBehaviour
         currentHealth = maxHealth;
         checkpointPosition = transform.position; // checkpoint inicial
         healthDisplay.UpdateHealth(currentHealth);
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     public void SetCheckpoint(Vector3 newCheckpoint)
@@ -35,6 +41,10 @@ public class PlayerHealth : MonoBehaviour
         {
             Die();
         }
+        if (spriteRenderer != null)
+        {
+            StartCoroutine(FlashCoroutine());
+        }
     }
 
     void Die()
@@ -44,5 +54,17 @@ public class PlayerHealth : MonoBehaviour
         transform.position = checkpointPosition; 
         currentHealth = maxHealth;
         healthDisplay.UpdateHealth(currentHealth);
+    }
+
+    private IEnumerator FlashCoroutine()
+    {
+        Color originalColor = spriteRenderer.color;
+
+        // Faz o sprite ficar vermelho
+        spriteRenderer.color = Color.Lerp(originalColor, Color.red, 0.7f); // Lerp
+
+        yield return new WaitForSeconds(flashDuration);
+
+        spriteRenderer.color = originalColor;
     }
 }

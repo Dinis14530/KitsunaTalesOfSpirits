@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ad480844de953c4ba12efdb6fde9565, type: 3}
+  m_Name: RatDialog
+  m_EditorClassIdentifier: Assembly-CSharp::NpcDialog
+  npcName: Rat
+  npcPortrait: {fileID: 3290450029278852982, guid: 3bdb63b8d551c5446a1b0eb16b2a253b, type: 3}
+  dialogLines:
+  - Aura
+  typingSpeed: 0.05
+  voiceSound: {fileID: 0}
+  voicePitch: 1
+  autoProgressLines: 01
+  autoProgressDelay: 0.5

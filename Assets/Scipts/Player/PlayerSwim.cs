@@ -23,6 +23,7 @@ public class PlayerSwim : MonoBehaviour
     private float damageTimer;
     private bool isDrowning;
     private PlayerKnockBack knockback;
+    public Collider2D headCollider;
 
     private void Awake()
     {
@@ -113,17 +114,29 @@ public class PlayerSwim : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Water"))
+        if (collision.CompareTag("Water") && collision.IsTouching(headCollider))
         {
             EnterWater();
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.CompareTag("Water"))
+        {
+            if (!isInWater && collision.IsTouching(headCollider))
+            {
+                EnterWater();
+            }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Water") && !collision.IsTouching(headCollider))
         {
             ExitWater();
         }
     }
+
 }

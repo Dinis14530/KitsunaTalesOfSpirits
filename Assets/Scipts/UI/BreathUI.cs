@@ -28,21 +28,25 @@ public class BreathUI : MonoBehaviour
         }
     }
 
-    void UpdateBreathBar()
+void UpdateBreathBar()
     {
         if (playerSwim == null || breathSprites.Length == 0) return;
 
-        // calcula percentual de fôlego
         float breathPercent = playerSwim.currentBreathTime / playerSwim.maxBreathTime;
-        int index = Mathf.RoundToInt((1f - breathPercent) * (breathSprites.Length - 1));
 
+        int index = Mathf.FloorToInt((1f - breathPercent) * breathSprites.Length);
         index = Mathf.Clamp(index, 0, breathSprites.Length - 1);
 
-        // muda sprite apenas se necessário
         if (index != lastSpriteIndex)
         {
             breathImage.sprite = breathSprites[index];
             lastSpriteIndex = index;
         }
+
+        if (index == breathSprites.Length - 1)
+        {
+            playerSwim.currentBreathTime = 0f;
+        }
     }
+
 }
