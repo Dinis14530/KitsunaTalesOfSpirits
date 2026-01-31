@@ -17,9 +17,17 @@ public class Chest : MonoBehaviour, IInterectable
     public ChestLoot[] lootItems;
     public Sprite openedSprite;
 
+    [Header("Áudio")]
+    public AudioSource audioSource;   // Fonte de som do baú
+    public AudioClip openClip;        // Som ao abrir
+
     void Start()
     {
         ChestID = GlobalHelper.GenerateUniqueID(gameObject);
+
+        // Se não tiver AudioSource, tenta pegar
+        if (audioSource == null)
+            audioSource = GetComponent<AudioSource>();
     }
 
     public bool CanInteract()
@@ -37,6 +45,9 @@ public class Chest : MonoBehaviour, IInterectable
     {
         SetOpened(true);
 
+        // Toca o som ao abrir
+        PlayOpenSound();
+
         if (lootItems == null || lootItems.Length == 0)
             return;
 
@@ -50,6 +61,15 @@ public class Chest : MonoBehaviour, IInterectable
             {
                 LootHelper.SpawnLootItem(loot.itemSO, transform.position, loot.quantity);
             }
+        }
+    }
+
+    private void PlayOpenSound()
+    {
+        if (audioSource != null && openClip != null)
+        {
+            audioSource.pitch = Random.Range(0.95f, 1.05f); // pitch aleatório
+            audioSource.PlayOneShot(openClip);
         }
     }
 

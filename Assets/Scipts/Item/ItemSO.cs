@@ -73,7 +73,7 @@ public class ItemSO : ScriptableObject
         
         if (statToChange == StatToChange.strength)
         {
-            AtackPlayer attack = player.GetComponent<AtackPlayer>();
+            PlayerAttack attack = player.GetComponent<PlayerAttack>();
             if (attack != null)
             {
                 attack.ApplyStrengthMultiplier(2f, amountToChangeStat); // duplica o dano por duration

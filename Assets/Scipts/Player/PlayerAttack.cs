@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class AtackPlayer : MonoBehaviour
+public class PlayerAttack : MonoBehaviour
 {
     private Animator anim;
     public bool isAttacking = false;
@@ -13,10 +13,14 @@ public class AtackPlayer : MonoBehaviour
     public int baseDamage = 1;
     private float damageMultiplier = 1f;
     private Coroutine strengthRoutine;
+    public AudioClip attackSound;
+    private AudioSource audioSource;
 
     void Start()
     {
         anim = GetComponent<Animator>();
+        if (audioSource == null)
+            audioSource = gameObject.AddComponent<AudioSource>();
     }
 
     void Update()
@@ -30,7 +34,11 @@ public class AtackPlayer : MonoBehaviour
             {
                 anim.SetTrigger("Attack");
                 timeBtwToAttack = startTimeBtwAttack;
+
+                if (attackSound != null)
+                    audioSource.PlayOneShot(attackSound);
             }
+
         }
     }
 

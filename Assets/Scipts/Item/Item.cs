@@ -9,11 +9,19 @@ public class Item : MonoBehaviour
     private AbilityUIManager abilityUIManager;
     private float nextPickupTime;
 
+    [Header("Áudio")]
+    public AudioSource audioSource;   // Fonte de som
+    public AudioClip pickupClip;      // Som ao pegar o item
+
     void Start()
     {
         coinDisplay = FindFirstObjectByType<CoinDisplay>();
         inventoryManager = GameObject.Find("InventoryCanvas")?.GetComponent<InventoryManager>();
         abilityUIManager = FindFirstObjectByType<AbilityUIManager>();
+
+        // Se não tiver AudioSource, tenta pegar um
+        if (audioSource == null)
+            audioSource = GetComponent<AudioSource>();
     }
 
     public void SetItemData(ItemSO itemSO_, int qty)
@@ -25,6 +33,9 @@ public class Item : MonoBehaviour
     private void TryPickup()
     {
         if (itemSO == null) return;
+
+        // Toca som de pickup
+        PlayPickupSound();
 
         // Moeda
         if (itemSO.isCurrency)
@@ -39,7 +50,6 @@ public class Item : MonoBehaviour
         {
             itemSO.UseItem();
 
-            // Mostra UI para todas as habilidades
             if (abilityUIManager != null)
             {
                 abilityUIManager.ShowAbilityUI(itemSO.sprite, itemSO.itemName, 3f); // 3 segundos
@@ -58,6 +68,15 @@ public class Item : MonoBehaviour
                 Destroy(gameObject);
             else
                 quantity = remaining;
+        }
+    }
+
+    private void PlayPickupSound()
+    {
+        if (audioSource != null && pickupClip != null)
+        {
+            audioSource.pitch = Random.Range(0.95f, 1.05f); // pitch aleatório
+            audioSource.PlayOneShot(pickupClip);
         }
     }
 

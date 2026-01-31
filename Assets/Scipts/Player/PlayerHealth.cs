@@ -10,9 +10,12 @@ public class PlayerHealth : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     public Color hitColor = Color.red;       // Cor do flash
     public float flashDuration = 0.1f;       // Duração de cada flash
-    
 
     private Vector3 checkpointPosition; // posição do checkpoint
+
+    [Header("Áudio")]
+    public AudioSource audioSource;   // Fonte de som de dano
+    public AudioClip damageClip;      // Som de dano
 
     void Start()
     {
@@ -20,6 +23,9 @@ public class PlayerHealth : MonoBehaviour
         checkpointPosition = transform.position; // checkpoint inicial
         healthDisplay.UpdateHealth(currentHealth);
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        if (audioSource == null)
+            audioSource = GetComponent<AudioSource>();
     }
 
     public void SetCheckpoint(Vector3 newCheckpoint)
@@ -36,6 +42,9 @@ public class PlayerHealth : MonoBehaviour
         if (currentHealth < 0) currentHealth = 0;
 
         healthDisplay.UpdateHealth(currentHealth);
+
+        // Toca som de dano
+        PlayDamageSound();
 
         if (currentHealth == 0)
         {
@@ -66,5 +75,14 @@ public class PlayerHealth : MonoBehaviour
         yield return new WaitForSeconds(flashDuration);
 
         spriteRenderer.color = originalColor;
+    }
+
+    private void PlayDamageSound()
+    {
+        if (audioSource != null && damageClip != null)
+        {
+            audioSource.pitch = Random.Range(0.95f, 1.05f); // pitch aleatório
+            audioSource.PlayOneShot(damageClip);
+        }
     }
 }

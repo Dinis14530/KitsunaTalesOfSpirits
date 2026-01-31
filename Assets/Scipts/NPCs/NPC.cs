@@ -5,11 +5,16 @@ using UnityEngine.UI;
 
 public class NPC : MonoBehaviour, IInterectable
 {
+    [Header("Diálogo")]
     public NpcDialog dialogueData;
     public GameObject dialoguePanel;
     public TMP_Text dialogueText, nameText;
     public Image portraitImage;
     public PlayerController player;
+
+    [Header("Áudio")]
+    public AudioSource audioSource;      // Fonte de som para diálogo
+    public AudioClip dialogueClip;       // Som ao avançar no diálogo
 
     private int dialogueIndex;
     private bool isTyping, isDialogueActive;
@@ -39,13 +44,17 @@ public class NPC : MonoBehaviour, IInterectable
         isDialogueActive = true;
         dialogueIndex = 0;
 
-        player.isInDialogue = true;   
+        player.isInDialogue = true;
         player.canMove = false;
 
         nameText.SetText(dialogueData.npcName);
         portraitImage.sprite = dialogueData.npcPortrait;
 
         dialoguePanel.SetActive(true);
+
+        // Toca som ao começar o diálogo
+        PlayDialogueSound();
+
         StartCoroutine(TypeLine());
     }
 
@@ -63,6 +72,9 @@ public class NPC : MonoBehaviour, IInterectable
 
             if (dialogueIndex < dialogueData.dialogLines.Length)
             {
+                // Toca som ao avançar para a próxima linha
+                PlayDialogueSound();
+
                 StartCoroutine(TypeLine());
             }
             else
@@ -101,7 +113,17 @@ public class NPC : MonoBehaviour, IInterectable
         dialogueText.SetText("");
         dialoguePanel.SetActive(false);
 
-        player.isInDialogue = false;  
+        player.isInDialogue = false;
         player.canMove = true;
+    }
+
+    // Função para tocar som de diálogo
+    private void PlayDialogueSound()
+    {
+        if (audioSource != null && dialogueClip != null)
+        {
+            audioSource.pitch = Random.Range(0.95f, 1.05f); // pitch aleatório
+            audioSource.PlayOneShot(dialogueClip);
+        }
     }
 }
