@@ -27,6 +27,7 @@ public class ItemSO : ScriptableObject
     public bool isKeyItem = false;
     public int coinValue = 1;
     public int purchaseLimit = -1;
+    public AudioClip pickupSound;
 
     public bool UseItem()
     {

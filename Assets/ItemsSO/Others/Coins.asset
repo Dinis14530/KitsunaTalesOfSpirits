@@ -15,8 +15,11 @@ MonoBehaviour:
   itemName: Coins
   statToChange: 0
   amountToChangeStat: 1
-  velocityDuration: 10
   sprite: {fileID: -2322180950842035098, guid: d45a1a3200dbf9e46b2af729115b7af0, type: 3}
   itemDescription: 
   isCurrency: 1
+  isAbility: 0
+  isKeyItem: 0
   coinValue: 1
+  purchaseLimit: -1
+  pickupSound: {fileID: 8300000, guid: 215dc964bf1a5c4409fdcabd89e6ff02, type: 3}

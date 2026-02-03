@@ -4,24 +4,19 @@ public class Item : MonoBehaviour
 {
     public ItemSO itemSO; 
     private int quantity = 1; 
+
     private InventoryManager inventoryManager;
     private CoinDisplay coinDisplay;
     private AbilityUIManager abilityUIManager;
+    private AudioSource audioSource; // AudioSource 
     private float nextPickupTime;
-
-    [Header("Áudio")]
-    public AudioSource audioSource;   // Fonte de som
-    public AudioClip pickupClip;      // Som ao pegar o item
 
     void Start()
     {
         coinDisplay = FindFirstObjectByType<CoinDisplay>();
         inventoryManager = GameObject.Find("InventoryCanvas")?.GetComponent<InventoryManager>();
         abilityUIManager = FindFirstObjectByType<AbilityUIManager>();
-
-        // Se não tiver AudioSource, tenta pegar um
-        if (audioSource == null)
-            audioSource = GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     public void SetItemData(ItemSO itemSO_, int qty)
@@ -30,16 +25,26 @@ public class Item : MonoBehaviour
         quantity = qty;
     }
 
+    private void PlayPickupSound()
+    {
+        if (itemSO != null && itemSO.pickupSound != null)
+        {
+            // Toca o som no AudioSource do prefab
+            if (audioSource != null)
+                audioSource.PlayOneShot(itemSO.pickupSound);
+            else
+                AudioSource.PlayClipAtPoint(itemSO.pickupSound, transform.position);
+        }
+    }
+
     private void TryPickup()
     {
         if (itemSO == null) return;
 
-        // Toca som de pickup
-        PlayPickupSound();
-
         // Moeda
         if (itemSO.isCurrency)
         {
+            PlayPickupSound();
             coinDisplay.AddCoins(itemSO.coinValue * quantity);
             Destroy(gameObject);
             return;
@@ -48,11 +53,12 @@ public class Item : MonoBehaviour
         // Habilidade
         if (itemSO.isAbility)
         {
+            PlayPickupSound();
             itemSO.UseItem();
 
             if (abilityUIManager != null)
             {
-                abilityUIManager.ShowAbilityUI(itemSO.sprite, itemSO.itemName, 3f); // 3 segundos
+                abilityUIManager.ShowAbilityUI(itemSO.sprite, itemSO.itemName, 3f);
             }
 
             Destroy(gameObject);
@@ -62,21 +68,20 @@ public class Item : MonoBehaviour
         // Item normal
         if (inventoryManager != null)
         {
-            int remaining = inventoryManager.AddItem(itemSO.itemName, quantity, itemSO.sprite, itemSO.itemDescription);
-            
+            int remaining = inventoryManager.AddItem(
+                itemSO.itemName, 
+                quantity, 
+                itemSO.sprite, 
+                itemSO.itemDescription
+            );
+
             if (remaining <= 0)
+            {
+                PlayPickupSound();
                 Destroy(gameObject);
+            }
             else
                 quantity = remaining;
-        }
-    }
-
-    private void PlayPickupSound()
-    {
-        if (audioSource != null && pickupClip != null)
-        {
-            audioSource.pitch = Random.Range(0.95f, 1.05f); // pitch aleatório
-            audioSource.PlayOneShot(pickupClip);
         }
     }
 

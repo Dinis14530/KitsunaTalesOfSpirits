@@ -1,16 +1,16 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MenuUI : MonoBehaviour
 {
-    [SerializeField] private GameObject menuCanvas; // arrasta o MenuCanvas aqui no Inspector
+    [SerializeField] private GameObject menuCanvas;
 
-    void Awake()
+    void Start()
     {
-        // Liga o menu ao iniciar
         menuCanvas.SetActive(true);
+        
     }
 
-    // Função para fechar o menu 
     public void CloseMenu()
     {
         menuCanvas.SetActive(false);

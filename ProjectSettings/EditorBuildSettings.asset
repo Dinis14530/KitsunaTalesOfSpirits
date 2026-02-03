@@ -9,11 +9,11 @@ EditorBuildSettings:
     path: Assets/GamePlayScene.unity
     guid: 03f6c9707f4f2bb4fa3f09c970113b78
   - enabled: 1
-    path: Assets/Scenes/GamePlayScene.unity
-    guid: 8c9cfa26abfee488c85f1582747f6a02
-  - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: fd6c940ea7a267446898ef0b3024aed9
+  - enabled: 1
+    path: Assets/Scenes/GamePlayScene.unity
+    guid: 8c9cfa26abfee488c85f1582747f6a02
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 383d85e7895049b439b26fdc17682f4a, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}

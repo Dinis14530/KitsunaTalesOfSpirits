@@ -23,3 +23,4 @@ MonoBehaviour:
   isKeyItem: 0
   coinValue: 1
   purchaseLimit: 5
+  pickupSound: {fileID: 8300000, guid: 215dc964bf1a5c4409fdcabd89e6ff02, type: 3}

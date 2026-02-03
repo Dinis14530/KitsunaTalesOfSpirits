@@ -301,4 +301,5 @@ public class PlayerController : MonoBehaviour
         speed = baseSpeed; // Reseta velocidade
         speedRoutineCoroutine = null; // Limpa referência
     }
+    
 }
