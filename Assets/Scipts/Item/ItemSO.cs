@@ -1,17 +1,18 @@
 using UnityEngine;
 using TMPro;
 
-    public enum StatToChange
-    {
-        none,
-        health,
-        mana,
-        strength,
-        velocity,
-        dash,
-        keydash,
-    };
-    
+public enum StatToChange
+{
+    none,
+    health,
+    mana,
+    strength,
+    velocity,
+    dash,
+    keydash,
+    maxHealth,  // Novo: aumenta vida máxima
+};
+
 [CreateAssetMenu]
 public class ItemSO : ScriptableObject
 {
@@ -54,6 +55,17 @@ public class ItemSO : ScriptableObject
             }
         }
 
+        if (statToChange == StatToChange.maxHealth && playerHealth != null)
+        {
+            // Aumenta a vida máxima e também a vida atual
+            playerHealth.maxHealth += (int)amountToChangeStat;
+            playerHealth.currentHealth += (int)amountToChangeStat;
+            
+            playerHealth.healthDisplay.UpdateHealth(playerHealth.currentHealth);
+            Debug.Log($"Max health increased to {playerHealth.maxHealth}");
+            return true; // item usado
+        }
+
         if (statToChange == StatToChange.dash)
         {
             PlayerDash dash = player.GetComponent<PlayerDash>();
@@ -65,10 +77,8 @@ public class ItemSO : ScriptableObject
             return false;
         }
 
-        
         if (statToChange == StatToChange.keydash)
         {
-
             return false;
         }
         

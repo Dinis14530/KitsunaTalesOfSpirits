@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Input = UnityEngine.Input;
 public class InventoryManager : MonoBehaviour
@@ -106,6 +107,56 @@ public class InventoryManager : MonoBehaviour
         return false;
     }
 
+    public List<InventoryItemData> ExportInventory()
+    {
+        List<InventoryItemData> list = new List<InventoryItemData>();
+        foreach (var slot in itemSlot)
+        {
+            if (slot.isFull && slot.quantity > 0)
+            {
+                list.Add(new InventoryItemData 
+                { 
+                    itemName = slot.itemName, 
+                    quantity = slot.quantity,
+                    itemDescription = slot.itemDescription
+                });
+            }
+        }
+        return list;
+    }
+
+    public void ImportInventory(List<InventoryItemData> items)
+    {
+        // Limpa o inventário atual
+        foreach (var slot in itemSlot)
+        {
+            slot.quantity = 0;
+            slot.isFull = false;
+            slot.itemName = "";
+            slot.itemSprite = slot.emptySprite;
+            slot.itemDescription = "";
+            slot.quantityText.enabled = false;
+            slot.itemImage.sprite = slot.emptySprite;
+        }
+
+        // Adiciona os itens salvos
+        foreach (var item in items)
+        {
+            // Encontra o ItemSO para obter a sprite
+            Sprite itemSprite = null;
+            foreach (var itemSO in itemSOs)
+            {
+                if (itemSO.itemName == item.itemName)
+                {
+                    itemSprite = itemSO.sprite;
+                    break;
+                }
+            }
+            
+            AddItem(item.itemName, item.quantity, itemSprite, item.itemDescription);
+        }
+    }
+
     public void DeselectAllSlots()
     {
         for(int i = 0; i < itemSlot.Length; i++)
@@ -114,4 +165,6 @@ public class InventoryManager : MonoBehaviour
             itemSlot[i].thisItemSelected = false;   
         }
     }
+
+    
 }

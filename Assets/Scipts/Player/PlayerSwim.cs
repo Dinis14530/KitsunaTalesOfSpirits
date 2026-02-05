@@ -87,7 +87,6 @@ public class PlayerSwim : MonoBehaviour
             }
         }
     }
-
     private void EnterWater()
     {
         isInWater = true;

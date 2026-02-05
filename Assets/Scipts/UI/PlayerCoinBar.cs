@@ -34,4 +34,10 @@ public class CoinDisplay : MonoBehaviour
     {
         return coins;
     }
+
+    public void SetCoins(int amount)
+    {
+        coins = amount;
+        UpdateCoinBar();
+    }
 }

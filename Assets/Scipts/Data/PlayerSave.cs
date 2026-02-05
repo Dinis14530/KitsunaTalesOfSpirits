@@ -19,12 +19,51 @@ public class PlayerSave : MonoBehaviour
         }
     }
 
+    private void OnApplicationQuit()
+    {
+        SaveGame();
+        Debug.Log("Jogo salvo ao sair");
+    }
+
     public void SaveGame()
     {
         SaveData data = new SaveData();
         data.playerPosition = transform.position;
         data.playerHealth = health;
+        
+        // Salva vida máxima
+        var playerHealth = GetComponent<PlayerHealth>();
+        if (playerHealth != null)
+            data.playerMaxHealth = (int)playerHealth.maxHealth;
+        
         data.activeCheckpoint = currentCheckpoint;
+
+        // Salva inventário
+        var inventoryManager = GameObject.Find("InventoryCanvas")?.GetComponent<InventoryManager>();
+        if (inventoryManager != null)
+            data.inventoryItems = inventoryManager.ExportInventory();
+
+        // Salva moedas
+        var coinDisplay = FindFirstObjectByType<CoinDisplay>();
+        if (coinDisplay != null)
+            data.coins = coinDisplay.GetCoins();
+
+        // Salva habilidades desbloqueadas
+        var playerDash = GetComponent<PlayerDash>();
+        if (playerDash != null)
+            data.canDash = playerDash.canDash;
+
+        // Salva baús abertos
+        if (ChestManager.Instance != null)
+            data.openedChests = ChestManager.Instance.GetOpenedChests();
+
+        // Salva portas abertas
+        if (DoorManager.Instance != null)
+            data.openedDoors = DoorManager.Instance.GetOpenedDoors();
+
+        // Salva bosses derrotados
+        if (BossManager.Instance != null)
+            data.defeatedBosses = BossManager.Instance.GetDefeatedBosses();
 
         SaveSystem.Save(data);
     }
@@ -37,5 +76,37 @@ public class PlayerSave : MonoBehaviour
         transform.position = data.playerPosition;
         health = data.playerHealth;
         currentCheckpoint = data.activeCheckpoint;
+
+        // Carrega vida máxima
+        var playerHealth = GetComponent<PlayerHealth>();
+        if (playerHealth != null)
+            playerHealth.maxHealth = data.playerMaxHealth;
+
+        // Carrega inventário
+        var inventoryManager = GameObject.Find("InventoryCanvas")?.GetComponent<InventoryManager>();
+        if (inventoryManager != null && data.inventoryItems != null)
+            inventoryManager.ImportInventory(data.inventoryItems);
+
+        // Carrega moedas
+        var coinDisplay = FindFirstObjectByType<CoinDisplay>();
+        if (coinDisplay != null)
+            coinDisplay.SetCoins(data.coins);
+
+        // Carrega habilidades desbloqueadas
+        var playerDash = GetComponent<PlayerDash>();
+        if (playerDash != null)
+            playerDash.canDash = data.canDash;
+
+        // Carrega baús abertos
+        if (ChestManager.Instance != null && data.openedChests != null)
+            ChestManager.Instance.SetOpenedChests(data.openedChests);
+
+        // Carrega portas abertas
+        if (DoorManager.Instance != null && data.openedDoors != null)
+            DoorManager.Instance.SetOpenedDoors(data.openedDoors);
+
+        // Carrega bosses derrotados
+        if (BossManager.Instance != null && data.defeatedBosses != null)
+            BossManager.Instance.SetDefeatedBosses(data.defeatedBosses);
     }
 }

@@ -28,6 +28,12 @@ public class Chest : MonoBehaviour, IInterectable
         // Se não tiver AudioSource, tenta pegar
         if (audioSource == null)
             audioSource = GetComponent<AudioSource>();
+
+        // Verifica se este baú já foi aberto antes
+        if (ChestManager.Instance != null && ChestManager.Instance.IsChestOpened(ChestID))
+        {
+            SetOpened(true);
+        }
     }
 
     public bool CanInteract()
@@ -77,6 +83,11 @@ public class Chest : MonoBehaviour, IInterectable
     {
         IsOpened = opened;
         if (IsOpened)
+        {
             GetComponent<SpriteRenderer>().sprite = openedSprite;
+            // Guarda que este baú foi aberto
+            if (ChestManager.Instance != null)
+                ChestManager.Instance.MarkChestAsOpened(ChestID);
+        }
     }
 }

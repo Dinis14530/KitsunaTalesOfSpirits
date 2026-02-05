@@ -105,6 +105,31 @@ public class ShopManager : MonoBehaviour, IInterectable
             return;
         }
         
+        // Se é um item que se usa imediatamente (maxHealth, health, etc)
+        if (IsInstantUseItem(itemSO))
+        {
+            // Tenta usar o item
+            bool used = itemSO.UseItem();
+            if (used)
+            {
+                coinDisplay.AddCoins(-price);
+                
+                // Registra a compra
+                if (!itemsPurchased.ContainsKey(itemSO))
+                    itemsPurchased[itemSO] = 0;
+                itemsPurchased[itemSO]++;
+                
+                Debug.Log($"{itemSO.itemName} comprado com sucesso! Compras: {itemsPurchased[itemSO]}/{itemSO.purchaseLimit}");
+                return;
+            }
+            else
+            {
+                Debug.LogWarning($"{itemSO.itemName} não pode ser usado agora");
+                return;
+            }
+        }
+        
+        // Se é um item normal, vai para o inventário
         // Verifica se tem espaço no inventário
         if (!HasSpaceForItem(itemSO))
         {
@@ -122,6 +147,12 @@ public class ShopManager : MonoBehaviour, IInterectable
         itemsPurchased[itemSO]++;
         
         Debug.Log($"{itemSO.itemName} comprado com sucesso! Compras: {itemsPurchased[itemSO]}/{itemSO.purchaseLimit}");
+    }
+    
+    private bool IsInstantUseItem(ItemSO itemSO)
+    {
+        // Itens que são usados imediatamente
+        return itemSO.statToChange == StatToChange.maxHealth || itemSO.isAbility;
     }
     
     private bool HasSpaceForItem(ItemSO itemSO)

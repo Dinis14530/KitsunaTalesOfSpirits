@@ -9,6 +9,7 @@ public class BossHealth : MonoBehaviour
     public float flashDuration = 0.1f;
     [HideInInspector]
     public int healthMax;
+    public string BossID { get; private set; }
 
     [System.Serializable]
     public class LootDrop
@@ -28,6 +29,21 @@ public class BossHealth : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         bossController = GetComponent<BossController>();
         healthMax = health;
+        
+        // Gera ID único baseado no nome e posição
+        BossID = gameObject.name + "_" + transform.position.ToString();
+        Debug.Log($"Boss criado com ID: {BossID}");
+    }
+
+    void Start()
+    {
+        // Verifica se este boss já foi derrotado
+        if (BossManager.Instance != null && BossManager.Instance.IsBossDefeated(BossID))
+        {
+            Debug.Log($"Boss {BossID} já foi derrotado, destruindo");
+            Destroy(gameObject);
+            return;
+        }
     }
 
     public void TakeDamage(int damage)
@@ -60,6 +76,11 @@ public class BossHealth : MonoBehaviour
     void Die()
     {
         Debug.Log(gameObject.name + " died");
+        
+        // Marca este boss como derrotado
+        if (BossManager.Instance != null)
+            BossManager.Instance.MarkBossAsDefeated(BossID);
+        
         DropLoot();
         Destroy(gameObject);
     }

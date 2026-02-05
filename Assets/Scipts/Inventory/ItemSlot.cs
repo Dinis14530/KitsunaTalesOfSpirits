@@ -19,10 +19,10 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
     
     // Item Slot
     [SerializeField]
-    private TMP_Text quantityText;
+    public TMP_Text quantityText;
 
     [SerializeField]
-    private Image itemImage;
+    public Image itemImage;
 
     // Item Description Slot
     public Image itemDescriptionImage;
@@ -54,6 +54,10 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
             quantityText.gameObject.SetActive(true);
             quantityText.text = this.quantity.ToString();
             itemImage.gameObject.SetActive(true);
+            
+            // Atualiza a descrição quando empilha
+            this.itemDescription = itemDescription;
+            
             return addQuantity; 
         }
 

@@ -3,6 +3,7 @@ using UnityEngine.EventSystems;
 
 public class EventSystemCleaner : MonoBehaviour
 {
+    [System.Obsolete]
     void Awake()
     {
         // Procura todos os EventSystems ativos na cena
