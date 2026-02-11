@@ -29,12 +29,18 @@ public class PlayerSave : MonoBehaviour
     {
         SaveData data = new SaveData();
         data.playerPosition = transform.position;
-        data.playerHealth = health;
         
-        // Salva vida máxima
+        // Salva vida actual e máxima
         var playerHealth = GetComponent<PlayerHealth>();
         if (playerHealth != null)
+        {
+            data.playerHealth = (int)playerHealth.currentHealth;
             data.playerMaxHealth = (int)playerHealth.maxHealth;
+        }
+        else
+        {
+            data.playerHealth = health;
+        }
         
         data.activeCheckpoint = currentCheckpoint;
 
@@ -77,10 +83,13 @@ public class PlayerSave : MonoBehaviour
         health = data.playerHealth;
         currentCheckpoint = data.activeCheckpoint;
 
-        // Carrega vida máxima
+        // Carrega vida máxima e atual
         var playerHealth = GetComponent<PlayerHealth>();
         if (playerHealth != null)
+        {
             playerHealth.maxHealth = data.playerMaxHealth;
+            playerHealth.RestoreHealth(data.playerHealth);
+        }
 
         // Carrega inventário
         var inventoryManager = GameObject.Find("InventoryCanvas")?.GetComponent<InventoryManager>();

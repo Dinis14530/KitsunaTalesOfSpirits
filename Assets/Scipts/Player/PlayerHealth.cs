@@ -34,6 +34,12 @@ public class PlayerHealth : MonoBehaviour
         Debug.Log("Checkpoint guardado em: " + checkpointPosition);
     }
 
+    public void RestoreHealth(float health)
+    {
+        currentHealth = health;
+        healthDisplay.UpdateHealth(currentHealth);
+    }
+
     public void TakeDamage(float amount)
     {
         if (isInvincible) return;

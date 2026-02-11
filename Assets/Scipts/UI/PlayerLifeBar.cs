@@ -6,6 +6,8 @@ public class HealthDisplay : MonoBehaviour
 {
     // Sprites
     public Image healthImg;
+    public Sprite healthFullLife2;
+    public Sprite healthFullLife1;
     public Sprite healthFullLife;
     public Sprite health_4;
     public Sprite health_3;
@@ -15,7 +17,11 @@ public class HealthDisplay : MonoBehaviour
     public void UpdateHealth(float health) // Funcao que muda a UI dependo da vida
     {
         // Se a vida for x entao sprite é y
-        if (health == 5)
+        if (health == 7)
+            healthImg.sprite = healthFullLife2;
+        else if (health == 6)
+            healthImg.sprite = healthFullLife1;
+        else if (health == 5)
             healthImg.sprite = healthFullLife;
         else if (health == 4)
             healthImg.sprite = health_4;

@@ -65,20 +65,7 @@ public class Item : MonoBehaviour
             return;
         }
 
-        // Item automático (maxHealth, health, etc)
-        bool used = itemSO.UseItem();
-        if (used)
-        {
-            PlayPickupSound();
-            quantity--;
-            if (quantity <= 0)
-            {
-                Destroy(gameObject);
-            }
-            return;
-        }
-
-        // Item normal (vai para inventário)
+        // Item normal
         if (inventoryManager != null)
         {
             int remaining = inventoryManager.AddItem(
