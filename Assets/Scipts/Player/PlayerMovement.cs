@@ -1,4 +1,5 @@
 using UnityEngine; 
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
@@ -58,6 +59,11 @@ public class PlayerController : MonoBehaviour
     private float stepTimer;  // Contador intervalo entre passos
     private System.Collections.IEnumerator speedRoutineCoroutine; // Coroutine buff velocidade
 
+    [Header("Input System")]
+    [SerializeField] private InputActionReference moveAction;
+    [SerializeField] private InputActionReference jumpAction;
+    [SerializeField] private InputActionReference crouchAction;
+
     // AWAKE 
     private void Awake()
     {
@@ -112,7 +118,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         // Atualiza jump buffer
-        if (Input.GetKeyDown(KeyCode.W))
+        if (jumpAction.action.WasPressedThisFrame())
             jumpBufferTimer = jumpBufferTime; // Reseta buffer ao apertar W
         else
             jumpBufferTimer -= Time.deltaTime; // Diminui buffer ao longo do tempo
@@ -134,9 +140,8 @@ public class PlayerController : MonoBehaviour
         // Despertar jogador dormindo
         if (isSleeping)
         {
-            if (Input.GetKeyDown(KeyCode.W) ||
-                Input.GetKeyDown(KeyCode.A) ||
-                Input.GetKeyDown(KeyCode.D)) // Qualquer movimento
+        if (moveAction.action.ReadValue<Vector2>() != Vector2.zero ||
+            jumpAction.action.WasPressedThisFrame())
             {
                 isSleeping = false; // Sai do estado de dormir
                 if (animator != null)
@@ -160,7 +165,7 @@ public class PlayerController : MonoBehaviour
     // HANDLEMOVEMENT -> MOVIMENTO HORIZONTAL
     private void HandleMovement()
     {
-        float xInput = Input.GetAxisRaw("Horizontal"); // Input horizontal A/D ou seta
+        float xInput = moveAction.action.ReadValue<Vector2>().x; // Input horizontal A/D ou seta
 
         if (xInput != 0)
             lastMoveDirection = new Vector2(xInput, 0).normalized; // Atualiza direção
@@ -190,7 +195,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // Short hop -> soltar tecla W reduz altura
-        if (Input.GetKeyUp(KeyCode.W) && rb.linearVelocity.y > 0f)
+        if (jumpAction.action.WasReleasedThisFrame() && rb.linearVelocity.y > 0f)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * shortHopMultiplier);
         }
@@ -300,6 +305,19 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(duration); // Espera duração
         speed = baseSpeed; // Reseta velocidade
         speedRoutineCoroutine = null; // Limpa referência
+    }
+    private void OnEnable()
+    {
+        moveAction.action.Enable();
+        jumpAction.action.Enable();
+        crouchAction.action.Enable();
+    }
+
+    private void OnDisable()
+    {
+        moveAction.action.Disable();
+        jumpAction.action.Disable();
+        crouchAction.action.Disable();
     }
     
 }

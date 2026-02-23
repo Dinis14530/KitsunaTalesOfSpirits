@@ -12,7 +12,6 @@ public class AudioManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // persiste entre cenas
         }
         else
         {

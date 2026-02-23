@@ -10,7 +10,7 @@ public enum StatToChange
     velocity,
     dash,
     keydash,
-    maxHealth,  // Novo: aumenta vida máxima
+    maxHealth,  
 };
 
 [CreateAssetMenu]
