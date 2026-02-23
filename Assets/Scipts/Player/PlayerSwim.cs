@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerSwim : MonoBehaviour
@@ -25,6 +26,10 @@ public class PlayerSwim : MonoBehaviour
     private PlayerKnockBack knockback;
     public Collider2D headCollider;
 
+    [Header("Input System")]
+    [SerializeField] private InputActionReference swimAction;
+    [SerializeField] private InputActionReference moveAction;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -46,12 +51,12 @@ public class PlayerSwim : MonoBehaviour
     {
         if (knockback != null && knockback.IsKnockback) return;
 
-        float xInput = Input.GetAxisRaw("Horizontal");
+        float xInput = moveAction.action.ReadValue<float>();
         float yInput = 0f;
 
-        if (Input.GetKey(KeyCode.W))
+        if (swimAction.action.ReadValue<float>() > 0.1f)
             yInput = 1f;
-        else if (Input.GetKey(KeyCode.S))
+        else if (swimAction.action.ReadValue<float>() < -0.1f)
             yInput = -1f;
 
         rb.linearVelocity = new Vector2(

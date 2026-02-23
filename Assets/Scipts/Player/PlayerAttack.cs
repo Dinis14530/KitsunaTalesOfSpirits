@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.InputSystem;
 
 public class PlayerAttack : MonoBehaviour
 {
@@ -16,6 +17,9 @@ public class PlayerAttack : MonoBehaviour
     public AudioClip attackSound;
     private AudioSource audioSource;
 
+    [Header("Input System")]
+    [SerializeField] private InputActionReference attackAction;
+
     void Start()
     {
         anim = GetComponent<Animator>();
@@ -30,7 +34,7 @@ public class PlayerAttack : MonoBehaviour
 
         if (timeBtwToAttack <= 0)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (attackAction.action.WasPressedThisFrame())
             {
                 anim.SetTrigger("Attack");
                 timeBtwToAttack = startTimeBtwAttack;

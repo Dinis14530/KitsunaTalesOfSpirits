@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 // Sistema de tiro do jogador
 public class PlayerShooting : MonoBehaviour
@@ -11,13 +12,16 @@ public class PlayerShooting : MonoBehaviour
     private float damageMultiplier = 1f;  // Multiplicador de dano (usado por buffs)
     private bool facingRight = true; // Indica para que lado o jogador está virado
 
+    [Header("Input System")]
+    [SerializeField] private InputActionReference shootAction;
+
     void Update()
     {
         HandleDirection(); // Atualiza a direção do jogador 
         HandleCooldown(); // Atualiza o cooldown do tiro
 
         // Dispara quando a tecla X é pressionada e o cooldown é zero
-        if (Input.GetKeyDown(KeyCode.X) && fireCooldown <= 0)
+        if (shootAction.action.WasPressedThisFrame() && fireCooldown <= 0)
         {
             Shoot();
             fireCooldown = fireRate; // reinicia o cooldown
