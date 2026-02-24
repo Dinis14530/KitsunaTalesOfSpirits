@@ -15,7 +15,7 @@ public class ShopMenu : MonoBehaviour
         menuCanvas.SetActive(true);
     }
 
-    // Função para fechar o menu (ex: botão Play)
+    // Função para fechar o menu
     public void CloseMenu()
     {
         menuCanvas.SetActive(false);

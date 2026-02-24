@@ -12,6 +12,7 @@ public class AudioManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -46,5 +47,10 @@ public class AudioManager : MonoBehaviour
         }
 
         musicSource.volume = startVolume;
+    }
+
+    public void SetVolume(float volume)
+    {
+        musicSource.volume = volume;
     }
 }
