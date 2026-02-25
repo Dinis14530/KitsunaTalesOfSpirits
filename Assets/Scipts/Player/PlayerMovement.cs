@@ -126,8 +126,8 @@ public class PlayerController : MonoBehaviour
         // Se em diálogo, trava movimento horizontal
         if (isInDialogue)
         {
-            rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y); // Apenas Y
-            return; // Sai do Update
+            ForceIdle();
+            return;
         }
 
         // Se não pode se mover, trava horizontal
@@ -299,6 +299,18 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(speedRoutineCoroutine);
     }
 
+    public void ForceIdle()
+    {
+        if (animator == null) return;
+
+        rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
+
+        animator.SetBool("IsRunning", false);
+        animator.SetBool("IsJumping", false);
+        animator.SetBool("IsCrouching", false);
+        animator.SetBool("IsIdle", true);
+    }
+
     private System.Collections.IEnumerator SpeedIncreaseCoroutine(float amount, float duration)
     {
         speed = baseSpeed + amount; // Aumenta velocidade
@@ -319,5 +331,4 @@ public class PlayerController : MonoBehaviour
         jumpAction.action.Disable();
         crouchAction.action.Disable();
     }
-    
 }

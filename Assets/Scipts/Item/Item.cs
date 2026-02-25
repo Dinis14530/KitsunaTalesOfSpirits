@@ -4,7 +4,6 @@ public class Item : MonoBehaviour
 {
     public ItemSO itemSO; 
     private int quantity = 1; 
-
     private InventoryManager inventoryManager;
     private CoinDisplay coinDisplay;
     private AbilityUIManager abilityUIManager;

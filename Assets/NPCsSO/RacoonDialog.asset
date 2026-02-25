@@ -15,10 +15,10 @@ MonoBehaviour:
   npcName: Racoon
   npcPortrait: {fileID: -17354137338108556, guid: 514534df58e285a468faa5b88c6e6413, type: 3}
   dialogLines:
-  - "Ol\xE1 Viajante, finalmente acordaste..."
-  - "Quando tiveres algumas moedas vem c\xE1 gastar..."
-  - Vou deixar de te chatear...
-  - Adeus, tem cuidado...
+    portuguese:
+    - "Ol\xE1 Viajante!"
+    english:
+    - Hello Travaller!
   typingSpeed: 0.05
   voiceSound: {fileID: 0}
   voicePitch: 1

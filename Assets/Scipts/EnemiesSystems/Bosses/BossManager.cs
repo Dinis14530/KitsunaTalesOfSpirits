@@ -17,8 +17,6 @@ public class BossManager : MonoBehaviour
         }
 
         Instance = this;
-        DontDestroyOnLoad(gameObject);
-        Debug.Log("BossManager inicializado");
     }
 
     public void MarkBossAsDefeated(string bossID)

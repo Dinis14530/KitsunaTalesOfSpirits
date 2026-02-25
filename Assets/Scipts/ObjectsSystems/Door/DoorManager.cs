@@ -17,8 +17,6 @@ public class DoorManager : MonoBehaviour
         }
 
         Instance = this;
-        DontDestroyOnLoad(gameObject);
-        Debug.Log("DoorManager inicializado");
     }
 
     public void MarkDoorAsOpened(string doorID)

@@ -13,11 +13,23 @@ public class NPC : MonoBehaviour, IInterectable
     public PlayerController player;
 
     [Header("Áudio")]
-    public AudioSource audioSource;      // Fonte de som para diálogo
-    public AudioClip dialogueClip;       // Som ao avançar no diálogo
+    public AudioSource audioSource;
+    public AudioClip dialogueClip;
 
     private int dialogueIndex;
     private bool isTyping, isDialogueActive;
+
+    string[] GetCurrentLanguageLines()
+    {
+        switch (LanguageManager.Instance.currentLanguage)
+        {
+            case Language.English:
+                return dialogueData.dialogLines.english;
+
+            default:
+                return dialogueData.dialogLines.portuguese;
+        }
+    }
 
     public bool CanInteract()
     {
@@ -30,13 +42,9 @@ public class NPC : MonoBehaviour, IInterectable
             return;
 
         if (isDialogueActive)
-        {
             NextLine();
-        }
         else
-        {
             StartDialogue();
-        }
     }
 
     void StartDialogue()
@@ -46,35 +54,34 @@ public class NPC : MonoBehaviour, IInterectable
 
         player.isInDialogue = true;
         player.canMove = false;
+        player.ForceIdle(); 
 
         nameText.SetText(dialogueData.npcName);
         portraitImage.sprite = dialogueData.npcPortrait;
 
         dialoguePanel.SetActive(true);
 
-        // Toca som ao começar o diálogo
         PlayDialogueSound();
-
         StartCoroutine(TypeLine());
     }
 
     void NextLine()
     {
+        string[] lines = GetCurrentLanguageLines();
+
         if (isTyping)
         {
             StopAllCoroutines();
-            dialogueText.SetText(dialogueData.dialogLines[dialogueIndex]);
+            dialogueText.SetText(lines[dialogueIndex]); 
             isTyping = false;
         }
         else
         {
             dialogueIndex++;
 
-            if (dialogueIndex < dialogueData.dialogLines.Length)
+            if (dialogueIndex < lines.Length)
             {
-                // Toca som ao avançar para a próxima linha
                 PlayDialogueSound();
-
                 StartCoroutine(TypeLine());
             }
             else
@@ -89,7 +96,10 @@ public class NPC : MonoBehaviour, IInterectable
         isTyping = true;
         dialogueText.text = "";
 
-        foreach (char letter in dialogueData.dialogLines[dialogueIndex])
+        string[] lines = GetCurrentLanguageLines();
+        string currentLine = lines[dialogueIndex]; 
+
+        foreach (char letter in currentLine)
         {
             dialogueText.text += letter;
             yield return new WaitForSeconds(dialogueData.typingSpeed);
@@ -117,12 +127,11 @@ public class NPC : MonoBehaviour, IInterectable
         player.canMove = true;
     }
 
-    // Função para tocar som de diálogo
     private void PlayDialogueSound()
     {
         if (audioSource != null && dialogueClip != null)
         {
-            audioSource.pitch = Random.Range(0.95f, 1.05f); // pitch aleatório
+            audioSource.pitch = Random.Range(0.95f, 1.05f);
             audioSource.PlayOneShot(dialogueClip);
         }
     }
