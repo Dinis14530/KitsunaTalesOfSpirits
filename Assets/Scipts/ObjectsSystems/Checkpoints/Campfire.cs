@@ -1,4 +1,6 @@
+using System.Collections;
 using UnityEngine;
+using TMPro;
 
 [System.Obsolete]
 public class CampfireCheckpoint : MonoBehaviour, IInterectable
@@ -13,6 +15,13 @@ public class CampfireCheckpoint : MonoBehaviour, IInterectable
     public float soundRadius = 5f;       // Distância máxima para ouvir
 
     private Transform playerTransform;
+
+    [Header("UI")]
+    public GameObject checkpointPanel;
+    public TMP_Text checkpointText;
+    public float panelDuration = 2f;
+
+    private Coroutine checkpointPanelCoroutine;
 
     private void Awake()
     {
@@ -38,6 +47,9 @@ public class CampfireCheckpoint : MonoBehaviour, IInterectable
 
     private void Start()
     {
+        if (checkpointPanel != null)
+            checkpointPanel.SetActive(false);
+
         // Restaura checkpoint do save
         PlayerSave playerSave = FindObjectOfType<PlayerSave>();
         if (playerSave != null && playerSave.currentCheckpoint == gameObject.name)
@@ -81,6 +93,7 @@ public class CampfireCheckpoint : MonoBehaviour, IInterectable
         {
             player.SetCheckpoint(transform.position);
             ActivateCheckpoint();
+            ShowCheckpointPanel();
 
             // Auto-save
             if (playerSave != null)
@@ -113,5 +126,39 @@ public class CampfireCheckpoint : MonoBehaviour, IInterectable
 
         if (fireAudioSource != null && fireAudioSource.isPlaying)
             fireAudioSource.Stop();
+    }
+
+    private void ShowCheckpointPanel()
+    {
+        if (checkpointPanel == null)
+            return;
+
+        if (checkpointText != null)
+            checkpointText.text = "Checkpoint ativado!";
+
+        if (checkpointPanelCoroutine != null)
+            StopCoroutine(checkpointPanelCoroutine);
+
+        checkpointPanelCoroutine = StartCoroutine(ShowCheckpointPanelRoutine());
+    }
+
+    private IEnumerator ShowCheckpointPanelRoutine()
+    {
+        checkpointPanel.SetActive(true);
+        yield return new WaitForSeconds(panelDuration);
+        checkpointPanel.SetActive(false);
+        checkpointPanelCoroutine = null;
+    }
+
+    private void OnDisable()
+    {
+        if (checkpointPanelCoroutine != null)
+        {
+            StopCoroutine(checkpointPanelCoroutine);
+            checkpointPanelCoroutine = null;
+        }
+
+        if (checkpointPanel != null)
+            checkpointPanel.SetActive(false);
     }
 }
