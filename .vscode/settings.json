@@ -67,6 +67,8 @@
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "KitsunaTalesOfSpirits.slnx",
-    "git.ignoreLimitWarning": true
+    "<<<<<<<HEADdotnet.defaultSolution": "KitsunaTalesOfSpirits_Original.slnx",
+    "=======dotnet.defaultSolution": "KitsunaTalesOfSpirits.slnx",
+    ">>>>>>>cc5223631c04c4ffcc8c4bef6abda7eaa2451088git.ignoreLimitWarning": true,
+    "dotnet.defaultSolution": "KitsunaTalesOfSpirits_Original.slnx"
 }

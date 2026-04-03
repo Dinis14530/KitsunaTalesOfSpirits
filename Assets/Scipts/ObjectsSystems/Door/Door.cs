@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class Door : MonoBehaviour, IInterectable
@@ -17,12 +16,6 @@ public class Door : MonoBehaviour, IInterectable
     public AudioSource audioSource;
     public AudioClip openClip;
 
-    [Header("UI")]
-    public GameObject missingKeyPanel;
-    public float panelDuration = 2f;
-
-    private Coroutine missingKeyCoroutine;
-
     void Awake()
     {
         // Gera ID único baseado no nome e posição
@@ -34,7 +27,7 @@ public class Door : MonoBehaviour, IInterectable
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         doorCollider = GetComponent<Collider2D>();
-        inventory = FindFirstObjectByType<InventoryManager>();
+        inventory = FindObjectOfType<InventoryManager>();
 
         // Se não tiver AudioSource, tenta pegar
         if (audioSource == null)
@@ -60,7 +53,7 @@ public class Door : MonoBehaviour, IInterectable
     {
         if (isOpen) return;
 
-        if (inventory != null && inventory.HasItem(requiredItem))
+        if (inventory.HasItem(requiredItem))
         {
             // Remove item e abre a porta
             bool removed = inventory.RemoveItem(requiredItem, 1);
@@ -70,7 +63,6 @@ public class Door : MonoBehaviour, IInterectable
         else
         {
             Debug.Log("You need: " + requiredItem.itemName);
-            ShowMissingKeyPanel();
         }
     }
 
@@ -91,7 +83,7 @@ public class Door : MonoBehaviour, IInterectable
         Debug.Log("Door opened");
     }
 
-    // Versão que não remove item 
+    // Versão que não remove item (usada ao carregar jogo)
     private void SetOpenedWithoutRemoving()
     {
         isOpen = true;
@@ -106,24 +98,5 @@ public class Door : MonoBehaviour, IInterectable
             audioSource.pitch = Random.Range(0.95f, 1.05f);
             audioSource.PlayOneShot(openClip);
         }
-    }
-
-    private void ShowMissingKeyPanel()
-    {
-        if (missingKeyPanel == null)
-            return;
-
-        if (missingKeyCoroutine != null)
-            StopCoroutine(missingKeyCoroutine);
-
-        missingKeyCoroutine = StartCoroutine(ShowMissingKeyPanelRoutine());
-    }
-
-    private IEnumerator ShowMissingKeyPanelRoutine()
-    {
-        missingKeyPanel.SetActive(true);
-        yield return new WaitForSeconds(panelDuration);
-        missingKeyPanel.SetActive(false);
-        missingKeyCoroutine = null;
     }
 }
