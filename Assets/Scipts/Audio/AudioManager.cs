@@ -49,6 +49,7 @@ public class AudioManager : MonoBehaviour
         musicSource.volume = startVolume;
     }
 
+    // Método para ajustar o volume da música
     public void SetVolume(float volume)
     {
         musicSource.volume = volume;
