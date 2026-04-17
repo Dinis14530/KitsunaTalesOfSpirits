@@ -54,6 +54,9 @@ public class PlayerSave : MonoBehaviour
         if (coinDisplay != null)
             data.coins = coinDisplay.GetCoins();
 
+        if (MapManager.Instance != null)
+            data.hasPurchasedMap = MapManager.Instance.IsMapPurchased();
+
         // Salva habilidades desbloqueadas
         var playerDash = GetComponent<PlayerDash>();
         if (playerDash != null)
@@ -100,6 +103,9 @@ public class PlayerSave : MonoBehaviour
         var coinDisplay = FindFirstObjectByType<CoinDisplay>();
         if (coinDisplay != null)
             coinDisplay.SetCoins(data.coins);
+
+        if (MapManager.Instance != null)
+            MapManager.Instance.SetMapPurchased(data.hasPurchasedMap);
 
         // Carrega habilidades desbloqueadas
         var playerDash = GetComponent<PlayerDash>();

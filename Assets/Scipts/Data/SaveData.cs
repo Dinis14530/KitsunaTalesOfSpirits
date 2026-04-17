@@ -10,6 +10,7 @@ public class SaveData
     public string activeCheckpoint;
     public List<InventoryItemData> inventoryItems = new List<InventoryItemData>();
     public int coins;
+    public bool hasPurchasedMap;
     public List<string> unlockedAbilities = new List<string>();
     
     // Habilidades específicas do jogador

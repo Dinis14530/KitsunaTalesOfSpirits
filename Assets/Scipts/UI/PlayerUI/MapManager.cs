@@ -8,6 +8,7 @@ public class MapManager : MonoBehaviour
 
     [SerializeField] private GameObject miniMap;
     [SerializeField] private GameObject largeMap;
+    [SerializeField] private bool mapPurchased;
 
     public bool isLargeMapOpen;
 
@@ -18,10 +19,14 @@ public class MapManager : MonoBehaviour
             Instance = this;
         }
         closeLargeMap();
+        ApplyMapAvailability();
     }
 
     private void Update()
     {
+        if (!mapPurchased)
+            return;
+
         if (Input.GetKeyDown(KeyCode.J))
         {
             if (!isLargeMapOpen)
@@ -44,9 +49,33 @@ public class MapManager : MonoBehaviour
     }
     private void closeLargeMap()
     {
-        miniMap.SetActive(true);
+        miniMap.SetActive(mapPurchased);
         largeMap.SetActive(false);
         isLargeMapOpen = false;
         Time.timeScale = 1;
+    }
+
+    public bool IsMapPurchased()
+    {
+        return mapPurchased;
+    }
+
+    public void SetMapPurchased(bool purchased)
+    {
+        mapPurchased = purchased;
+
+        if (!mapPurchased)
+            closeLargeMap();
+
+        ApplyMapAvailability();
+    }
+
+    private void ApplyMapAvailability()
+    {
+        if (miniMap != null)
+            miniMap.SetActive(mapPurchased && !isLargeMapOpen);
+
+        if (largeMap != null)
+            largeMap.SetActive(mapPurchased && isLargeMapOpen);
     }
 }
