@@ -16,7 +16,7 @@ MonoBehaviour:
   npcPortrait: {fileID: 3334738622998220081, guid: f292cfc3d24046b4faed19abb4a5dac8, type: 3}
   dialogLines:
     portuguese:
-    - A
+    - "Centro de com\xE9rcio do reino."
     english:
     - B
   typingSpeed: 0.05

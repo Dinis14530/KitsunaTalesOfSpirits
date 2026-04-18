@@ -16,11 +16,16 @@ MonoBehaviour:
   npcPortrait: {fileID: -17354137338108556, guid: 514534df58e285a468faa5b88c6e6413, type: 3}
   dialogLines:
     portuguese:
-    - "Ol\xE1 Viajante!"
+    - "Ol\xE1 Viajante! "
+    - Finalmente acordaste!
+    - Acho melhor teres cuidado...
+    - Mas prontosss...
+    - Quando tiveres dinheiro, volta aqui.
+    - Ok...
     english:
-    - Hello Travaller!
+    - 'Hello Travaller! '
   typingSpeed: 0.05
   voiceSound: {fileID: 0}
   voicePitch: 1
-  autoProgressLines: 01010101
+  autoProgressLines: 010101010101
   autoProgressDelay: 0.5

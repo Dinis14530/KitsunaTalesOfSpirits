@@ -1,14 +1,27 @@
+using System.Collections;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MapSellerNPC : MonoBehaviour, IInterectable
 {
     [Header("Compra de mapa")]
-    [SerializeField] private int mapPrice = 50;
+    [SerializeField] private int mapPrice;
     [SerializeField] private CoinDisplay coinDisplay;
     [SerializeField] private GameObject purchaseUI;
     [SerializeField] private PlayerController player;
 
+    [Header("Diálogo")]
+    [SerializeField] private TMP_Text dialogueText;
+    [TextArea]
+    [SerializeField] private string purchaseMessage;
+    [TextArea]
+    [SerializeField] private string soldMessage;
+    [SerializeField] private float soldMessageDuration;
+
     private bool isUIOpen;
+    private Coroutine soldMessageCoroutine;
+    private Button[] purchaseButtons;
 
     private void Start()
     {
@@ -19,7 +32,18 @@ public class MapSellerNPC : MonoBehaviour, IInterectable
             player = FindFirstObjectByType<PlayerController>();
 
         if (purchaseUI != null)
+        {
             purchaseUI.SetActive(false);
+            if (dialogueText == null)
+                dialogueText = purchaseUI.GetComponentInChildren<TMP_Text>(true);
+
+            purchaseButtons = purchaseUI.GetComponentsInChildren<Button>(true);
+        }
+
+        if (dialogueText != null)
+            dialogueText.text = purchaseMessage;
+
+        SetPurchaseButtonsVisible(!IsMapPurchased());
     }
 
     public bool CanInteract()
@@ -30,7 +54,10 @@ public class MapSellerNPC : MonoBehaviour, IInterectable
     public void Interact()
     {
         if (MapManager.Instance != null && MapManager.Instance.IsMapPurchased())
+        {
+            ShowSoldMessage();
             return;
+        }
 
         if (isUIOpen)
             ClosePurchaseUI();
@@ -74,6 +101,11 @@ public class MapSellerNPC : MonoBehaviour, IInterectable
         if (purchaseUI == null)
             return;
 
+        if (dialogueText != null)
+            dialogueText.text = purchaseMessage;
+
+        SetPurchaseButtonsVisible(true);
+
         isUIOpen = true;
         purchaseUI.SetActive(true);
 
@@ -87,6 +119,12 @@ public class MapSellerNPC : MonoBehaviour, IInterectable
 
     private void ClosePurchaseUI()
     {
+        if (soldMessageCoroutine != null)
+        {
+            StopCoroutine(soldMessageCoroutine);
+            soldMessageCoroutine = null;
+        }
+
         if (purchaseUI != null)
             purchaseUI.SetActive(false);
 
@@ -96,6 +134,67 @@ public class MapSellerNPC : MonoBehaviour, IInterectable
         {
             player.canMove = true;
             player.isInDialogue = false;
+        }
+    }
+
+    private void ShowSoldMessage()
+    {
+        if (purchaseUI == null)
+        {
+            Debug.Log(soldMessage);
+            return;
+        }
+
+        if (dialogueText != null)
+            dialogueText.text = soldMessage;
+
+        SetPurchaseButtonsVisible(false);
+
+        if (soldMessageCoroutine != null)
+            StopCoroutine(soldMessageCoroutine);
+
+        soldMessageCoroutine = StartCoroutine(ShowSoldMessageRoutine());
+    }
+
+    private IEnumerator ShowSoldMessageRoutine()
+    {
+        purchaseUI.SetActive(true);
+
+        if (player != null)
+        {
+            player.canMove = false;
+            player.isInDialogue = true;
+            player.ForceIdle();
+        }
+
+        yield return new WaitForSeconds(soldMessageDuration);
+
+        if (purchaseUI != null)
+            purchaseUI.SetActive(false);
+
+        if (player != null)
+        {
+            player.canMove = true;
+            player.isInDialogue = false;
+        }
+
+        soldMessageCoroutine = null;
+    }
+
+    private bool IsMapPurchased()
+    {
+        return MapManager.Instance != null && MapManager.Instance.IsMapPurchased();
+    }
+
+    private void SetPurchaseButtonsVisible(bool visible)
+    {
+        if (purchaseButtons == null)
+            return;
+
+        foreach (Button button in purchaseButtons)
+        {
+            if (button != null)
+                button.gameObject.SetActive(visible);
         }
     }
 }
