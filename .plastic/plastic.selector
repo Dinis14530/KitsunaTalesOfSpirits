@@ -1,4 +1,3 @@
 repository "2DGame/Kitsuna Tales of Spirits@6872308488592@cloud"
   path "/"
-    br "/main"
-    co "/main"
+    smartbranch "/main"
