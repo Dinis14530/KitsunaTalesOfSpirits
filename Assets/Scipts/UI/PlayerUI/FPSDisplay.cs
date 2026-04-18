@@ -33,7 +33,6 @@ public class FPSDisplay : MonoBehaviour
         if (fpsText != null)
         {
             fpsText.text = $"FPS: {fps:0}";
-            fpsText.color = GetColorForFps(fps);
         }
 
         frameCounter = 0;
@@ -80,16 +79,5 @@ public class FPSDisplay : MonoBehaviour
             rectTransform.anchoredPosition = new Vector2(16f, -16f);
             rectTransform.sizeDelta = new Vector2(220f, 40f);
         }
-    }
-
-    private Color GetColorForFps(float fps)
-    {
-        if (fps >= 50f)
-            return new Color(0.35f, 0.9f, 0.45f);
-
-        if (fps >= 30f)
-            return new Color(1f, 0.8f, 0.25f);
-
-        return new Color(1f, 0.35f, 0.35f);
     }
 }
