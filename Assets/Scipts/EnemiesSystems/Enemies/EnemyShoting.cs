@@ -30,6 +30,6 @@ public class EnemyShoting : MonoBehaviour
 
     private void Shoot()
     {
-        Instantiate(projectilePrefab, bulletPosition.position, Quaternion.identity);
+        ObjectPoolManager.Spawn(projectilePrefab, bulletPosition.position, Quaternion.identity);
     }
 }

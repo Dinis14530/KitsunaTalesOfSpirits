@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class PlayerSave : MonoBehaviour
@@ -5,8 +7,15 @@ public class PlayerSave : MonoBehaviour
     public int health = 5;
     public string currentCheckpoint = "Campfire_01";
 
+    private PlayerHealth playerHealth;
+    private PlayerDash playerDash;
+    private InventoryManager inventoryManager;
+    private CoinDisplay coinDisplay;
+
     void Start()
     {
+        CacheReferences();
+
         // cria save apenas se não existir
         if (!SaveSystem.HasSave())
         {
@@ -27,58 +36,32 @@ public class PlayerSave : MonoBehaviour
 
     public void SaveGame()
     {
-        SaveData data = new SaveData();
-        data.playerPosition = transform.position;
-        
-        // Salva vida actual e máxima
-        var playerHealth = GetComponent<PlayerHealth>();
-        if (playerHealth != null)
-        {
-            data.playerHealth = (int)playerHealth.currentHealth;
-            data.playerMaxHealth = (int)playerHealth.maxHealth;
-        }
+        SaveSystem.Save(CreateSaveData());
+    }
+
+    public void SaveGameAsync()
+    {
+        StartCoroutine(SaveGameCoroutine());
+    }
+
+    public IEnumerator SaveGameCoroutine()
+    {
+        SaveData data = CreateSaveData();
+        Task saveTask = SaveSystem.SaveAsync(data);
+
+        while (!saveTask.IsCompleted)
+            yield return null;
+
+        if (saveTask.Exception != null)
+            Debug.LogException(saveTask.Exception);
         else
-        {
-            data.playerHealth = health;
-        }
-        
-        data.activeCheckpoint = currentCheckpoint;
-
-        // Salva inventário
-        var inventoryManager = GameObject.Find("InventoryCanvas")?.GetComponent<InventoryManager>();
-        if (inventoryManager != null)
-            data.inventoryItems = inventoryManager.ExportInventory();
-
-        // Salva moedas
-        var coinDisplay = FindFirstObjectByType<CoinDisplay>();
-        if (coinDisplay != null)
-            data.coins = coinDisplay.GetCoins();
-
-        if (MapManager.Instance != null)
-            data.hasPurchasedMap = MapManager.Instance.IsMapPurchased();
-
-        // Salva habilidades desbloqueadas
-        var playerDash = GetComponent<PlayerDash>();
-        if (playerDash != null)
-            data.canDash = playerDash.canDash;
-
-        // Salva baús abertos
-        if (ChestManager.Instance != null)
-            data.openedChests = ChestManager.Instance.GetOpenedChests();
-
-        // Salva portas abertas
-        if (DoorManager.Instance != null)
-            data.openedDoors = DoorManager.Instance.GetOpenedDoors();
-
-        // Salva bosses derrotados
-        if (BossManager.Instance != null)
-            data.defeatedBosses = BossManager.Instance.GetDefeatedBosses();
-
-        SaveSystem.Save(data);
+            Debug.Log("Jogo guardado em segundo plano");
     }
 
     public void LoadGame()
     {
+        CacheReferences();
+
         SaveData data = SaveSystem.Load();
         if (data == null) return;
 
@@ -87,7 +70,6 @@ public class PlayerSave : MonoBehaviour
         currentCheckpoint = data.activeCheckpoint;
 
         // Carrega vida máxima e atual
-        var playerHealth = GetComponent<PlayerHealth>();
         if (playerHealth != null)
         {
             playerHealth.maxHealth = data.playerMaxHealth;
@@ -95,12 +77,10 @@ public class PlayerSave : MonoBehaviour
         }
 
         // Carrega inventário
-        var inventoryManager = GameObject.Find("InventoryCanvas")?.GetComponent<InventoryManager>();
         if (inventoryManager != null && data.inventoryItems != null)
             inventoryManager.ImportInventory(data.inventoryItems);
 
         // Carrega moedas
-        var coinDisplay = FindFirstObjectByType<CoinDisplay>();
         if (coinDisplay != null)
             coinDisplay.SetCoins(data.coins);
 
@@ -108,7 +88,6 @@ public class PlayerSave : MonoBehaviour
             MapManager.Instance.SetMapPurchased(data.hasPurchasedMap);
 
         // Carrega habilidades desbloqueadas
-        var playerDash = GetComponent<PlayerDash>();
         if (playerDash != null)
             playerDash.canDash = data.canDash;
 
@@ -123,5 +102,63 @@ public class PlayerSave : MonoBehaviour
         // Carrega bosses derrotados
         if (BossManager.Instance != null && data.defeatedBosses != null)
             BossManager.Instance.SetDefeatedBosses(data.defeatedBosses);
+    }
+
+    private void CacheReferences()
+    {
+        if (playerHealth == null)
+            playerHealth = GetComponent<PlayerHealth>();
+
+        if (playerDash == null)
+            playerDash = GetComponent<PlayerDash>();
+
+        if (inventoryManager == null)
+            inventoryManager = GameObject.Find("InventoryCanvas")?.GetComponent<InventoryManager>();
+
+        if (coinDisplay == null)
+            coinDisplay = FindFirstObjectByType<CoinDisplay>();
+    }
+
+    private SaveData CreateSaveData()
+    {
+        CacheReferences();
+
+        SaveData data = new SaveData();
+        data.playerPosition = transform.position;
+
+        if (playerHealth != null)
+        {
+            data.playerHealth = (int)playerHealth.currentHealth;
+            data.playerMaxHealth = (int)playerHealth.maxHealth;
+        }
+        else
+        {
+            data.playerHealth = health;
+        }
+
+        data.activeCheckpoint = currentCheckpoint;
+
+        if (inventoryManager != null)
+            data.inventoryItems = inventoryManager.ExportInventory();
+
+        if (coinDisplay != null)
+            data.coins = coinDisplay.GetCoins();
+
+        if (MapManager.Instance != null)
+            data.hasPurchasedMap = MapManager.Instance.IsMapPurchased();
+
+        if (playerDash != null)
+            data.canDash = playerDash.canDash;
+
+        if (ChestManager.Instance != null)
+            data.openedChests = ChestManager.Instance.GetOpenedChests();
+
+        if (DoorManager.Instance != null)
+            data.openedDoors = DoorManager.Instance.GetOpenedDoors();
+
+        if (BossManager.Instance != null)
+            data.defeatedBosses = BossManager.Instance.GetDefeatedBosses();
+
+        return data;
     }
 }

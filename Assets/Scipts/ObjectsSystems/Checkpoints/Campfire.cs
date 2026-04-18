@@ -22,6 +22,8 @@ public class CampfireCheckpoint : MonoBehaviour, IInterectable
     public float panelDuration = 2f;
 
     private Coroutine checkpointPanelCoroutine;
+    private PlayerHealth playerHealth;
+    private PlayerSave playerSave;
 
     private void Awake()
     {
@@ -43,6 +45,15 @@ public class CampfireCheckpoint : MonoBehaviour, IInterectable
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null)
             playerTransform = playerObj.transform;
+
+        if (playerObj != null)
+        {
+            playerHealth = playerObj.GetComponent<PlayerHealth>();
+            playerSave = playerObj.GetComponent<PlayerSave>();
+        }
+
+        if (playerSave == null)
+            playerSave = FindFirstObjectByType<PlayerSave>();
     }
 
     private void Start()
@@ -51,7 +62,6 @@ public class CampfireCheckpoint : MonoBehaviour, IInterectable
             checkpointPanel.SetActive(false);
 
         // Restaura checkpoint do save
-        PlayerSave playerSave = FindObjectOfType<PlayerSave>();
         if (playerSave != null && playerSave.currentCheckpoint == gameObject.name)
         {
             ActivateCheckpoint();
@@ -86,12 +96,9 @@ public class CampfireCheckpoint : MonoBehaviour, IInterectable
     {
         if (isActive) return;
 
-        PlayerHealth player = FindObjectOfType<PlayerHealth>();
-        PlayerSave playerSave = FindObjectOfType<PlayerSave>();
-
-        if (player != null)
+        if (playerHealth != null)
         {
-            player.SetCheckpoint(transform.position);
+            playerHealth.SetCheckpoint(transform.position);
             ActivateCheckpoint();
             ShowCheckpointPanel();
 
@@ -99,7 +106,7 @@ public class CampfireCheckpoint : MonoBehaviour, IInterectable
             if (playerSave != null)
             {
                 playerSave.currentCheckpoint = gameObject.name;
-                playerSave.SaveGame();
+                playerSave.SaveGameAsync();
             }
 
             Debug.Log("Checkpoint ativado e jogo guardado");

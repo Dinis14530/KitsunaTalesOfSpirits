@@ -1,4 +1,3 @@
-using System.Numerics;
 using UnityEngine;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
@@ -12,13 +11,19 @@ public class EnemyProjectile : MonoBehaviour
     private float timer;
     public int damage = 1; // Dano
     public int health = 1;
-    void Start()
+    private void OnEnable()
     {
         rb = GetComponent<Rigidbody2D>();
-        player = GameObject.FindGameObjectWithTag("Player");
+        if (player == null)
+            player = GameObject.FindGameObjectWithTag("Player");
 
-        Vector3 direction = player.transform.position - transform.position;
-        rb.linearVelocity = new Vector2(direction.x, direction.y).normalized * force;
+        timer = 0f;
+
+        if (player != null && rb != null)
+        {
+            Vector3 direction = player.transform.position - transform.position;
+            rb.linearVelocity = new Vector2(direction.x, direction.y).normalized * force;
+        }
     }
 
     void Update()
@@ -27,7 +32,7 @@ public class EnemyProjectile : MonoBehaviour
 
         if (timer > bulletTimeInScreen)
         {
-            Destroy(gameObject);
+            ObjectPoolManager.Release(gameObject);
         }
     }
 
@@ -52,7 +57,7 @@ public class EnemyProjectile : MonoBehaviour
                     knockback.ApplyKnockback(direction); 
                 }
             }
-            Destroy(gameObject);
+            ObjectPoolManager.Release(gameObject);
         }
     }
 }

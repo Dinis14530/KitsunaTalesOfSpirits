@@ -2,6 +2,7 @@ using UnityEngine;
 using System.IO;
 using System.Text;
 using System.Security.Cryptography;
+using System.Threading.Tasks;
 
 public static class SaveSystem
 {
@@ -15,16 +16,20 @@ public static class SaveSystem
     public static void Save(SaveData data)
     {
         string json = JsonUtility.ToJson(data, true);
+        WriteSaveFile(json);
 
         // DEBUG apenas no Editor
         #if UNITY_EDITOR
             Debug.Log("SAVE JSON:\n" + json);
         #endif
 
-        byte[] encryptedData = Encrypt(json);
-        File.WriteAllBytes(SavePath, encryptedData);
-
         Debug.Log("Jogo guardado em: " + SavePath);
+    }
+
+    public static Task SaveAsync(SaveData data)
+    {
+        string json = JsonUtility.ToJson(data, true);
+        return Task.Run(() => WriteSaveFile(json));
     }
 
     public static SaveData Load()
@@ -81,5 +86,11 @@ public static class SaveSystem
         }
 
         return Encoding.UTF8.GetString(ms.ToArray());
+    }
+
+    private static void WriteSaveFile(string json)
+    {
+        byte[] encryptedData = Encrypt(json);
+        File.WriteAllBytes(SavePath, encryptedData);
     }
 }

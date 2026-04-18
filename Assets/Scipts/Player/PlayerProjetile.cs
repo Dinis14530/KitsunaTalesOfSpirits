@@ -7,20 +7,31 @@ public class Projetile : MonoBehaviour
 
     private int damage;
     private Vector2 direction;
+    private float lifeTimer;
 
-    public void SetDirection(Vector2 dir)
+    private void OnEnable()
     {
-        direction = dir.normalized;
-        Destroy(gameObject, lifeTime);
+        lifeTimer = 0f;
+        damage = 0;
+        direction = Vector2.zero;
     }
 
-    public void SetDamage(int dmg)
+    public void Initialize(Vector2 dir, int dmg)
     {
+        direction = dir.normalized;
         damage = dmg;
     }
 
     void Update()
     {
+        lifeTimer += Time.deltaTime;
+
+        if (lifeTimer >= lifeTime)
+        {
+            ReleaseProjectile();
+            return;
+        }
+
         transform.Translate(direction * speed * Time.deltaTime);
     }
 
@@ -30,12 +41,17 @@ public class Projetile : MonoBehaviour
         {
             col.GetComponent<Enemy>()?.TakeDamage(damage);
             col.GetComponent<BossHealth>()?.TakeDamage(damage);
-            Destroy(gameObject);
+            ReleaseProjectile();
         }
 
         if (col.CompareTag("Wall"))
         {
-            Destroy(gameObject);
+            ReleaseProjectile();
         }
+    }
+
+    private void ReleaseProjectile()
+    {
+        ObjectPoolManager.Release(gameObject);
     }
 }

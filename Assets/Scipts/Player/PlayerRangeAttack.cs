@@ -52,16 +52,21 @@ public class PlayerShooting : MonoBehaviour
     // Dispara o projétil
     void Shoot()
     {
-        // Cria o projétil 
-        GameObject proj = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
+        GameObject proj = ObjectPoolManager.Spawn(bulletPrefab, firePoint.position, Quaternion.identity);
+        if (proj == null)
+            return;
+
         Vector2 dir = facingRight ? Vector2.right : Vector2.left;
         Projetile projScript = proj.GetComponent<Projetile>();
 
-        // Define a direção do projétil
-        projScript.SetDirection(dir);
+        if (projScript == null)
+        {
+            Debug.LogWarning("O prefab do projétil do jogador precisa do componente Projetile.");
+            ObjectPoolManager.Release(proj);
+            return;
+        }
 
-        // Define o dano do projétil (dano base * multiplicador)
-        projScript.SetDamage(Mathf.RoundToInt(baseDamage * damageMultiplier));
+        projScript.Initialize(dir, Mathf.RoundToInt(baseDamage * damageMultiplier));
     }
 
     // Buff de dano
