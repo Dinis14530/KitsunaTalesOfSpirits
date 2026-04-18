@@ -7,6 +7,7 @@ public class SaveData
     public Vector3 playerPosition;
     public int playerHealth;
     public int playerMaxHealth;  
+    public long lastSavedUtcTicks;
     public string activeCheckpoint;
     public List<InventoryItemData> inventoryItems = new List<InventoryItemData>();
     public int coins;
