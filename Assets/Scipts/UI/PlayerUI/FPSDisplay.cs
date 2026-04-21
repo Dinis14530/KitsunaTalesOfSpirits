@@ -1,9 +1,12 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class FPSDisplay : MonoBehaviour
 {
+    private const string ShowFpsPrefKey = "ShowFPS";
+
+    public static FPSDisplay Instance { get; private set; }
+
     [Header("UI")]
     [SerializeField] private Canvas fpsCanvas;
     [SerializeField] private TMP_Text fpsText;
@@ -11,17 +14,53 @@ public class FPSDisplay : MonoBehaviour
     [Header("Atualização")]
     [SerializeField] private float updateInterval = 0.25f;
 
+    [Header("Estado")]
+    [SerializeField] private bool showByDefault = true;
+
     private float unscaledTimeAccumulator;
     private int frameCounter;
+    private bool isDisplayEnabled;
+
+    public bool IsDisplayEnabled => isDisplayEnabled;
+
+    public static FPSDisplay GetExisting()
+    {
+        if (Instance != null)
+            return Instance;
+
+        return FindObjectOfType<FPSDisplay>(true);
+    }
 
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
         DontDestroyOnLoad(gameObject);
-        EnsureUI();
+        ResolveUIReferences();
+
+        bool savedShowValue = PlayerPrefs.GetInt(ShowFpsPrefKey, showByDefault ? 1 : 0) == 1;
+        SetDisplayEnabled(savedShowValue, false);
+    }
+
+    private void OnDestroy()
+    {
+        if (Instance == this)
+            Instance = null;
     }
 
     private void Update()
     {
+        if (!isDisplayEnabled)
+            return;
+
+        if (fpsText == null)
+            return;
+
         frameCounter++;
         unscaledTimeAccumulator += Time.unscaledDeltaTime;
 
@@ -39,45 +78,39 @@ public class FPSDisplay : MonoBehaviour
         unscaledTimeAccumulator = 0f;
     }
 
-    private void EnsureUI()
+    public void SetDisplayEnabled(bool enabled)
+    {
+        SetDisplayEnabled(enabled, true);
+    }
+
+    private void SetDisplayEnabled(bool enabled, bool savePreference)
+    {
+        isDisplayEnabled = enabled;
+
+        if (fpsCanvas != null)
+            fpsCanvas.gameObject.SetActive(enabled);
+        else if (fpsText != null)
+            fpsText.enabled = enabled;
+
+        frameCounter = 0;
+        unscaledTimeAccumulator = 0f;
+
+        if (savePreference)
+        {
+            PlayerPrefs.SetInt(ShowFpsPrefKey, enabled ? 1 : 0);
+            PlayerPrefs.Save();
+        }
+    }
+
+    private void ResolveUIReferences()
     {
         if (fpsCanvas == null)
             fpsCanvas = GetComponentInChildren<Canvas>(true);
 
         if (fpsCanvas == null)
-        {
-            GameObject canvasObject = new GameObject("FPSCanvas");
-            canvasObject.transform.SetParent(transform, false);
-
-            fpsCanvas = canvasObject.AddComponent<Canvas>();
-            fpsCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
-            fpsCanvas.sortingOrder = 5000;
-
-            CanvasScaler scaler = canvasObject.AddComponent<CanvasScaler>();
-            scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-            scaler.referenceResolution = new Vector2(1920, 1080);
-
-            canvasObject.AddComponent<GraphicRaycaster>();
-        }
+            return;
 
         if (fpsText == null)
-        {
-            GameObject textObject = new GameObject("FPSText");
-            textObject.transform.SetParent(fpsCanvas.transform, false);
-
-            fpsText = textObject.AddComponent<TextMeshProUGUI>();
-            fpsText.fontSize = 24f;
-            fpsText.alignment = TextAlignmentOptions.TopLeft;
-            fpsText.color = Color.white;
-            fpsText.raycastTarget = false;
-            fpsText.text = "FPS: --";
-
-            RectTransform rectTransform = fpsText.rectTransform;
-            rectTransform.anchorMin = new Vector2(0f, 1f);
-            rectTransform.anchorMax = new Vector2(0f, 1f);
-            rectTransform.pivot = new Vector2(0f, 1f);
-            rectTransform.anchoredPosition = new Vector2(16f, -16f);
-            rectTransform.sizeDelta = new Vector2(220f, 40f);
-        }
+            fpsText = fpsCanvas.GetComponentInChildren<TMP_Text>(true);
     }
 }

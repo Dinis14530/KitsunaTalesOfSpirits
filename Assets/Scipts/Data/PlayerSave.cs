@@ -17,7 +17,11 @@ public class PlayerSave : MonoBehaviour
     {
         CacheReferences();
 
-        Task<LoadedSave> loadTask = LoadBestSaveAsync();
+        SaveData initialLocalData = SaveSystem.HasSave() ? SaveSystem.Load() : null;
+        if (initialLocalData != null)
+            ApplySaveData(initialLocalData);
+
+        Task<LoadedSave> loadTask = LoadBestSaveAsync(initialLocalData);
 
         while (!loadTask.IsCompleted)
             yield return null;
@@ -32,8 +36,11 @@ public class PlayerSave : MonoBehaviour
 
         if (loadedSave == null || loadedSave.Data == null)
         {
-            SaveGame();
-            Debug.Log("Primeiro save criado");
+            if (initialLocalData == null)
+            {
+                SaveGame();
+                Debug.Log("Primeiro save criado");
+            }
 
             yield break;
         }
@@ -181,9 +188,11 @@ public class PlayerSave : MonoBehaviour
             _ = CloudSaveSync.SaveAsync(loadedSave.Data);
     }
 
-    private async Task<LoadedSave> LoadBestSaveAsync()
+    private async Task<LoadedSave> LoadBestSaveAsync(SaveData localData = null)
     {
-        SaveData localData = SaveSystem.HasSave() ? SaveSystem.Load() : null;
+        if (localData == null && SaveSystem.HasSave())
+            localData = SaveSystem.Load();
+
         SaveData cloudData = await CloudSaveSync.LoadAsync();
 
         if (localData == null && cloudData == null)

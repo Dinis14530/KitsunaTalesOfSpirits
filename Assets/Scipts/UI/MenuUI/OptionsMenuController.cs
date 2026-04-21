@@ -9,7 +9,7 @@ public class MenuController : MonoBehaviour
     private void Start()
     {
         mainMenu.SetActive(true);
-        optionsMenu.SetActive(false);
+        optionsMenu.SetActive(true);
     }
 
     public void OpenOptions()

@@ -7,13 +7,23 @@ public class EnemyShoting : MonoBehaviour
    public Transform bulletPosition;
    private float timer;
    private GameObject player;
+
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        TryFindPlayer();
     }
 
     void Update()
     {
+        if (player == null)
+        {
+            TryFindPlayer();
+            return;
+        }
+
+        if (projectilePrefab == null || bulletPosition == null)
+            return;
+
         float distance = Vector2.Distance(transform.position, player.transform.position);
 
         if (distance < 10)
@@ -31,5 +41,10 @@ public class EnemyShoting : MonoBehaviour
     private void Shoot()
     {
         ObjectPoolManager.Spawn(projectilePrefab, bulletPosition.position, Quaternion.identity);
+    }
+
+    private void TryFindPlayer()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 }
