@@ -26,6 +26,9 @@ public class CameraFollow : MonoBehaviour
     [Header("Pixel Perfect")]
     public float pixelsPerUnit = 16f;
 
+    [Header("Rendering")]
+    public bool disableMSAA = true;
+
     private Camera cam;
     private float camHalfWidth;
     private float camHalfHeight;
@@ -33,6 +36,10 @@ public class CameraFollow : MonoBehaviour
     private void Awake()
     {
         cam = GetComponent<Camera>();
+
+        if (disableMSAA)
+            cam.allowMSAA = false;
+
         camHalfHeight = cam.orthographicSize;
         camHalfWidth = cam.aspect * camHalfHeight;
 
@@ -67,10 +74,6 @@ public class CameraFollow : MonoBehaviour
             -10f
         );
 
-        // --- PIXEL PERFECT ---
-        pos.x = Mathf.Round(pos.x * pixelsPerUnit) / pixelsPerUnit;
-        pos.y = Mathf.Round(pos.y * pixelsPerUnit) / pixelsPerUnit;
-
         // --- LIMITES DA CAMERA ---
         if (cameraBounds != null)
         {
@@ -83,6 +86,14 @@ public class CameraFollow : MonoBehaviour
 
             pos.x = Mathf.Clamp(pos.x, minX, maxX);
             pos.y = Mathf.Clamp(pos.y, minY, maxY);
+        }
+
+        // Faz snap apos clamp para evitar subpixel no limite da area.
+        if (pixelsPerUnit > 0f)
+        {
+            float step = 1f / pixelsPerUnit;
+            pos.x = Mathf.Round(pos.x / step) * step;
+            pos.y = Mathf.Round(pos.y / step) * step;
         }
 
         transform.position = pos;
