@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: WallJump
   statToChange: 8
   amountToChangeStat: 0
-  sprite: {fileID: -7848039375673857549, guid: a4278621f6ade4748b1bdca7160eb78b, type: 3}
+  sprite: {fileID: 3528185928632461864, guid: 53e73ec129f87654398d27846b6f0ad2, type: 3}
   itemDescription: 
   isCurrency: 0
   isAbility: 1
