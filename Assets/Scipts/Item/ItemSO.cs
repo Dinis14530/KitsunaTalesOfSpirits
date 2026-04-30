@@ -10,7 +10,8 @@ public enum StatToChange
     velocity,
     dash,
     keydash,
-    maxHealth,  
+    maxHealth,
+    wallJump
 };
 
 [CreateAssetMenu]
@@ -72,6 +73,17 @@ public class ItemSO : ScriptableObject
             if (dash != null)
             {
                 dash.canDash = true;
+                return true;
+            }
+            return false;
+        }
+
+        if (statToChange == StatToChange.wallJump)
+        {
+            PlayerMovement wallJump = player.GetComponent<PlayerMovement>();
+            if (wallJump != null)
+            {
+                wallJump.EnableWallJump();
                 return true;
             }
             return false;

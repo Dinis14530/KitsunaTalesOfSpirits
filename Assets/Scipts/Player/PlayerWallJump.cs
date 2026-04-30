@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     private float wallJumpingCounter;
     public float wallJumpingDuration = 0.4f;
     public Vector2 wallJumpingPower = new Vector2(8f, 16f);
+    public bool canWallJump = false; // Flag para ativar/desativar wall jump
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
@@ -35,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void WallSlide()
     {
-        if (IsWalled() && !IsGrounded())
+        if (canWallJump && IsWalled() && !IsGrounded())
         {
             isWallSliding = true;
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Clamp(rb.linearVelocity.y, -wallSlidingSpeed, float.MaxValue));
@@ -78,5 +79,18 @@ public class PlayerMovement : MonoBehaviour
     private void StopWallJumping()
     {
         isWallJumping = false;
+    }
+
+    // Método público para ativar o wall jump
+    public void EnableWallJump()
+    {
+        canWallJump = true;
+    }
+
+    // Método público para desativar o wall jump
+    public void DisableWallJump()
+    {
+        canWallJump = false;
+        isWallSliding = false;
     }
 }
