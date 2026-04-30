@@ -3,17 +3,22 @@ using UnityEngine;
 public class PuzzleRewardDropper : MonoBehaviour
 {
     [Header("Reward Settings")]
-    [SerializeField] private ItemSO rewardItem; // Item a dropar
-    [SerializeField] private Transform dropPosition; // Posição onde o item vai dropar
-    [SerializeField] private bool useThisTransform = false; // Se true, usa a posição deste GameObject
-    
+    [SerializeField]
+    private ItemSO rewardItem; // Item a dropar
+
+    [SerializeField]
+    private Transform dropPosition; // Posição onde o item vai dropar
+
+    [SerializeField]
+    private bool useThisTransform = false; // Se true, usa a posição deste GameObject
+
     private MusicPuzzleManager puzzleManager;
     private bool hasDropped = false; // Evita dropar múltiplas vezes
 
     private void Start()
     {
         puzzleManager = GetComponent<MusicPuzzleManager>();
-        
+
         if (puzzleManager == null)
         {
             return;
@@ -50,7 +55,7 @@ public class PuzzleRewardDropper : MonoBehaviour
 
         // Dropa o item
         LootHelper.SpawnLootItem(rewardItem, spawnPosition, 1);
-        
+
         Debug.Log($"Item '{rewardItem.itemName}' dropado na posição {spawnPosition}!");
         hasDropped = true;
     }
