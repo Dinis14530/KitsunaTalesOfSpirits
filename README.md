@@ -2,6 +2,13 @@
 
 Projeto desenvolvido no âmbito da Prova de Aptidão Profissional (PAP).
 
+## Gestão do projeto
+
+- **Progress Tracker:** [`docs/PROJECT_TRACKER.md`](docs/PROJECT_TRACKER.md)
+- **Backlog:** [`docs/BACKLOG.md`](docs/BACKLOG.md)
+- **Roadmap:** [`docs/ROADMAP.md`](docs/ROADMAP.md)
+- **Wiki do projeto:** [`docs/wiki/HOME.md`](docs/wiki/HOME.md)
+
 ## Sobre o jogo
 
 Kitsuna Tales of Spirits é um jogo 2D estilo metroidvania, desenvolvido em Unity com C#, inspirado na mitologia japonesa.
