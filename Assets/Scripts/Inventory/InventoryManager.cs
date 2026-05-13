@@ -2,16 +2,15 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Input = UnityEngine.Input;
+
 public class InventoryManager : MonoBehaviour
 {
     public GameObject inventoryMenu;
     private bool menuActivated;
     public ItemSlot[] itemSlot;
     public ItemSO[] itemSOs;
-    void Start()
-    {
-        
-    }
+
+    void Start() { }
 
     void Update()
     {
@@ -21,7 +20,7 @@ public class InventoryManager : MonoBehaviour
             inventoryMenu.SetActive(false);
             menuActivated = false;
         }
-        else if (Input.GetKeyDown(KeyCode.E)&& !menuActivated)
+        else if (Input.GetKeyDown(KeyCode.E) && !menuActivated)
         {
             Time.timeScale = 0;
             inventoryMenu.SetActive(true);
@@ -42,7 +41,7 @@ public class InventoryManager : MonoBehaviour
         {
             if (itemSlot[i].isFull && itemSlot[i].itemName == itemName)
             {
-                // espera-se que ItemSlot.AddItem retorne o restante 
+                // espera-se que ItemSlot.AddItem retorne o restante
                 remaining = itemSlot[i].AddItem(itemName, remaining, itemSprite, itemDescription);
             }
         }
@@ -66,9 +65,9 @@ public class InventoryManager : MonoBehaviour
 
     public bool UseItem(string itemName)
     {
-        for(int i = 0; i < itemSOs.Length; i++)
+        for (int i = 0; i < itemSOs.Length; i++)
         {
-            if(itemSOs[i].itemName == itemName)
+            if (itemSOs[i].itemName == itemName)
             {
                 Debug.Log("Using item: " + itemName);
                 return itemSOs[i].UseItem();
@@ -79,10 +78,15 @@ public class InventoryManager : MonoBehaviour
 
     public bool HasItem(ItemSO itemSO)
     {
-        if (itemSO == null) return false;
+        if (itemSO == null)
+            return false;
         for (int i = 0; i < itemSlot.Length; i++)
         {
-            if (itemSlot[i].isFull && itemSlot[i].itemName == itemSO.itemName && itemSlot[i].quantity > 0)
+            if (
+                itemSlot[i].isFull
+                && itemSlot[i].itemName == itemSO.itemName
+                && itemSlot[i].quantity > 0
+            )
                 return true;
         }
         return false;
@@ -90,7 +94,8 @@ public class InventoryManager : MonoBehaviour
 
     public bool RemoveItem(ItemSO itemSO, int amount)
     {
-        if (itemSO == null || amount <= 0) return false;
+        if (itemSO == null || amount <= 0)
+            return false;
 
         int remaining = amount;
         for (int i = 0; i < itemSlot.Length && remaining > 0; i++)
@@ -114,12 +119,14 @@ public class InventoryManager : MonoBehaviour
         {
             if (slot.isFull && slot.quantity > 0)
             {
-                list.Add(new InventoryItemData 
-                { 
-                    itemName = slot.itemName, 
-                    quantity = slot.quantity,
-                    itemDescription = slot.itemDescription
-                });
+                list.Add(
+                    new InventoryItemData
+                    {
+                        itemName = slot.itemName,
+                        quantity = slot.quantity,
+                        itemDescription = slot.itemDescription,
+                    }
+                );
             }
         }
         return list;
@@ -152,19 +159,17 @@ public class InventoryManager : MonoBehaviour
                     break;
                 }
             }
-            
+
             AddItem(item.itemName, item.quantity, itemSprite, item.itemDescription);
         }
     }
 
     public void DeselectAllSlots()
     {
-        for(int i = 0; i < itemSlot.Length; i++)
+        for (int i = 0; i < itemSlot.Length; i++)
         {
-            itemSlot[i].selectedShader.SetActive(false);    
-            itemSlot[i].thisItemSelected = false;   
+            itemSlot[i].selectedShader.SetActive(false);
+            itemSlot[i].thisItemSelected = false;
         }
     }
-
-    
 }

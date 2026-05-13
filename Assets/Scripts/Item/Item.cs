@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-    public ItemSO itemSO; 
-    private int quantity = 1; 
+    public ItemSO itemSO;
+    private int quantity = 1;
     private InventoryManager inventoryManager;
     private CoinDisplay coinDisplay;
     private AbilityUIManager abilityUIManager;
-    private AudioSource audioSource; // AudioSource 
+    private AudioSource audioSource; // AudioSource
     private float nextPickupTime;
 
     void Start()
@@ -38,7 +38,8 @@ public class Item : MonoBehaviour
 
     private void TryPickup()
     {
-        if (itemSO == null) return;
+        if (itemSO == null)
+            return;
 
         // Moeda
         if (itemSO.isCurrency)
@@ -68,9 +69,9 @@ public class Item : MonoBehaviour
         if (inventoryManager != null)
         {
             int remaining = inventoryManager.AddItem(
-                itemSO.itemName, 
-                quantity, 
-                itemSO.sprite, 
+                itemSO.itemName,
+                quantity,
+                itemSO.sprite,
                 itemSO.itemDescription
             );
 
@@ -86,7 +87,8 @@ public class Item : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (!collision.gameObject.CompareTag("Player")) return;
+        if (!collision.gameObject.CompareTag("Player"))
+            return;
 
         TryPickup();
         nextPickupTime = Time.time;
@@ -94,8 +96,10 @@ public class Item : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (!collision.gameObject.CompareTag("Player")) return;
-        if (Time.time < nextPickupTime) return;
+        if (!collision.gameObject.CompareTag("Player"))
+            return;
+        if (Time.time < nextPickupTime)
+            return;
 
         TryPickup();
         nextPickupTime = Time.time;

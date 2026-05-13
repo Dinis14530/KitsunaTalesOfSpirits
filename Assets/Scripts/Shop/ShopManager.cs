@@ -3,11 +3,20 @@ using UnityEngine;
 
 public class ShopManager : MonoBehaviour, IInterectable
 {
-    [SerializeField] private List<ShopItems> shopItems;
-    [SerializeField] private ShopSlot[] shopSlots;
-    [SerializeField] private CoinDisplay coinDisplay;
-    [SerializeField] private InventoryManager inventoryManager;
-    [SerializeField] private CanvasGroup shopUI; 
+    [SerializeField]
+    private List<ShopItems> shopItems;
+
+    [SerializeField]
+    private ShopSlot[] shopSlots;
+
+    [SerializeField]
+    private CoinDisplay coinDisplay;
+
+    [SerializeField]
+    private InventoryManager inventoryManager;
+
+    [SerializeField]
+    private CanvasGroup shopUI;
     public PlayerController player;
     private Dictionary<ItemSO, int> itemsPurchased = new Dictionary<ItemSO, int>();
     private bool isShopOpen = false;
@@ -24,7 +33,6 @@ public class ShopManager : MonoBehaviour, IInterectable
         shopUI.alpha = 0;
         shopUI.blocksRaycasts = false;
         shopUI.interactable = false;
-        
     }
 
     // Implementa IInterectable -> chamado quando player pressiona F
@@ -42,7 +50,7 @@ public class ShopManager : MonoBehaviour, IInterectable
     }
 
     private void OpenShop()
-    {  
+    {
         isShopOpen = true;
         shopUI.alpha = 1;
         shopUI.blocksRaycasts = true;
@@ -61,10 +69,9 @@ public class ShopManager : MonoBehaviour, IInterectable
         player.canMove = true;
         player.isInDialogue = false;
     }
-    
+
     public void PopulateShopItems()
     {
-
         for (int i = 0; i < shopItems.Count && i < shopSlots.Length; i++)
         {
             ShopItems shopitem = shopItems[i];
@@ -84,27 +91,29 @@ public class ShopManager : MonoBehaviour, IInterectable
         {
             return;
         }
-        
+
         // Verifica o limite de compra
         if (itemSO.purchaseLimit > 0)
         {
             if (!itemsPurchased.ContainsKey(itemSO))
                 itemsPurchased[itemSO] = 0;
-            
+
             if (itemsPurchased[itemSO] >= itemSO.purchaseLimit)
             {
-                Debug.LogWarning($"Limite de compra atingido para {itemSO.itemName} Máximo: {itemSO.purchaseLimit}");
+                Debug.LogWarning(
+                    $"Limite de compra atingido para {itemSO.itemName} Máximo: {itemSO.purchaseLimit}"
+                );
                 return;
             }
         }
-        
+
         // Verifica se tem coins suficientes
         if (coinDisplay.GetCoins() < price)
         {
             Debug.LogWarning("Coins insuficientes");
             return;
         }
-        
+
         // Se é um item que se usa imediatamente (maxHealth, health, etc)
         if (IsInstantUseItem(itemSO))
         {
@@ -113,13 +122,15 @@ public class ShopManager : MonoBehaviour, IInterectable
             if (used)
             {
                 coinDisplay.AddCoins(-price);
-                
+
                 // Registra a compra
                 if (!itemsPurchased.ContainsKey(itemSO))
                     itemsPurchased[itemSO] = 0;
                 itemsPurchased[itemSO]++;
-                
-                Debug.Log($"{itemSO.itemName} comprado com sucesso! Compras: {itemsPurchased[itemSO]}/{itemSO.purchaseLimit}");
+
+                Debug.Log(
+                    $"{itemSO.itemName} comprado com sucesso! Compras: {itemsPurchased[itemSO]}/{itemSO.purchaseLimit}"
+                );
                 return;
             }
             else
@@ -128,7 +139,7 @@ public class ShopManager : MonoBehaviour, IInterectable
                 return;
             }
         }
-        
+
         // Se é um item normal, vai para o inventário
         // Verifica se tem espaço no inventário
         if (!HasSpaceForItem(itemSO))
@@ -136,31 +147,37 @@ public class ShopManager : MonoBehaviour, IInterectable
             Debug.LogWarning("Inventário cheio");
             return;
         }
-        
+
         // Compra o item
         coinDisplay.AddCoins(-price);
         inventoryManager.AddItem(itemSO.itemName, 1, itemSO.sprite, itemSO.itemDescription);
-        
+
         // Registra a compra
         if (!itemsPurchased.ContainsKey(itemSO))
             itemsPurchased[itemSO] = 0;
         itemsPurchased[itemSO]++;
-        
-        Debug.Log($"{itemSO.itemName} comprado com sucesso! Compras: {itemsPurchased[itemSO]}/{itemSO.purchaseLimit}");
+
+        Debug.Log(
+            $"{itemSO.itemName} comprado com sucesso! Compras: {itemsPurchased[itemSO]}/{itemSO.purchaseLimit}"
+        );
     }
-    
+
     private bool IsInstantUseItem(ItemSO itemSO)
     {
         // Itens que são usados imediatamente
         return itemSO.statToChange == StatToChange.maxHealth || itemSO.isAbility;
     }
-    
+
     private bool HasSpaceForItem(ItemSO itemSO)
     {
         foreach (var slot in inventoryManager.itemSlot)
         {
             // Se o slot tem o mesmo item e não está cheio
-            if (!slot.isFull && slot.itemName == itemSO.itemName && slot.quantity < ItemSlot.MaxStack)
+            if (
+                !slot.isFull
+                && slot.itemName == itemSO.itemName
+                && slot.quantity < ItemSlot.MaxStack
+            )
                 return true;
             // Se o slot está vazio
             else if (!slot.isFull)

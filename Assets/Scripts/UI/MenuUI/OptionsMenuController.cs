@@ -3,8 +3,11 @@ using UnityEngine;
 public class MenuController : MonoBehaviour
 {
     [Header("Menus")]
-    [SerializeField] private GameObject mainMenu;
-    [SerializeField] private GameObject optionsMenu;
+    [SerializeField]
+    private GameObject mainMenu;
+
+    [SerializeField]
+    private GameObject optionsMenu;
 
     private void Start()
     {

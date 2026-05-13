@@ -7,13 +7,21 @@ using UnityEngine.Tilemaps;
 public class PlayerLadder : MonoBehaviour
 {
     [Header("Ladder")]
-    [SerializeField] private Tilemap ladderTilemap;
-    [SerializeField] private TileBase[] ladderTiles;
-    [SerializeField] private float climbSpeed = 3f;
-    [SerializeField] private float inputThreshold = 0.1f;
+    [SerializeField]
+    private Tilemap ladderTilemap;
+
+    [SerializeField]
+    private TileBase[] ladderTiles;
+
+    [SerializeField]
+    private float climbSpeed = 3f;
+
+    [SerializeField]
+    private float inputThreshold = 0.1f;
 
     [Header("Input System")]
-    [SerializeField] private InputActionReference moveAction;
+    [SerializeField]
+    private InputActionReference moveAction;
 
     private Rigidbody2D rb;
     private PlayerController playerController;
@@ -40,7 +48,14 @@ public class PlayerLadder : MonoBehaviour
         if (moveAction == null || moveAction.action == null || ladderTilemap == null)
             return;
 
-        if (playerController != null && (playerController.isDashing || !playerController.canMove || playerController.isInDialogue))
+        if (
+            playerController != null
+            && (
+                playerController.isDashing
+                || !playerController.canMove
+                || playerController.isInDialogue
+            )
+        )
         {
             StopClimbing();
             return;
@@ -49,7 +64,9 @@ public class PlayerLadder : MonoBehaviour
         Vector2 input = moveAction.action.ReadValue<Vector2>();
         float yInput = input.y;
 
-        bool onLadder = IsOnLadderTile(transform.position) || IsOnLadderTile(transform.position + Vector3.down * 0.4f);
+        bool onLadder =
+            IsOnLadderTile(transform.position)
+            || IsOnLadderTile(transform.position + Vector3.down * 0.4f);
 
         if (onLadder && Mathf.Abs(yInput) > inputThreshold)
         {

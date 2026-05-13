@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class BossAttackHitbox : MonoBehaviour
 {
-
     public int damage = 2;
     public float lifetime = 0.5f;
 
@@ -13,7 +12,7 @@ public class BossAttackHitbox : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        PlayerHealth player = collision.gameObject.GetComponent<PlayerHealth>(); 
+        PlayerHealth player = collision.gameObject.GetComponent<PlayerHealth>();
 
         if (collision.CompareTag("Player"))
         {

@@ -1,10 +1,11 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.Collections;
 
 public class KeepOnlyOneScene : MonoBehaviour
 {
-    [SerializeField] private string sceneToKeep; // Nome da cena que queres manter
+    [SerializeField]
+    private string sceneToKeep; // Nome da cena que queres manter
 
     private void Start()
     {

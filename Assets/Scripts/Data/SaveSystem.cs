@@ -1,27 +1,29 @@
-using UnityEngine;
 using System.IO;
-using System.Text;
 using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 public static class SaveSystem
 {
-    private static readonly string SavePath =
-        Path.Combine(Application.persistentDataPath, "save.dat");
+    private static readonly string SavePath = Path.Combine(
+        Application.persistentDataPath,
+        "save.dat"
+    );
 
-    // Chave simples 
+    // Chave simples
     private const string EncryptionKey = "iAyQ5yE4d8cvqt4Q";
 
-    // PUBLIC API 
+    // PUBLIC API
     public static void Save(SaveData data)
     {
         string json = JsonUtility.ToJson(data, true);
         WriteSaveFile(json);
 
         // DEBUG apenas no Editor
-        #if UNITY_EDITOR
-            Debug.Log("SAVE JSON:\n" + json);
-        #endif
+#if UNITY_EDITOR
+        Debug.Log("SAVE JSON:\n" + json);
+#endif
 
         Debug.Log("Jogo guardado em: " + SavePath);
     }
@@ -34,15 +36,16 @@ public static class SaveSystem
 
     public static SaveData Load()
     {
-        if (!HasSave()) return null;
+        if (!HasSave())
+            return null;
 
         byte[] encryptedData = File.ReadAllBytes(SavePath);
         string json = Decrypt(encryptedData);
 
         // DEBUG
-        #if UNITY_EDITOR
-            Debug.Log("LOAD JSON:\n" + json);
-        #endif
+#if UNITY_EDITOR
+        Debug.Log("LOAD JSON:\n" + json);
+#endif
 
         Debug.Log("Jogo carregado");
         return JsonUtility.FromJson<SaveData>(json);
@@ -53,7 +56,7 @@ public static class SaveSystem
         return File.Exists(SavePath);
     }
 
-    // ENCRYPTION 
+    // ENCRYPTION
     private static byte[] Encrypt(string plainText)
     {
         using var aes = Aes.Create();

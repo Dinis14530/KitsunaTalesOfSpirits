@@ -4,6 +4,7 @@ using UnityEngine.Tilemaps;
 public class EnemySpawner : MonoBehaviour
 {
     public GameObject enemyPrefab;
+
     [Header("Zona de Spawn")]
     public BoxCollider2D spawnArea;
     public float spawnDistance = 12f;
@@ -18,12 +19,14 @@ public class EnemySpawner : MonoBehaviour
     void Start()
     {
         var p = GameObject.FindWithTag("Player");
-        if (p) player = p.transform;
+        if (p)
+            player = p.transform;
     }
 
     void Update()
     {
-        if (!player || !spawnArea) return;
+        if (!player || !spawnArea)
+            return;
 
         float dist = Vector2.Distance(player.position, spawnArea.bounds.center);
 
@@ -49,7 +52,8 @@ public class EnemySpawner : MonoBehaviour
         enemy = Instantiate(enemyPrefab, pos, Quaternion.identity);
 
         var ai = enemy.GetComponentInChildren<AiChace>();
-        if (ai) ai.player = player.gameObject;
+        if (ai)
+            ai.player = player.gameObject;
 
         var trail = enemy.GetComponentInChildren<EnemyTrailTilemap>();
         if (trail)

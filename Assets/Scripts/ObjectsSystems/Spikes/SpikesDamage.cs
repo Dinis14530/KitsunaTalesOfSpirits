@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class SpikesDamage : MonoBehaviour
 {
-    public Vector2 teleportPosition;   
+    public Vector2 teleportPosition;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

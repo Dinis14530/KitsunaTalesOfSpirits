@@ -2,8 +2,11 @@ using UnityEngine;
 
 public class TilePixelPerfectSetup : MonoBehaviour
 {
-    [SerializeField] private bool forcePointFilterOnStart = true;
-    [SerializeField] private bool disableTrilinearFiltering = true;
+    [SerializeField]
+    private bool forcePointFilterOnStart = true;
+
+    [SerializeField]
+    private bool disableTrilinearFiltering = true;
 
     private void Awake()
     {

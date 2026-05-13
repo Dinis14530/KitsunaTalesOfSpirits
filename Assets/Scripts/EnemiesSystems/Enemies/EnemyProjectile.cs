@@ -11,6 +11,7 @@ public class EnemyProjectile : MonoBehaviour
     private float timer;
     public int damage = 1; // Dano
     public int health = 1;
+
     private void OnEnable()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -43,7 +44,7 @@ public class EnemyProjectile : MonoBehaviour
             PlayerHealth player = other.gameObject.GetComponent<PlayerHealth>(); // Vida do jopgador
             PlayerKnockBack knockback = other.gameObject.GetComponent<PlayerKnockBack>(); // Knockback
 
-            if (player != null && !player.isInvincible) // Se o jogador nao estiver invencivel 
+            if (player != null && !player.isInvincible) // Se o jogador nao estiver invencivel
             {
                 // Aplica dano
                 player.TakeDamage(damage);
@@ -51,10 +52,10 @@ public class EnemyProjectile : MonoBehaviour
                 // Aplica knockback no player
                 if (knockback != null)
                 {
-                    // Calcula direção do knockback 
+                    // Calcula direção do knockback
                     Vector2 direction = (other.transform.position - transform.position).normalized;
 
-                    knockback.ApplyKnockback(direction); 
+                    knockback.ApplyKnockback(direction);
                 }
             }
             ObjectPoolManager.Release(gameObject);

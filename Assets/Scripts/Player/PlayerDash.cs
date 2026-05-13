@@ -33,7 +33,12 @@ public class PlayerDash : MonoBehaviour
         if (dashCooldownTimer > 0)
             dashCooldownTimer -= Time.deltaTime;
 
-        if (canDash && !playerController.isDashing && Input.GetKeyDown(KeyCode.R) && dashCooldownTimer <= 0)
+        if (
+            canDash
+            && !playerController.isDashing
+            && Input.GetKeyDown(KeyCode.R)
+            && dashCooldownTimer <= 0
+        )
             StartDash();
 
         if (playerController.isDashing)

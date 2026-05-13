@@ -1,9 +1,9 @@
-using UnityEngine;
-using TMPro;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
-using Unity.VisualScripting;
 using System;
+using TMPro;
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class ItemSlot : MonoBehaviour, IPointerClickHandler
 {
@@ -16,7 +16,7 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
     public bool isFull;
     public string itemDescription;
     public Sprite emptySprite;
-    
+
     // Item Slot
     [SerializeField]
     public TMP_Text quantityText;
@@ -41,7 +41,8 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
 
     public int AddItem(string itemName, int addQuantity, Sprite itemSprite, string itemDescription)
     {
-        if (addQuantity <= 0) return 0;
+        if (addQuantity <= 0)
+            return 0;
 
         // Se o slot já contém o mesmo item, empilha até MaxStack
         if (isFull && this.itemName == itemName)
@@ -54,11 +55,11 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
             quantityText.gameObject.SetActive(true);
             quantityText.text = this.quantity.ToString();
             itemImage.gameObject.SetActive(true);
-            
+
             // Atualiza a descrição quando empilha
             this.itemDescription = itemDescription;
-            
-            return addQuantity; 
+
+            return addQuantity;
         }
 
         if (!isFull)
@@ -78,7 +79,7 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
             itemImage.sprite = itemSprite;
 
             addQuantity -= toAdd;
-            return addQuantity; 
+            return addQuantity;
         }
 
         return addQuantity;
@@ -86,11 +87,11 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if(eventData.button == PointerEventData.InputButton.Left)
+        if (eventData.button == PointerEventData.InputButton.Left)
         {
             OnLeftClick();
         }
-        if(eventData.button == PointerEventData.InputButton.Right)
+        if (eventData.button == PointerEventData.InputButton.Right)
         {
             OnRightClick();
         }
@@ -105,7 +106,7 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
             {
                 quantity -= 1;
                 quantityText.text = quantity.ToString();
-                if(quantity <= 0)
+                if (quantity <= 0)
                     EmptySlot();
             }
             else
@@ -121,7 +122,7 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
             ItemDescriptionNameText.text = itemName;
             ItemDescriptionText.text = itemDescription;
             itemDescriptionImage.sprite = itemSprite;
-            if(itemDescriptionImage.sprite == null)
+            if (itemDescriptionImage.sprite == null)
             {
                 itemDescriptionImage.sprite = emptySprite;
             }
@@ -142,13 +143,13 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
         ItemDescriptionNameText.text = "";
         ItemDescriptionText.text = "";
         itemDescriptionImage.sprite = emptySprite;
-        
     }
 
     // Remove a given amount from this slot
     public int RemoveQuantity(int amount)
     {
-        if (!isFull || amount <= 0) return amount;
+        if (!isFull || amount <= 0)
+            return amount;
 
         int toRemove = Math.Min(amount, this.quantity);
         this.quantity -= toRemove;
@@ -165,8 +166,5 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
         return amount - toRemove;
     }
 
-    public void OnRightClick()
-    {
-
-    }
+    public void OnRightClick() { }
 }

@@ -1,10 +1,10 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class DoorManager : MonoBehaviour
 {
     public static DoorManager Instance { get; private set; }
-    
+
     private HashSet<string> openedDoors = new HashSet<string>();
 
     private void Awake()
@@ -21,8 +21,9 @@ public class DoorManager : MonoBehaviour
 
     public void MarkDoorAsOpened(string doorID)
     {
-        if (string.IsNullOrEmpty(doorID)) return;
-        
+        if (string.IsNullOrEmpty(doorID))
+            return;
+
         if (!openedDoors.Contains(doorID))
         {
             openedDoors.Add(doorID);
@@ -32,7 +33,8 @@ public class DoorManager : MonoBehaviour
 
     public bool IsDoorOpened(string doorID)
     {
-        if (string.IsNullOrEmpty(doorID)) return false;
+        if (string.IsNullOrEmpty(doorID))
+            return false;
         return openedDoors.Contains(doorID);
     }
 

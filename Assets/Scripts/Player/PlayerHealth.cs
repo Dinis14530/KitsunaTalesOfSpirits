@@ -1,5 +1,5 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -8,14 +8,14 @@ public class PlayerHealth : MonoBehaviour
     public HealthDisplay healthDisplay;
     public bool isInvincible = false;
     private SpriteRenderer spriteRenderer;
-    public Color hitColor = Color.red;       // Cor do flash
-    public float flashDuration = 0.1f;       // Duração de cada flash
+    public Color hitColor = Color.red; // Cor do flash
+    public float flashDuration = 0.1f; // Duração de cada flash
 
     private Vector3 checkpointPosition; // posição do checkpoint
 
     [Header("Áudio")]
-    public AudioSource audioSource;   // Fonte de som de dano
-    public AudioClip damageClip;      // Som de dano
+    public AudioSource audioSource; // Fonte de som de dano
+    public AudioClip damageClip; // Som de dano
 
     void Start()
     {
@@ -42,10 +42,12 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(float amount)
     {
-        if (isInvincible) return;
+        if (isInvincible)
+            return;
 
         currentHealth -= amount;
-        if (currentHealth < 0) currentHealth = 0;
+        if (currentHealth < 0)
+            currentHealth = 0;
 
         healthDisplay.UpdateHealth(currentHealth);
 
@@ -66,7 +68,7 @@ public class PlayerHealth : MonoBehaviour
     {
         Debug.Log($"{gameObject.name} died");
 
-        transform.position = checkpointPosition; 
+        transform.position = checkpointPosition;
         currentHealth = maxHealth;
         healthDisplay.UpdateHealth(currentHealth);
     }

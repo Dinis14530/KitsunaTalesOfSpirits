@@ -1,11 +1,11 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 
 public enum BossState
 {
     Flying,
     Attacking,
-    Grounded
+    Grounded,
 }
 
 public class BossController : MonoBehaviour
@@ -36,7 +36,7 @@ public class BossController : MonoBehaviour
     private bool isActive = false;
 
     [Header("UI")]
-    public GameObject lifeBarUI; 
+    public GameObject lifeBarUI;
 
     void Start()
     {
@@ -49,7 +49,8 @@ public class BossController : MonoBehaviour
 
     void Update()
     {
-        if (!isActive) return;
+        if (!isActive)
+            return;
 
         if (state == BossState.Flying)
         {

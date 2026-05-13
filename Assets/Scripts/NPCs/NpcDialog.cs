@@ -13,7 +13,7 @@ public class NpcDialog : ScriptableObject
         public string[] english;
     }
 
-    public LocalizedLines dialogLines; 
+    public LocalizedLines dialogLines;
 
     public float typingSpeed = 0.05f;
     public AudioClip voiceSound;

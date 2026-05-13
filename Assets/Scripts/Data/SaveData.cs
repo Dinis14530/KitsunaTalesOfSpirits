@@ -1,22 +1,22 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 [System.Serializable]
 public class SaveData
 {
     public Vector3 playerPosition;
     public int playerHealth;
-    public int playerMaxHealth;  
+    public int playerMaxHealth;
     public long lastSavedUtcTicks;
     public string activeCheckpoint;
     public List<InventoryItemData> inventoryItems = new List<InventoryItemData>();
     public int coins;
     public bool hasPurchasedMap;
     public List<string> unlockedAbilities = new List<string>();
-    
+
     // Habilidades específicas do jogador
     public bool canDash = false;
-    
+
     // Baús, Portas e Bosses
     public List<string> openedChests = new List<string>();
     public List<string> openedDoors = new List<string>();

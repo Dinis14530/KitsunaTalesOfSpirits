@@ -4,9 +4,9 @@ using UnityEngine.UI;
 public class BreathUI : MonoBehaviour
 {
     [Header("Referências")]
-    public PlayerSwim playerSwim;   // referência ao PlayerSwim
-    public Image breathImage;       // Image do Canvas para o fôlego
-    public Sprite[] breathSprites;  // sprites da barra de fôlego 
+    public PlayerSwim playerSwim; // referência ao PlayerSwim
+    public Image breathImage; // Image do Canvas para o fôlego
+    public Sprite[] breathSprites; // sprites da barra de fôlego
 
     private int lastSpriteIndex = -1;
 
@@ -28,9 +28,10 @@ public class BreathUI : MonoBehaviour
         }
     }
 
-void UpdateBreathBar()
+    void UpdateBreathBar()
     {
-        if (playerSwim == null || breathSprites.Length == 0) return;
+        if (playerSwim == null || breathSprites.Length == 0)
+            return;
 
         float breathPercent = playerSwim.currentBreathTime / playerSwim.maxBreathTime;
 
@@ -48,5 +49,4 @@ void UpdateBreathBar()
             playerSwim.currentBreathTime = 0f;
         }
     }
-
 }

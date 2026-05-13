@@ -1,5 +1,5 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 
 public class BossHealth : MonoBehaviour
 {
@@ -7,6 +7,7 @@ public class BossHealth : MonoBehaviour
     public int health = 20;
     public Color hitColor = Color.red;
     public float flashDuration = 0.1f;
+
     [HideInInspector]
     public int healthMax;
     public string BossID { get; private set; }
@@ -15,10 +16,12 @@ public class BossHealth : MonoBehaviour
     public class LootDrop
     {
         public ItemSO itemSO;
+
         [Range(0, 100)]
         public int dropChance;
         public int quantity = 1;
     }
+
     public LootDrop[] lootDrops;
 
     private SpriteRenderer spriteRenderer;
@@ -29,7 +32,7 @@ public class BossHealth : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         bossController = GetComponent<BossController>();
         healthMax = health;
-        
+
         // Gera ID único baseado no nome e posição
         BossID = gameObject.name + "_" + transform.position.ToString();
         Debug.Log($"Boss criado com ID: {BossID}");
@@ -76,11 +79,11 @@ public class BossHealth : MonoBehaviour
     void Die()
     {
         Debug.Log(gameObject.name + " died");
-        
+
         // Marca este boss como derrotado
         if (BossManager.Instance != null)
             BossManager.Instance.MarkBossAsDefeated(BossID);
-        
+
         DropLoot();
         Destroy(gameObject);
     }
@@ -92,7 +95,8 @@ public class BossHealth : MonoBehaviour
 
         foreach (LootDrop loot in lootDrops)
         {
-            if (loot.itemSO == null) continue;
+            if (loot.itemSO == null)
+                continue;
 
             int randomChance = Random.Range(0, 101);
             if (randomChance <= loot.dropChance)

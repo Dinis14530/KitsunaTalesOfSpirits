@@ -13,7 +13,7 @@ public class ReturnMenu : MonoBehaviour
             if (playerSave != null)
                 playerSave.SaveGame();
 
-            SceneManager.LoadScene(0); 
+            SceneManager.LoadScene(0);
             Debug.Log(Application.persistentDataPath);
         }
     }

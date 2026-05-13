@@ -1,17 +1,26 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using TMPro;
 
 public class SimpleRebindUI : MonoBehaviour
 {
     [Header("Input")]
-    [SerializeField] private InputActionReference actionReference;
-    [SerializeField] private int bindingIndex; 
+    [SerializeField]
+    private InputActionReference actionReference;
+
+    [SerializeField]
+    private int bindingIndex;
+
     [Header("UI")]
-    [SerializeField] private TMP_Text actionLabel;
-    [SerializeField] private TMP_Text bindingText;
-    [SerializeField] private TMP_Text rebindPrompt;
+    [SerializeField]
+    private TMP_Text actionLabel;
+
+    [SerializeField]
+    private TMP_Text bindingText;
+
+    [SerializeField]
+    private TMP_Text rebindPrompt;
 
     private InputActionRebindingExtensions.RebindingOperation rebindOperation;
 
@@ -49,26 +58,26 @@ public class SimpleRebindUI : MonoBehaviour
         }
 
         rebindOperation = action
-    .PerformInteractiveRebinding(bindingIndex)
-    .OnMatchWaitForAnother(0.1f) 
-    .OnComplete(operation =>
-    {
-        operation.Dispose();
-        rebindOperation = null;
-        action.Enable();
-        if (rebindPrompt != null)
-            rebindPrompt.gameObject.SetActive(false);
-        UpdateUI();
-    })
-    .OnCancel(operation =>
-    {
-        operation.Dispose();
-        rebindOperation = null;
-        action.Enable();
-        if (rebindPrompt != null)
-            rebindPrompt.gameObject.SetActive(false);
-    })
-    .Start();
+            .PerformInteractiveRebinding(bindingIndex)
+            .OnMatchWaitForAnother(0.1f)
+            .OnComplete(operation =>
+            {
+                operation.Dispose();
+                rebindOperation = null;
+                action.Enable();
+                if (rebindPrompt != null)
+                    rebindPrompt.gameObject.SetActive(false);
+                UpdateUI();
+            })
+            .OnCancel(operation =>
+            {
+                operation.Dispose();
+                rebindOperation = null;
+                action.Enable();
+                if (rebindPrompt != null)
+                    rebindPrompt.gameObject.SetActive(false);
+            })
+            .Start();
     }
 
     public void ResetBinding()
@@ -80,6 +89,4 @@ public class SimpleRebindUI : MonoBehaviour
         action.RemoveBindingOverride(bindingIndex);
         UpdateUI();
     }
-
-    
 }

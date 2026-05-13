@@ -28,8 +28,11 @@ public class PlayerSwim : MonoBehaviour
     private Animator animator;
 
     [Header("Input System")]
-    [SerializeField] private InputActionReference swimAction;
-    [SerializeField] private InputActionReference moveAction;
+    [SerializeField]
+    private InputActionReference swimAction;
+
+    [SerializeField]
+    private InputActionReference moveAction;
 
     private void Awake()
     {
@@ -43,7 +46,8 @@ public class PlayerSwim : MonoBehaviour
 
     private void Update()
     {
-        if (!isInWater) return;
+        if (!isInWater)
+            return;
 
         HandleSwimming();
         HandleBreathing();
@@ -51,7 +55,8 @@ public class PlayerSwim : MonoBehaviour
 
     private void HandleSwimming()
     {
-        if (knockback != null && knockback.IsKnockback) return;
+        if (knockback != null && knockback.IsKnockback)
+            return;
 
         float xInput = moveAction.action.ReadValue<float>();
         float yInput = 0f;
@@ -61,10 +66,7 @@ public class PlayerSwim : MonoBehaviour
         else if (swimAction.action.ReadValue<float>() < -0.1f)
             yInput = -1f;
 
-        rb.linearVelocity = new Vector2(
-            xInput * swimSpeed,
-            yInput * verticalSwimSpeed
-        );
+        rb.linearVelocity = new Vector2(xInput * swimSpeed, yInput * verticalSwimSpeed);
 
         isSwimming = Mathf.Abs(xInput) > 0.1f || Mathf.Abs(yInput) > 0.1f;
 
@@ -100,6 +102,7 @@ public class PlayerSwim : MonoBehaviour
             }
         }
     }
+
     private void EnterWater()
     {
         isInWater = true;
@@ -142,6 +145,7 @@ public class PlayerSwim : MonoBehaviour
             }
         }
     }
+
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Water") && !collision.IsTouching(headCollider))
@@ -149,5 +153,4 @@ public class PlayerSwim : MonoBehaviour
             ExitWater();
         }
     }
-
 }

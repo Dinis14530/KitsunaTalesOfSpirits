@@ -8,7 +8,8 @@ public class LampFollower : MonoBehaviour
 
     void LateUpdate()
     {
-        if (enemySwim == null) return;
+        if (enemySwim == null)
+            return;
 
         // Usa o flipX do sprite do EnemySwim para definir a direção
         float direction = enemySwim.GetComponent<SpriteRenderer>().flipX ? -1f : 1f;

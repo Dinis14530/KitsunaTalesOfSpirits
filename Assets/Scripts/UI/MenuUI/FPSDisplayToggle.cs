@@ -7,7 +7,8 @@ public class FPSDisplayToggle : MonoBehaviour
     private const string ShowFpsPrefKey = "ShowFPS";
     private const int DefaultShowFps = 1;
 
-    [SerializeField] private FPSDisplay fpsDisplay;
+    [SerializeField]
+    private FPSDisplay fpsDisplay;
 
     private Toggle toggle;
 

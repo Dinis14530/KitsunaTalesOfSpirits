@@ -4,13 +4,13 @@ using UnityEngine.UI;
 public class BossLifeBar : MonoBehaviour
 {
     [Header("Referências")]
-    public BossHealth bossHealth;   // referência ao BossHealth
-    public Image lifeBarImage;      // Image do Canvas
-    public Sprite[] lifeSprites;    // sprites da barra
-    
+    public BossHealth bossHealth; // referência ao BossHealth
+    public Image lifeBarImage; // Image do Canvas
+    public Sprite[] lifeSprites; // sprites da barra
+
     [Header("Collider do Boss")]
-    public Collider2D bossCollider;  // Collider do boss (deve ser trigger)
-    
+    public Collider2D bossCollider; // Collider do boss (deve ser trigger)
+
     private int lastSpriteIndex = -1;
     private CanvasGroup canvasGroup;
     private bool playerInRange = false;
@@ -27,7 +27,7 @@ public class BossLifeBar : MonoBehaviour
             canvasGroup = lifeBarImage.GetComponentInParent<CanvasGroup>();
             if (canvasGroup == null)
                 canvasGroup = lifeBarImage.gameObject.AddComponent<CanvasGroup>();
-            
+
             // Começa invisível
             canvasGroup.alpha = 0f;
         }
@@ -69,7 +69,8 @@ public class BossLifeBar : MonoBehaviour
 
     void UpdateLifeBar()
     {
-        if (bossHealth == null) return;
+        if (bossHealth == null)
+            return;
 
         // calcula percentual de vida
         float healthPercent = (float)bossHealth.health / bossHealth.healthMax;

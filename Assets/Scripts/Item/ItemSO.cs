@@ -1,5 +1,5 @@
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
 public enum StatToChange
 {
@@ -11,7 +11,7 @@ public enum StatToChange
     dash,
     keydash,
     maxHealth,
-    wallJump
+    wallJump,
 };
 
 [CreateAssetMenu]
@@ -19,9 +19,10 @@ public class ItemSO : ScriptableObject
 {
     public string itemName;
     public StatToChange statToChange = StatToChange.none;
-    public float amountToChangeStat; 
+    public float amountToChangeStat;
     private float velocityDuration = 10f;
     public Sprite sprite;
+
     [TextArea]
     public string itemDescription;
     public bool isCurrency = false;
@@ -61,7 +62,7 @@ public class ItemSO : ScriptableObject
             // Aumenta a vida máxima e também a vida atual
             playerHealth.maxHealth += (int)amountToChangeStat;
             playerHealth.currentHealth += (int)amountToChangeStat;
-            
+
             playerHealth.healthDisplay.UpdateHealth(playerHealth.currentHealth);
             Debug.Log($"Max health increased to {playerHealth.maxHealth}");
             return true; // item usado
@@ -93,7 +94,7 @@ public class ItemSO : ScriptableObject
         {
             return false;
         }
-        
+
         if (statToChange == StatToChange.strength)
         {
             PlayerAttack attack = player.GetComponent<PlayerAttack>();
@@ -120,8 +121,8 @@ public class ItemSO : ScriptableObject
         {
             CoinDisplay coinDisplay = FindFirstObjectByType<CoinDisplay>();
 
-                coinDisplay.AddCoins(coinValue);
-                return true;
+            coinDisplay.AddCoins(coinValue);
+            return true;
         }
 
         return false;

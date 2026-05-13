@@ -11,8 +11,8 @@ public class MusicPuzzleManager : MonoBehaviour
     public UnityEvent onPuzzleFailed;
 
     [Header("Sprite Change Settings")]
-    public SpriteRenderer targetSpriteRenderer; 
-    public Sprite newSprite; 
+    public SpriteRenderer targetSpriteRenderer;
+    public Sprite newSprite;
 
     private bool puzzleCompleted = false; // bloqueia interações após sucesso
 

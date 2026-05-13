@@ -6,18 +6,32 @@ using UnityEngine.UI;
 public class MapSellerNPC : MonoBehaviour, IInterectable
 {
     [Header("Compra de mapa")]
-    [SerializeField] private int mapPrice;
-    [SerializeField] private CoinDisplay coinDisplay;
-    [SerializeField] private GameObject purchaseUI;
-    [SerializeField] private PlayerController player;
+    [SerializeField]
+    private int mapPrice;
+
+    [SerializeField]
+    private CoinDisplay coinDisplay;
+
+    [SerializeField]
+    private GameObject purchaseUI;
+
+    [SerializeField]
+    private PlayerController player;
 
     [Header("Diálogo")]
-    [SerializeField] private TMP_Text dialogueText;
+    [SerializeField]
+    private TMP_Text dialogueText;
+
     [TextArea]
-    [SerializeField] private string purchaseMessage;
+    [SerializeField]
+    private string purchaseMessage;
+
     [TextArea]
-    [SerializeField] private string soldMessage;
-    [SerializeField] private float soldMessageDuration;
+    [SerializeField]
+    private string soldMessage;
+
+    [SerializeField]
+    private float soldMessageDuration;
 
     private bool isUIOpen;
     private Coroutine soldMessageCoroutine;

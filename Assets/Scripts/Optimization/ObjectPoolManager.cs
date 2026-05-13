@@ -19,7 +19,12 @@ public class ObjectPoolManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public static GameObject Spawn(GameObject prefab, Vector3 position, Quaternion rotation, Transform parent = null)
+    public static GameObject Spawn(
+        GameObject prefab,
+        Vector3 position,
+        Quaternion rotation,
+        Transform parent = null
+    )
     {
         if (prefab == null)
             return null;
@@ -37,7 +42,12 @@ public class ObjectPoolManager : MonoBehaviour
         Instance.ReleaseInternal(instance);
     }
 
-    private GameObject SpawnInternal(GameObject prefab, Vector3 position, Quaternion rotation, Transform parent)
+    private GameObject SpawnInternal(
+        GameObject prefab,
+        Vector3 position,
+        Quaternion rotation,
+        Transform parent
+    )
     {
         int poolId = prefab.GetInstanceID();
 

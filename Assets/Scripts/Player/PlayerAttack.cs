@@ -1,5 +1,5 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerAttack : MonoBehaviour
@@ -18,7 +18,8 @@ public class PlayerAttack : MonoBehaviour
     private AudioSource audioSource;
 
     [Header("Input System")]
-    [SerializeField] private InputActionReference attackAction;
+    [SerializeField]
+    private InputActionReference attackAction;
 
     void Start()
     {
@@ -42,14 +43,17 @@ public class PlayerAttack : MonoBehaviour
                 if (attackSound != null)
                     audioSource.PlayOneShot(attackSound);
             }
-
         }
     }
 
-    // Chamado pela animação de ataque 
+    // Chamado pela animação de ataque
     public void Attack()
     {
-        Collider2D[] enemies = Physics2D.OverlapCircleAll(attackPos.position, attackRange, whatIsEnemies);
+        Collider2D[] enemies = Physics2D.OverlapCircleAll(
+            attackPos.position,
+            attackRange,
+            whatIsEnemies
+        );
 
         int currentDamage = Mathf.RoundToInt(baseDamage * damageMultiplier);
 
@@ -83,7 +87,7 @@ public class PlayerAttack : MonoBehaviour
         isAttacking = false;
     }
 
-    // Aplica multiplicador temporário 
+    // Aplica multiplicador temporário
     public void ApplyStrengthMultiplier(float multiplier, float duration)
     {
         if (strengthRoutine != null)
@@ -102,7 +106,8 @@ public class PlayerAttack : MonoBehaviour
 
     void OnDrawGizmosSelected()
     {
-        if (attackPos == null) return;
+        if (attackPos == null)
+            return;
 
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(attackPos.position, attackRange);

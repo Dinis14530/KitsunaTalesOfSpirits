@@ -22,7 +22,8 @@ public class ShopInfo : MonoBehaviour
 
     public void ShowItemInfo(ItemSO itemSO)
     {
-        if (infoPanel == null || itemSO == null) return;
+        if (infoPanel == null || itemSO == null)
+            return;
 
         itemNameText.text = itemSO.itemName;
         itemDescriptionText.text = itemSO.itemDescription;
@@ -34,7 +35,8 @@ public class ShopInfo : MonoBehaviour
 
     public void HideItemInfo()
     {
-        if (infoPanel == null) return;
+        if (infoPanel == null)
+            return;
 
         infoPanel.alpha = 0;
         infoPanel.blocksRaycasts = false;
@@ -46,8 +48,10 @@ public class ShopInfo : MonoBehaviour
 
     public void FollowMouse()
     {
-        if (infoPanelRect == null || infoPanel == null) return;
-        if (infoPanel.alpha <= 0) return; 
+        if (infoPanelRect == null || infoPanel == null)
+            return;
+        if (infoPanel.alpha <= 0)
+            return;
 
         Vector3 mousePosition = Input.mousePosition;
         Vector3 offset = new Vector3(10, -10, 0);

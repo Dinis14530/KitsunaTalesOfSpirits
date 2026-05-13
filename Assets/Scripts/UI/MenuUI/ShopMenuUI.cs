@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class ShopMenu : MonoBehaviour
 {
-    [SerializeField] private GameObject menuCanvas; // arrasta o MenuCanvas aqui no Inspector
+    [SerializeField]
+    private GameObject menuCanvas; // arrasta o MenuCanvas aqui no Inspector
 
     void Awake()
     {

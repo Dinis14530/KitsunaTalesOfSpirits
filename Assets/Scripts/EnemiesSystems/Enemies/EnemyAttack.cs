@@ -15,7 +15,7 @@ public class EnemyAttack : MonoBehaviour
             PlayerHealth player = collision.gameObject.GetComponent<PlayerHealth>(); // Vida do jopgador
             PlayerKnockBack knockback = collision.gameObject.GetComponent<PlayerKnockBack>(); // Knockback
 
-            if (player != null && !player.isInvincible) // Se o jogador nao estiver invencivel 
+            if (player != null && !player.isInvincible) // Se o jogador nao estiver invencivel
             {
                 // Aplica dano
                 player.TakeDamage(damage);
@@ -23,10 +23,12 @@ public class EnemyAttack : MonoBehaviour
                 // Aplica knockback no player
                 if (knockback != null)
                 {
-                    // Calcula direção do knockback 
-                    Vector2 direction = (collision.transform.position - transform.position).normalized;
+                    // Calcula direção do knockback
+                    Vector2 direction = (
+                        collision.transform.position - transform.position
+                    ).normalized;
 
-                    knockback.ApplyKnockback(direction); 
+                    knockback.ApplyKnockback(direction);
                 }
 
                 lastAttackTime = Time.time; // Atualiza o tempo do último ataque

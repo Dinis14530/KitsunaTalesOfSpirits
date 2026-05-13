@@ -8,7 +8,8 @@ public class NPC : MonoBehaviour, IInterectable
     [Header("Diálogo")]
     public NpcDialog dialogueData;
     public GameObject dialoguePanel;
-    public TMP_Text dialogueText, nameText;
+    public TMP_Text dialogueText,
+        nameText;
     public Image portraitImage;
     public PlayerController player;
 
@@ -17,7 +18,8 @@ public class NPC : MonoBehaviour, IInterectable
     public AudioClip dialogueClip;
 
     private int dialogueIndex;
-    private bool isTyping, isDialogueActive;
+    private bool isTyping,
+        isDialogueActive;
 
     string[] GetCurrentLanguageLines()
     {
@@ -54,7 +56,7 @@ public class NPC : MonoBehaviour, IInterectable
 
         player.isInDialogue = true;
         player.canMove = false;
-        player.ForceIdle(); 
+        player.ForceIdle();
 
         nameText.SetText(dialogueData.npcName);
         portraitImage.sprite = dialogueData.npcPortrait;
@@ -72,7 +74,7 @@ public class NPC : MonoBehaviour, IInterectable
         if (isTyping)
         {
             StopAllCoroutines();
-            dialogueText.SetText(lines[dialogueIndex]); 
+            dialogueText.SetText(lines[dialogueIndex]);
             isTyping = false;
         }
         else
@@ -97,7 +99,7 @@ public class NPC : MonoBehaviour, IInterectable
         dialogueText.text = "";
 
         string[] lines = GetCurrentLanguageLines();
-        string currentLine = lines[dialogueIndex]; 
+        string currentLine = lines[dialogueIndex];
 
         foreach (char letter in currentLine)
         {
@@ -107,8 +109,10 @@ public class NPC : MonoBehaviour, IInterectable
 
         isTyping = false;
 
-        if (dialogueData.autoProgressLines.Length > dialogueIndex &&
-            dialogueData.autoProgressLines[dialogueIndex])
+        if (
+            dialogueData.autoProgressLines.Length > dialogueIndex
+            && dialogueData.autoProgressLines[dialogueIndex]
+        )
         {
             yield return new WaitForSeconds(dialogueData.autoProgressDelay);
             NextLine();

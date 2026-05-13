@@ -3,12 +3,16 @@ using UnityEngine;
 
 public class MapManager : MonoBehaviour
 {
-
     public static MapManager Instance { get; private set; }
 
-    [SerializeField] private GameObject miniMap;
-    [SerializeField] private GameObject largeMap;
-    [SerializeField] private bool mapPurchased;
+    [SerializeField]
+    private GameObject miniMap;
+
+    [SerializeField]
+    private GameObject largeMap;
+
+    [SerializeField]
+    private bool mapPurchased;
 
     public bool isLargeMapOpen;
 
@@ -47,6 +51,7 @@ public class MapManager : MonoBehaviour
         isLargeMapOpen = true;
         Time.timeScale = 0;
     }
+
     private void closeLargeMap()
     {
         miniMap.SetActive(mapPurchased);

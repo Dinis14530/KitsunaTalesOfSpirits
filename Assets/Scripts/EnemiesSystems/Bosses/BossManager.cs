@@ -1,10 +1,10 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class BossManager : MonoBehaviour
 {
     public static BossManager Instance { get; private set; }
-    
+
     private HashSet<string> defeatedBosses = new HashSet<string>();
 
     private void Awake()
@@ -21,8 +21,9 @@ public class BossManager : MonoBehaviour
 
     public void MarkBossAsDefeated(string bossID)
     {
-        if (string.IsNullOrEmpty(bossID)) return;
-        
+        if (string.IsNullOrEmpty(bossID))
+            return;
+
         if (!defeatedBosses.Contains(bossID))
         {
             defeatedBosses.Add(bossID);
@@ -32,7 +33,8 @@ public class BossManager : MonoBehaviour
 
     public bool IsBossDefeated(string bossID)
     {
-        if (string.IsNullOrEmpty(bossID)) return false;
+        if (string.IsNullOrEmpty(bossID))
+            return false;
         return defeatedBosses.Contains(bossID);
     }
 

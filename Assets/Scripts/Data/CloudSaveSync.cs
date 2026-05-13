@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using UnityEngine;
 using Unity.Services.Authentication;
 using Unity.Services.CloudSave;
 using Unity.Services.Core;
+using UnityEngine;
 
 public static class CloudSaveSync
 {
@@ -38,10 +38,7 @@ public static class CloudSaveSync
             string json = JsonUtility.ToJson(data, true);
 
             await CloudSaveService.Instance.Data.Player.SaveAsync(
-                new Dictionary<string, object>
-                {
-                    { SaveKey, json }
-                }
+                new Dictionary<string, object> { { SaveKey, json } }
             );
         }
         catch (Exception exception)

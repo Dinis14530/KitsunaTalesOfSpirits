@@ -1,12 +1,12 @@
 using UnityEngine;
 
-// Knockback Player 
+// Knockback Player
 public class PlayerKnockBack : MonoBehaviour
 {
-    public float KBforceX = 10f;       // Força horizontal do knockback
-    public float KBforceY = 5f;        // Força vertical (salto)
-    public float KBTotalTime = 0.2f;   // Duração do knockback
-    private float KBCounter;           // Contador interno
+    public float KBforceX = 10f; // Força horizontal do knockback
+    public float KBforceY = 5f; // Força vertical (salto)
+    public float KBTotalTime = 0.2f; // Duração do knockback
+    private float KBCounter; // Contador interno
     private Rigidbody2D rb;
     private PlayerController movement; // Para desativar o movimento durante knockback
 

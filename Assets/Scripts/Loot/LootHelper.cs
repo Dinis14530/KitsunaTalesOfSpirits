@@ -8,7 +8,7 @@ public static class LootHelper
         lootObject.transform.position = position;
         lootObject.layer = LayerMask.NameToLayer("Items");
 
-        // Map Icon Child  
+        // Map Icon Child
         // GameObject mapIconChild = new("MapIcon");
         // mapIconChild.transform.SetParent(lootObject.transform);
         // mapIconChild.transform.localPosition = Vector3.zero;
@@ -21,7 +21,7 @@ public static class LootHelper
         // mapRenderer.sortingOrder = -1;
         // mapIconChild.transform.localScale = new Vector3(0.5f, 0.5f, 1f);
 
-        // Sprite do Item 
+        // Sprite do Item
         GameObject spriteChild = new("ItemSprite");
         spriteChild.transform.SetParent(lootObject.transform);
         spriteChild.transform.localPosition = Vector3.zero;
@@ -44,7 +44,7 @@ public static class LootHelper
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         rb.bodyType = RigidbodyType2D.Dynamic;
 
-        // Script do item 
+        // Script do item
         Item itemComponent = lootObject.AddComponent<Item>();
         itemComponent.SetItemData(itemSO, quantity);
 

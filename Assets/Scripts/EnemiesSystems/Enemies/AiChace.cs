@@ -4,8 +4,8 @@ using UnityEngine;
 public class AiChace : MonoBehaviour
 {
     public GameObject player; // Player
-    public float speed = 3f;  // Velocidade do inimigo
-    public float distance;    // Distância até o player
+    public float speed = 3f; // Velocidade do inimigo
+    public float distance; // Distância até o player
 
     private EnemyKnockBack knockBack;
     private SpriteRenderer spriteRenderer;
@@ -18,7 +18,8 @@ public class AiChace : MonoBehaviour
 
     void Update()
     {
-        if (player == null) return;
+        if (player == null)
+            return;
 
         distance = Vector2.Distance(transform.position, player.transform.position);
 
@@ -38,10 +39,7 @@ public class AiChace : MonoBehaviour
         // Move apenas no eixo X
         if (distance < 20 && (knockBack == null || !knockBack.isKnockback))
         {
-            Vector2 targetPosition = new Vector2(
-                player.transform.position.x,
-                transform.position.y
-            );
+            Vector2 targetPosition = new Vector2(player.transform.position.x, transform.position.y);
 
             transform.position = Vector2.MoveTowards(
                 transform.position,

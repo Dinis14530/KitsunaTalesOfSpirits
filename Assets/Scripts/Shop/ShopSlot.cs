@@ -3,15 +3,24 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using Image = UnityEngine.UI.Image;
 
-public class ShopSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerMoveHandler
+public class ShopSlot
+    : MonoBehaviour,
+        IPointerEnterHandler,
+        IPointerExitHandler,
+        IPointerMoveHandler
 {
     public ItemSO itemSO;
     public TMP_Text itemNameText;
     public TMP_Text priceText;
     public Image itemImage;
-    [SerializeField] private ShopManager shopManager;
-    [SerializeField] private ShopInfo shopInfo;
+
+    [SerializeField]
+    private ShopManager shopManager;
+
+    [SerializeField]
+    private ShopInfo shopInfo;
     private int price;
+
     public void Initialize(ItemSO newItemSO, int price)
     {
         itemSO = newItemSO;

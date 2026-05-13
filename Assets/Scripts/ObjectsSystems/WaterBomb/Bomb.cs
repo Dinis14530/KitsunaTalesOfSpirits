@@ -1,5 +1,5 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 
 public class Bomb : MonoBehaviour
 {
@@ -8,14 +8,18 @@ public class Bomb : MonoBehaviour
     private bool hasExploded = false; // Flag para evitar múltiplas explosões
 
     [Header("Áudio")]
-    public AudioSource audioSource;  // Fonte de som da explosão
-    public AudioClip explodeClip;    // Som da explosão
+    public AudioSource audioSource; // Fonte de som da explosão
+    public AudioClip explodeClip; // Som da explosão
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if ((collision.gameObject.CompareTag("Player") || 
-             collision.gameObject.CompareTag("Enemy") || 
-             collision.gameObject.CompareTag("Item")) && !hasExploded)
+        if (
+            (
+                collision.gameObject.CompareTag("Player")
+                || collision.gameObject.CompareTag("Enemy")
+                || collision.gameObject.CompareTag("Item")
+            ) && !hasExploded
+        )
         {
             hasExploded = true;
 
@@ -31,8 +35,10 @@ public class Bomb : MonoBehaviour
 
                     if (knockback != null)
                     {
-                        Vector2 direction = (collision.transform.position - transform.position).normalized;
-                        knockback.ApplyKnockback(direction); 
+                        Vector2 direction = (
+                            collision.transform.position - transform.position
+                        ).normalized;
+                        knockback.ApplyKnockback(direction);
                     }
                 }
             }
@@ -48,8 +54,10 @@ public class Bomb : MonoBehaviour
 
                     if (knockback != null)
                     {
-                        Vector2 direction = (collision.transform.position - transform.position).normalized;
-                        knockback.ApplyKnockback(direction); 
+                        Vector2 direction = (
+                            collision.transform.position - transform.position
+                        ).normalized;
+                        knockback.ApplyKnockback(direction);
                     }
                 }
             }
@@ -60,7 +68,7 @@ public class Bomb : MonoBehaviour
             // Toca o som de explosão
             PlayExplosionSound();
 
-            // Destroi o objeto após 1 segundo 
+            // Destroi o objeto após 1 segundo
             Destroy(gameObject, 1f);
         }
     }

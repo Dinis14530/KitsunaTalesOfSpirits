@@ -8,14 +8,19 @@ public class FPSDisplay : MonoBehaviour
     public static FPSDisplay Instance { get; private set; }
 
     [Header("UI")]
-    [SerializeField] private Canvas fpsCanvas;
-    [SerializeField] private TMP_Text fpsText;
+    [SerializeField]
+    private Canvas fpsCanvas;
+
+    [SerializeField]
+    private TMP_Text fpsText;
 
     [Header("Atualização")]
-    [SerializeField] private float updateInterval = 0.25f;
+    [SerializeField]
+    private float updateInterval = 0.25f;
 
     [Header("Estado")]
-    [SerializeField] private bool showByDefault = true;
+    [SerializeField]
+    private bool showByDefault = true;
 
     private float unscaledTimeAccumulator;
     private int frameCounter;

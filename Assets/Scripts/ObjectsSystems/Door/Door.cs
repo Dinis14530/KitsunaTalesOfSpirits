@@ -1,6 +1,6 @@
 using System.Collections;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
 public class Door : MonoBehaviour, IInterectable
 {
@@ -63,7 +63,8 @@ public class Door : MonoBehaviour, IInterectable
 
     public void Interact()
     {
-        if (isOpen) return;
+        if (isOpen)
+            return;
 
         if (inventory != null && inventory.HasItem(requiredItem))
         {

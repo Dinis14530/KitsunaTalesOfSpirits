@@ -7,7 +7,8 @@ public class EnemyKnockBack : MonoBehaviour
     public float KBforceY = 3f;
     public float KBTime = 0.15f;
 
-    [HideInInspector] public bool isKnockback = false;
+    [HideInInspector]
+    public bool isKnockback = false;
 
     private float counter;
     private Vector2 knockbackVelocity;
@@ -20,16 +21,15 @@ public class EnemyKnockBack : MonoBehaviour
 
     void Update()
     {
-        if (!isKnockback) return;
+        if (!isKnockback)
+            return;
 
         counter -= Time.deltaTime;
 
         if (rb.bodyType == RigidbodyType2D.Kinematic)
         {
             // knockback manual
-            rb.MovePosition(
-                rb.position + knockbackVelocity * Time.deltaTime
-            );
+            rb.MovePosition(rb.position + knockbackVelocity * Time.deltaTime);
         }
 
         if (counter <= 0)
@@ -51,20 +51,14 @@ public class EnemyKnockBack : MonoBehaviour
             // knockback físico
             rb.linearVelocity = Vector2.zero;
 
-            Vector2 force = new Vector2(
-                direction.x * KBforceX,
-                KBforceY
-            );
+            Vector2 force = new Vector2(direction.x * KBforceX, KBforceY);
 
             rb.AddForce(force, ForceMode2D.Impulse);
         }
         else
         {
             // knockback manual (kinematic)
-            knockbackVelocity = new Vector2(
-                direction.x * KBforceX,
-                KBforceY
-            );
+            knockbackVelocity = new Vector2(direction.x * KBforceX, KBforceY);
         }
     }
 }

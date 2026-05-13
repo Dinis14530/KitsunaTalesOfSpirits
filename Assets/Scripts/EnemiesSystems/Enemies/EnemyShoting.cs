@@ -3,10 +3,10 @@ using UnityEngine;
 
 public class EnemyShoting : MonoBehaviour
 {
-   public GameObject projectilePrefab;
-   public Transform bulletPosition;
-   private float timer;
-   private GameObject player;
+    public GameObject projectilePrefab;
+    public Transform bulletPosition;
+    private float timer;
+    private GameObject player;
 
     void Start()
     {

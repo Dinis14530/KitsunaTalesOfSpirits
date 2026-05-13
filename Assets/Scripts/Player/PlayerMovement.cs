@@ -1,31 +1,30 @@
-using UnityEngine; 
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(AudioSource))]
-
 public class PlayerController : MonoBehaviour
 {
     // CONFIGURAÇÃO DE MOVIMENTO
     [Header("Movimento")]
-    public float speed = 3f; // Velocidade de movimento 
+    public float speed = 3f; // Velocidade de movimento
     public float jumpForce = 7f; // Força vertical aplicada ao saltar
 
     // COMPONENTES
-    private Rigidbody2D rb; // Rigidbody2D 
-    private Animator animator; // Animator 
-    private SpriteRenderer spriteRenderer; // SpriteRenderer 
+    private Rigidbody2D rb; // Rigidbody2D
+    private Animator animator; // Animator
+    private SpriteRenderer spriteRenderer; // SpriteRenderer
 
     // STATUS DO JOGADOR
     public bool isGrounded; // True se o jogador estiver tocando o chão
     public bool isInDialogue = false; // True se o jogador estiver interagindo com NPC
     private bool isCrouching; // True se o jogador estiver agachado
-    public Vector2 lastMoveDirection; // Ultima direção horizontal 
+    public Vector2 lastMoveDirection; // Ultima direção horizontal
     public bool isDashing; // True se o jogador estiver em dash
     public bool canMove = true; // True se o jogador pode se mover
-    private bool isSleeping = true; // True se o jogador está dormindo 
+    private bool isSleeping = true; // True se o jogador está dormindo
 
     // ESTA NO CHAO?
     [Header("Ground Check")]
@@ -42,10 +41,10 @@ public class PlayerController : MonoBehaviour
     // ÁUDIO - FOOTSTEPS
     [Header("Áudio - Footsteps")]
     public AudioSource footstepSource; // Fonte de som para passos
-    public AudioClip[] footstepClips;  // Array de sons de passos
-    public float minStepInterval = 0.3f;  // Intervalo mínimo entre passos
-    
-    // public float maxStepInterval = 0.5f;  
+    public AudioClip[] footstepClips; // Array de sons de passos
+    public float minStepInterval = 0.3f; // Intervalo mínimo entre passos
+
+    // public float maxStepInterval = 0.5f;
 
     // ÁUDIO - SALTO
     [Header("Áudio - Jump")]
@@ -54,41 +53,46 @@ public class PlayerController : MonoBehaviour
 
     // VARIÁVEIS
     private float coyoteTimer = 0f; // Contador coyote time
-    private float jumpBufferTimer = 0f;  // Contador jump buffer
-    private float baseSpeed;  // Velocidade base original
-    private float stepTimer;  // Contador intervalo entre passos
+    private float jumpBufferTimer = 0f; // Contador jump buffer
+    private float baseSpeed; // Velocidade base original
+    private float stepTimer; // Contador intervalo entre passos
     private System.Collections.IEnumerator speedRoutineCoroutine; // Coroutine buff velocidade
 
     [Header("Input System")]
-    [SerializeField] private InputActionReference moveAction;
-    [SerializeField] private InputActionReference jumpAction;
-    [SerializeField] private InputActionReference crouchAction;
+    [SerializeField]
+    private InputActionReference moveAction;
 
-    // AWAKE 
+    [SerializeField]
+    private InputActionReference jumpAction;
+
+    [SerializeField]
+    private InputActionReference crouchAction;
+
+    // AWAKE
     private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>(); // Rigidbody2D 
-        animator = GetComponent<Animator>();  // Animator
+        rb = GetComponent<Rigidbody2D>(); // Rigidbody2D
+        animator = GetComponent<Animator>(); // Animator
         spriteRenderer = GetComponent<SpriteRenderer>(); // SpriteRendere GameObject
 
         animator.applyRootMotion = false; // Root motion false
 
         // Configura Footsteps
-        footstepSource = GetComponent<AudioSource>(); // Pega AudioSource 
+        footstepSource = GetComponent<AudioSource>(); // Pega AudioSource
         footstepSource.playOnAwake = false; // Não tocar automaticamente
-        footstepSource.loop = false;  // Não repetir automaticamente
-        footstepSource.spatialBlend = 0f; // Som 
+        footstepSource.loop = false; // Não repetir automaticamente
+        footstepSource.spatialBlend = 0f; // Som
 
         // Configura Jump
-        jumpSource = gameObject.AddComponent<AudioSource>(); // Cria AudioSource 
+        jumpSource = gameObject.AddComponent<AudioSource>(); // Cria AudioSource
         jumpSource.playOnAwake = false; // Não tocar automaticamente
         jumpSource.loop = false; // Não repetir
-        jumpSource.spatialBlend = 0f; // Som 
+        jumpSource.spatialBlend = 0f; // Som
 
         baseSpeed = speed; // Guarda velocidade original
     }
 
-    // START 
+    // START
     private void Start()
     {
         if (animator != null)
@@ -96,7 +100,7 @@ public class PlayerController : MonoBehaviour
         canMove = false; // Inicialmente, jogador não pode se mover
     }
 
-    // FIXEDUPDATE 
+    // FIXEDUPDATE
     private void FixedUpdate()
     {
         // Checa se jogador está no chão usando OverlapCircle
@@ -140,15 +144,18 @@ public class PlayerController : MonoBehaviour
         // Despertar jogador dormindo
         if (isSleeping)
         {
-        if (moveAction.action.ReadValue<Vector2>() != Vector2.zero ||
-            jumpAction.action.WasPressedThisFrame())
+            if (
+                moveAction.action.ReadValue<Vector2>() != Vector2.zero
+                || jumpAction.action.WasPressedThisFrame()
+            )
             {
                 isSleeping = false; // Sai do estado de dormir
                 if (animator != null)
                     animator.SetBool("IsSleeping", false); // Atualiza Animator
                 canMove = true; // Permite movimentar
             }
-            else return; // Se nenhuma tecla, sai do Update
+            else
+                return; // Se nenhuma tecla, sai do Update
         }
 
         // Movimento e salto
@@ -175,14 +182,17 @@ public class PlayerController : MonoBehaviour
         rb.linearVelocity = new Vector2(xInput * finalSpeed, rb.linearVelocity.y); // Aplica velocidade
 
         // Flip do sprite
-        if (xInput > 0) spriteRenderer.flipX = false; // Direita
-        else if (xInput < 0) spriteRenderer.flipX = true; // Esquerda
+        if (xInput > 0)
+            spriteRenderer.flipX = false; // Direita
+        else if (xInput < 0)
+            spriteRenderer.flipX = true; // Esquerda
     }
 
     // HANDLEJUMP -> SALTO
     private void HandleJump()
     {
-        if (isCrouching) return; // Não salta agachado
+        if (isCrouching)
+            return; // Não salta agachado
 
         // Se dentro do jump buffer e coyote time
         if (jumpBufferTimer > 0f && coyoteTimer > 0f)
@@ -197,14 +207,18 @@ public class PlayerController : MonoBehaviour
         // Short hop -> soltar tecla W reduz altura
         if (jumpAction.action.WasReleasedThisFrame() && rb.linearVelocity.y > 0f)
         {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * shortHopMultiplier);
+            rb.linearVelocity = new Vector2(
+                rb.linearVelocity.x,
+                rb.linearVelocity.y * shortHopMultiplier
+            );
         }
     }
 
     // PlayRandomJumpSound -> som de salto aleatório
     private void PlayRandomJumpSound()
     {
-        if (jumpClips == null || jumpClips.Length == 0 || jumpSource == null) return; // Não faz nada se não tiver sons
+        if (jumpClips == null || jumpClips.Length == 0 || jumpSource == null)
+            return; // Não faz nada se não tiver sons
 
         int index = Random.Range(0, jumpClips.Length); // Escolhe índice aleatório
         jumpSource.pitch = Random.Range(0.95f, 1.05f); // Pitch aleatório
@@ -214,7 +228,8 @@ public class PlayerController : MonoBehaviour
     // HANDLEANIMATIONS -> animações
     private void HandleAnimations()
     {
-        if (isSleeping) return; // Não muda animações se dormindo
+        if (isSleeping)
+            return; // Não muda animações se dormindo
 
         float xVel = Mathf.Abs(rb.linearVelocity.x); // Velocidade horizontal absoluta
         bool isRunning = xVel > 0.1f; // Considera correndo se >0.1
@@ -248,16 +263,20 @@ public class PlayerController : MonoBehaviour
     private void HandleFootsteps()
     {
         bool shouldPlayFootsteps =
-            Mathf.Abs(rb.linearVelocity.x) > 0.1f && // Se se move horizontalmente
-            isGrounded && // No chão
-            !isSleeping && // Não dormindo
-            canMove && // Pode se mover
+            Mathf.Abs(rb.linearVelocity.x) > 0.1f
+            && // Se se move horizontalmente
+            isGrounded
+            && // No chão
+            !isSleeping
+            && // Não dormindo
+            canMove
+            && // Pode se mover
             !isInDialogue; // Não em diálogo
 
         if (!shouldPlayFootsteps)
         {
             stepTimer = 0f; // Zera timer
-            return;         
+            return;
         }
 
         stepTimer -= Time.deltaTime; // Diminui contador
@@ -272,7 +291,8 @@ public class PlayerController : MonoBehaviour
     // PlayRandomFootstep -> passos aleatórios
     private void PlayRandomFootstep()
     {
-        if (footstepClips == null || footstepClips.Length == 0) return; // Não faz nada se não tiver sons
+        if (footstepClips == null || footstepClips.Length == 0)
+            return; // Não faz nada se não tiver sons
 
         int index = Random.Range(0, footstepClips.Length); // Escolhe aleatório
         footstepSource.pitch = Random.Range(0.95f, 1.05f); // Pitch aleatório
@@ -301,7 +321,8 @@ public class PlayerController : MonoBehaviour
 
     public void ForceIdle()
     {
-        if (animator == null) return;
+        if (animator == null)
+            return;
 
         rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
 
@@ -318,6 +339,7 @@ public class PlayerController : MonoBehaviour
         speed = baseSpeed; // Reseta velocidade
         speedRoutineCoroutine = null; // Limpa referência
     }
+
     private void OnEnable()
     {
         moveAction.action.Enable();
