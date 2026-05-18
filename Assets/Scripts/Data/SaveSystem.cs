@@ -61,7 +61,7 @@ public static class SaveSystem
     {
         using var aes = Aes.Create();
         aes.Key = Encoding.UTF8.GetBytes(EncryptionKey);
-        aes.IV = new byte[16]; // IV fixo
+        aes.IV = new byte[16]; 
 
         byte[] plainBytes = Encoding.UTF8.GetBytes(plainText);
 
@@ -71,7 +71,6 @@ public static class SaveSystem
             cs.Write(plainBytes, 0, plainBytes.Length);
             cs.FlushFinalBlock();
         }
-
         return ms.ToArray();
     }
 
