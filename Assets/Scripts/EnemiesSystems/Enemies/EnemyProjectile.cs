@@ -9,8 +9,8 @@ public class EnemyProjectile : MonoBehaviour
     public float force;
     public float bulletTimeInScreen;
     private float timer;
-    public int damage = 1; // Dano
-    public int health = 1;
+    public int damage; 
+    public int health;
 
     private void OnEnable()
     {
