@@ -18,10 +18,12 @@ public class EnemyProjectile : MonoBehaviour
         if (player == null)
             player = GameObject.FindGameObjectWithTag("Player");
 
+        // Reinicia o tempo sempre que o projecil volta da pool
         timer = 0f;
 
         if (player != null && rb != null)
         {
+            // Aponta o projecil para a posicao actual do player
             Vector3 direction = player.transform.position - transform.position;
             rb.linearVelocity = new Vector2(direction.x, direction.y).normalized * force;
         }
@@ -44,6 +46,7 @@ public class EnemyProjectile : MonoBehaviour
             PlayerHealth player = other.gameObject.GetComponent<PlayerHealth>(); // Vida do jopgador
             PlayerKnockBack knockback = other.gameObject.GetComponent<PlayerKnockBack>(); // Knockback
 
+            // Aplica dano e empurra o player apenas quando ele ainda nao esta invencivel
             if (player != null && !player.isInvincible) // Se o jogador nao estiver invencivel
             {
                 // Aplica dano
@@ -58,6 +61,7 @@ public class EnemyProjectile : MonoBehaviour
                     knockback.ApplyKnockback(direction);
                 }
             }
+            // O projecil sai de cena assim que acerta ou testa colisao com o player
             ObjectPoolManager.Release(gameObject);
         }
     }

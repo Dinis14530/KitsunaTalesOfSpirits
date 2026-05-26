@@ -49,14 +49,17 @@ public class ObjectPoolManager : MonoBehaviour
         Transform parent
     )
     {
+        // Usa o ID do prefab como chave para manter uma pool por tipo de objecto
         int poolId = prefab.GetInstanceID();
 
         if (!pools.TryGetValue(poolId, out Queue<GameObject> pool))
         {
+            // Cria a fila se ainda nao existir para este prefab
             pool = new Queue<GameObject>();
             pools[poolId] = pool;
         }
 
+        // Reaproveita uma instancia activa ou cria uma nova se a pool estiver vazia
         GameObject instance = pool.Count > 0 ? pool.Dequeue() : CreateInstance(prefab, poolId);
         PooledObject pooledObject = instance.GetComponent<PooledObject>();
         if (pooledObject != null)
@@ -75,15 +78,18 @@ public class ObjectPoolManager : MonoBehaviour
 
         if (pooledObject == null)
         {
+            // Objectos fora da pool continuam a ser destruídos normalmente
             Destroy(instance);
             return;
         }
 
+        // Evita devolver a mesma instancia duas vezes
         if (!pooledObject.TryMarkAsReleased())
             return;
 
         if (!pools.TryGetValue(pooledObject.PoolId, out Queue<GameObject> pool))
         {
+            // Garante que a pool existe mesmo quando a instancia chega fora de ordem
             pool = new Queue<GameObject>();
             pools[pooledObject.PoolId] = pool;
         }
@@ -94,6 +100,7 @@ public class ObjectPoolManager : MonoBehaviour
 
     private GameObject CreateInstance(GameObject prefab, int poolId)
     {
+        // A instancia nasce ligada ao pool para permitir devolucao segura depois
         GameObject instance = Instantiate(prefab);
         PooledObject pooledObject = instance.GetComponent<PooledObject>();
 

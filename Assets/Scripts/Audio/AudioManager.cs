@@ -9,6 +9,7 @@ public class AudioManager : MonoBehaviour
 
     private void Awake()
     {
+        // Mantem apenas uma instancia global para controlo de musica entre cenas
         if (Instance == null)
         {
             Instance = this;
@@ -22,6 +23,7 @@ public class AudioManager : MonoBehaviour
 
     public void PlayMusic(AudioClip clip)
     {
+        // Reinicia o fade anterior para evitar sobreposicao de musicas
         StopAllCoroutines();
         StartCoroutine(FadeMusic(clip));
     }

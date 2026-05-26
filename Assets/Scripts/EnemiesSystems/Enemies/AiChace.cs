@@ -21,8 +21,10 @@ public class AiChace : MonoBehaviour
         if (player == null)
             return;
 
+        // Mantem a distancia atualizada para decidir quando perseguir
         distance = Vector2.Distance(transform.position, player.transform.position);
 
+        // Usa a posicao do player para virar o inimigo na direcao correta
         bool playerIsLeft = player.transform.position.x < transform.position.x;
 
         if (spriteRenderer != null)
@@ -36,7 +38,7 @@ public class AiChace : MonoBehaviour
             transform.localScale = scale;
         }
 
-        // Move apenas no eixo X
+        // Persegue apenas no eixo X e bloqueia movimento durante o knockback
         if (distance < 20 && (knockBack == null || !knockBack.isKnockback))
         {
             Vector2 targetPosition = new Vector2(player.transform.position.x, transform.position.y);

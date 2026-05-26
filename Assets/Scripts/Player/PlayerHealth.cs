@@ -20,6 +20,7 @@ public class PlayerHealth : MonoBehaviour
     void Start()
     {
         currentHealth = maxHealth;
+        // O checkpoint inicial e a posicao actual do player no arranque
         checkpointPosition = transform.position; // checkpoint inicial
         healthDisplay.UpdateHealth(currentHealth);
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -42,6 +43,7 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(float amount)
     {
+        // Bloqueia dano enquanto durar a invencibilidade
         if (isInvincible)
             return;
 
@@ -60,6 +62,7 @@ public class PlayerHealth : MonoBehaviour
         }
         if (spriteRenderer != null)
         {
+            // Flash visual apenas quando existe sprite para animar
             StartCoroutine(FlashCoroutine());
         }
     }
@@ -68,6 +71,7 @@ public class PlayerHealth : MonoBehaviour
     {
         Debug.Log($"{gameObject.name} died");
 
+        // Volta ao ultimo checkpoint em vez de destruir o player
         transform.position = checkpointPosition;
         currentHealth = maxHealth;
         healthDisplay.UpdateHealth(currentHealth);
@@ -89,6 +93,7 @@ public class PlayerHealth : MonoBehaviour
     {
         if (audioSource != null && damageClip != null)
         {
+            // Pequena variação de pitch para evitar repeticao identica do som
             audioSource.pitch = Random.Range(0.95f, 1.05f); // pitch aleatório
             audioSource.PlayOneShot(damageClip);
         }

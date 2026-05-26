@@ -51,6 +51,7 @@ public class CameraFollow : MonoBehaviour
     {
         if (target == null) return;
 
+        // Usa a velocidade actual do alvo para antecipar o movimento da camera
         float velX = targetRb != null ? targetRb.linearVelocity.x : 0f;
         float velY = targetRb != null ? targetRb.linearVelocity.y : 0f;
 
@@ -64,6 +65,7 @@ public class CameraFollow : MonoBehaviour
 
         // --- VERTICAL OFFSET ---
         float extraVertical = 0f;
+        // Compensa salto ou queda para manter o player melhor enquadrado
         if (velY > 0.05f) extraVertical = jumpOffset;
         else if (velY < -0.05f) extraVertical = fallOffset;
 
@@ -79,6 +81,7 @@ public class CameraFollow : MonoBehaviour
         {
             Bounds b = cameraBounds.bounds;
 
+            // Limita a camera para nao mostrar fora da area jogavel
             float minX = b.min.x + camHalfWidth;
             float maxX = b.max.x - camHalfWidth;
             float minY = b.min.y + camHalfHeight;

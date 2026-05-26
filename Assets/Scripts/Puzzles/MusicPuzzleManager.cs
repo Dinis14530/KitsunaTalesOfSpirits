@@ -22,8 +22,10 @@ public class MusicPuzzleManager : MonoBehaviour
         if (puzzleCompleted)
             return;
 
+        // Regista a nota actual para validar a sequencia parcial
         playerSequence.Add(noteID);
 
+        // Falha assim que uma nota foge da sequencia esperada
         for (int i = 0; i < playerSequence.Count; i++)
         {
             if (playerSequence[i] != correctSequence[i])
@@ -50,6 +52,7 @@ public class MusicPuzzleManager : MonoBehaviour
             targetSpriteRenderer.sprite = newSprite;
         }
 
+        // Dispara recompensas ou eventos ligados ao puzzle resolvido
         onPuzzleSolved?.Invoke();
         playerSequence.Clear();
     }
@@ -57,6 +60,7 @@ public class MusicPuzzleManager : MonoBehaviour
     private void Fail()
     {
         Debug.Log("Wrong sequence!");
+        // Reinicia a tentativa para permitir nova sequencia limpa
         onPuzzleFailed?.Invoke();
         playerSequence.Clear();
     }

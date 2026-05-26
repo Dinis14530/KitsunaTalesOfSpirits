@@ -15,6 +15,7 @@ public class EnemyAttack : MonoBehaviour
             PlayerHealth player = collision.gameObject.GetComponent<PlayerHealth>(); // Vida do jopgador
             PlayerKnockBack knockback = collision.gameObject.GetComponent<PlayerKnockBack>(); // Knockback
 
+            // O inimigo so aplica dano quando o player nao esta protegido
             if (player != null && !player.isInvincible) // Se o jogador nao estiver invencivel
             {
                 // Aplica dano
@@ -31,6 +32,7 @@ public class EnemyAttack : MonoBehaviour
                     knockback.ApplyKnockback(direction);
                 }
 
+                // Reinicia o cooldown apenas depois de um acerto valido
                 lastAttackTime = Time.time; // Atualiza o tempo do último ataque
             }
         }

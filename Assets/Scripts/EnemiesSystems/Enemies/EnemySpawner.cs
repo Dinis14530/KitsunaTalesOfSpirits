@@ -28,8 +28,10 @@ public class EnemySpawner : MonoBehaviour
         if (!player || !spawnArea)
             return;
 
+        // Mede a distancia ate ao centro da area para controlar spawn e despawn
         float dist = Vector2.Distance(player.position, spawnArea.bounds.center);
 
+        // Impede respawn imediato quando o inimigo morre enquanto o player continua perto
         if (hadEnemyLastFrame && enemy == null)
             waitingForReenter = true;
 
@@ -47,6 +49,7 @@ public class EnemySpawner : MonoBehaviour
 
     void Spawn()
     {
+        // Gera um ponto aleatorio dentro da area e instancia o inimigo ali
         Vector2 pos = GetRandomPointInBounds(spawnArea.bounds);
 
         enemy = Instantiate(enemyPrefab, pos, Quaternion.identity);
@@ -58,6 +61,7 @@ public class EnemySpawner : MonoBehaviour
         var trail = enemy.GetComponentInChildren<EnemyTrailTilemap>();
         if (trail)
         {
+            // Reusa a tilemap de trilho e faz fallback para a tilemap base da cena
             trail.trailTilemap = trailTilemap;
             trail.requiredSourceTilemap = requiredSourceTilemap
                 ? requiredSourceTilemap
@@ -67,6 +71,7 @@ public class EnemySpawner : MonoBehaviour
 
     void Despawn()
     {
+        // Limpa o rasto antes de destruir o inimigo
         enemy.GetComponentInChildren<EnemyTrailTilemap>()?.ClearAllTrail();
         Destroy(enemy);
         enemy = null;

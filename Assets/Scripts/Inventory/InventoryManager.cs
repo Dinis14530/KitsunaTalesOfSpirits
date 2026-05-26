@@ -14,6 +14,7 @@ public class InventoryManager : MonoBehaviour
 
     void Update()
     {
+        // A tecla E alterna abrir e fechar o menu sem criar estados extra
         if (Input.GetKeyDown(KeyCode.E) && menuActivated)
         {
             Time.timeScale = 1;
@@ -149,7 +150,7 @@ public class InventoryManager : MonoBehaviour
         // Adiciona os itens salvos
         foreach (var item in items)
         {
-            // Encontra o ItemSO para obter a sprite
+            // Procura o ItemSO para reconstruir a sprite original do item
             Sprite itemSprite = null;
             foreach (var itemSO in itemSOs)
             {

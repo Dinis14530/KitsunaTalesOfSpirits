@@ -18,7 +18,9 @@ public class PlayerShooting : MonoBehaviour
 
     void Update()
     {
+        // Mantem a direcao de disparo alinhada com o movimento actual
         HandleDirection(); // Atualiza a direção do jogador
+        // Reseta o tiro apenas quando o cooldown permite
         HandleCooldown(); // Atualiza o cooldown do tiro
 
         // Dispara quando a tecla X é pressionada e o cooldown é zero
@@ -41,6 +43,7 @@ public class PlayerShooting : MonoBehaviour
     {
         float h = Input.GetAxisRaw("Horizontal");
 
+        // Guarda o ultimo lado valido para reutilizar no disparo e no pool
         // Se o jogador se move para a direita
         if (h > 0)
             facingRight = true;
@@ -52,6 +55,7 @@ public class PlayerShooting : MonoBehaviour
     // Dispara o projétil
     void Shoot()
     {
+        // Reutiliza o projecil da pool para evitar Instantiate durante combate
         GameObject proj = ObjectPoolManager.Spawn(
             bulletPrefab,
             firePoint.position,
@@ -66,6 +70,7 @@ public class PlayerShooting : MonoBehaviour
         if (projScript == null)
         {
             Debug.LogWarning("O prefab do projétil do jogador precisa do componente Projetile.");
+            // Se o prefab estiver incompleto, devolve logo o objecto a pool
             ObjectPoolManager.Release(proj);
             return;
         }

@@ -22,6 +22,7 @@ public static class LootHelper
         // mapIconChild.transform.localScale = new Vector3(0.5f, 0.5f, 1f);
 
         // Sprite do Item
+        // O sprite fica num filho separado para manter o objeto principal com fisica e trigger
         GameObject spriteChild = new("ItemSprite");
         spriteChild.transform.SetParent(lootObject.transform);
         spriteChild.transform.localPosition = Vector3.zero;
@@ -33,6 +34,7 @@ public static class LootHelper
         spriteRenderer.sortingOrder = 0;
 
         // Collider
+        // O collider pertence ao objecto raiz para simplificar pickups e interacoes
         CircleCollider2D col = lootObject.AddComponent<CircleCollider2D>();
         col.isTrigger = false;
 
