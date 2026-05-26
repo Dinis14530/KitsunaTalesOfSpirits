@@ -127,15 +127,6 @@ public class PlayerController : MonoBehaviour
         else
             jumpBufferTimer -= Time.deltaTime; // Diminui buffer ao longo do tempo
 
-                    // Entra em slide apenas quando existe parede e o player ainda nao tocou no chao
-                    isWallSliding = true;
-                    // Limita a queda para dar tempo de executar o wall jump
-                    rb.linearVelocity = new Vector2(
-                        rb.linearVelocity.x,
-                        Mathf.Clamp(rb.linearVelocity.y, -wallSlidingSpeed, float.MaxValue)
-                    );
-        }
-
         // Se não pode se mover, trava horizontal
         if (!canMove)
         {
@@ -246,8 +237,6 @@ public class PlayerController : MonoBehaviour
             {
                 if (!isCrouching)
                 {
-                        // Enquanto esta encostado na parede, guarda a direcao oposta para o salto
-                        isWallJumping = false;
                     animator.SetBool("IsCrouching", true);
                 }
             }
@@ -276,15 +265,11 @@ public class PlayerController : MonoBehaviour
             && // Pode se mover
             !isInDialogue; // Não em diálogo
 
-       // Habilita a habilidade quando um item ou evento a desbloqueia
-       canWallJump = true;
+        if (!shouldPlayFootsteps)
         {
             stepTimer = 0f; // Zera timer
             return;
         }
-               // Desativa a habilidade e limpa o estado de slide para evitar persistencia
-               canWallJump = false;
-               isWallSliding = false;
 
         if (stepTimer <= 0f)
         {
