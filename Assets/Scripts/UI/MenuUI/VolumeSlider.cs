@@ -3,6 +3,9 @@ using UnityEngine.UI;
 
 public class VolumeSlider : MonoBehaviour
 {
+    private const string MasterVolumeKey = "MasterVolume";
+    private const string LegacyMusicVolumeKey = "MusicVolume";
+
     private Slider slider;
 
     private void Awake()
@@ -12,7 +15,10 @@ public class VolumeSlider : MonoBehaviour
 
     private void Start()
     {
-        float savedVolume = PlayerPrefs.GetFloat("MusicVolume", 1f);
+        float savedVolume = PlayerPrefs.GetFloat(
+            MasterVolumeKey,
+            PlayerPrefs.GetFloat(LegacyMusicVolumeKey, 1f)
+        );
 
         slider.value = savedVolume;
         AudioManager.Instance.SetVolume(savedVolume);
@@ -24,6 +30,6 @@ public class VolumeSlider : MonoBehaviour
     private void OnSliderValueChanged(float value)
     {
         AudioManager.Instance.SetVolume(value);
-        PlayerPrefs.SetFloat("MusicVolume", value);
+        PlayerPrefs.SetFloat(MasterVolumeKey, value);
     }
 }
