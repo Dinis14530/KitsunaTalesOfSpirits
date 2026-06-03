@@ -21,6 +21,14 @@ public class SaveData
     public List<string> openedChests = new List<string>();
     public List<string> openedDoors = new List<string>();
     public List<string> defeatedBosses = new List<string>();
+    public List<BossHealthEntry> bossHealths = new List<BossHealthEntry>();
+}
+
+[System.Serializable]
+public class BossHealthEntry
+{
+    public string bossID;
+    public int health;
 }
 
 [System.Serializable]

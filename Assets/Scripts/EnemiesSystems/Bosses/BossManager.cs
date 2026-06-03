@@ -6,6 +6,7 @@ public class BossManager : MonoBehaviour
     public static BossManager Instance { get; private set; }
 
     private HashSet<string> defeatedBosses = new HashSet<string>();
+    private Dictionary<string, int> bossHealths = new Dictionary<string, int>();
 
     private void Awake()
     {
@@ -60,5 +61,41 @@ public class BossManager : MonoBehaviour
     public void ClearAllBosses()
     {
         defeatedBosses.Clear();
+        bossHealths.Clear();
+    }
+
+    public void SetBossHealth(string bossID, int health)
+    {
+        if (!string.IsNullOrEmpty(bossID))
+            bossHealths[bossID] = health;
+    }
+
+    public int GetBossHealth(string bossID)
+    {
+        if (!string.IsNullOrEmpty(bossID) && bossHealths.TryGetValue(bossID, out int hp))
+            return hp;
+        return -1;
+    }
+
+    public List<BossHealthEntry> GetBossHealths()
+    {
+        var list = new List<BossHealthEntry>();
+        foreach (var kvp in bossHealths)
+        {
+            list.Add(new BossHealthEntry { bossID = kvp.Key, health = kvp.Value });
+        }
+        return list;
+    }
+
+    public void SetBossHealths(List<BossHealthEntry> entries)
+    {
+        bossHealths.Clear();
+        if (entries == null)
+            return;
+        foreach (var entry in entries)
+        {
+            if (!string.IsNullOrEmpty(entry.bossID))
+                bossHealths[entry.bossID] = entry.health;
+        }
     }
 }
