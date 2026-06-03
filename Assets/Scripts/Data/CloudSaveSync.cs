@@ -47,6 +47,21 @@ public static class CloudSaveSync
         }
     }
 
+    public static async Task DeleteAsync()
+    {
+        if (!await InitializeAsync())
+            return;
+
+        try
+        {
+            await CloudSaveService.Instance.Data.Player.DeleteAsync(SaveKey);
+        }
+        catch (Exception exception)
+        {
+            Debug.LogWarning("Cloud delete falhou: " + exception.Message);
+        }
+    }
+
     public static async Task<SaveData> LoadAsync()
     {
         if (!await InitializeAsync())

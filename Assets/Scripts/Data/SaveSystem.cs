@@ -56,12 +56,21 @@ public static class SaveSystem
         return File.Exists(SavePath);
     }
 
+    public static void DeleteSave()
+    {
+        if (File.Exists(SavePath))
+        {
+            File.Delete(SavePath);
+            Debug.Log("Save local apagado: " + SavePath);
+        }
+    }
+
     // ENCRYPTION
     private static byte[] Encrypt(string plainText)
     {
         using var aes = Aes.Create();
         aes.Key = Encoding.UTF8.GetBytes(EncryptionKey);
-        aes.IV = new byte[16]; 
+        aes.IV = new byte[16];
 
         byte[] plainBytes = Encoding.UTF8.GetBytes(plainText);
 
