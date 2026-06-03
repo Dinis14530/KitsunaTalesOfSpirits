@@ -163,7 +163,10 @@ public class PlayerSave : MonoBehaviour
             data.openedDoors = DoorManager.Instance.GetOpenedDoors();
 
         if (BossManager.Instance != null)
+        {
             data.defeatedBosses = BossManager.Instance.GetDefeatedBosses();
+            data.bossHealths = BossManager.Instance.GetBossHealths();
+        }
 
         return data;
     }
@@ -256,6 +259,9 @@ public class PlayerSave : MonoBehaviour
 
         if (BossManager.Instance != null && data.defeatedBosses != null)
             BossManager.Instance.SetDefeatedBosses(data.defeatedBosses);
+
+        if (BossManager.Instance != null && data.bossHealths != null)
+            BossManager.Instance.SetBossHealths(data.bossHealths);
     }
 
     private class LoadedSave

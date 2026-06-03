@@ -54,7 +54,18 @@ public class BossHealth : MonoBehaviour
             yield break;
         }
 
-        // Boss não foi derrotado — mostrar
+        // Boss não foi derrotado — restaurar vida guardada
+        if (BossManager.Instance != null)
+        {
+            int savedHealth = BossManager.Instance.GetBossHealth(BossID);
+            if (savedHealth > 0)
+            {
+                health = savedHealth;
+                Debug.Log($"Boss {BossID} vida restaurada: {health}");
+            }
+        }
+
+        // Mostrar
         if (spriteRenderer != null)
             spriteRenderer.enabled = true;
     }
@@ -70,6 +81,10 @@ public class BossHealth : MonoBehaviour
 
         health -= damage;
         Debug.Log(gameObject.name + " took " + damage + " damage. Remaining health: " + health);
+
+        // Atualiza a vida no BossManager para ser gravada no save
+        if (BossManager.Instance != null)
+            BossManager.Instance.SetBossHealth(BossID, health);
 
         if (spriteRenderer != null)
             StartCoroutine(FlashCoroutine());
@@ -90,9 +105,12 @@ public class BossHealth : MonoBehaviour
     {
         Debug.Log(gameObject.name + " died");
 
-        // Marca este boss como derrotado
+        // Marca este boss como derrotado e limpa a vida guardada
         if (BossManager.Instance != null)
+        {
             BossManager.Instance.MarkBossAsDefeated(BossID);
+            BossManager.Instance.SetBossHealth(BossID, 0);
+        }
 
         DropLoot();
         Destroy(gameObject);
