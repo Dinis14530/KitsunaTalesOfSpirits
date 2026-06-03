@@ -12,7 +12,9 @@ public class PuzzleRewardDropper : MonoBehaviour
     [SerializeField]
     private bool useThisTransform = false; // Se true, usa a posição deste GameObject
 
+    [SerializeField]
     private MusicPuzzleManager puzzleManager;
+
     private bool hasDropped = false; // Evita dropar múltiplas vezes
 
     private void Start()
