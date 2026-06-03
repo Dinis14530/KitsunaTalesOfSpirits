@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -15,9 +16,8 @@ public class SaveResetter : MonoBehaviour
         if (isResetting)
             return;
 
-        SaveSystem.DeleteSave();
-        _ = CloudSaveSync.DeleteAsync();
         ClearRuntimeProgress();
+        OverwriteWithFreshSave();
 
         Debug.Log("Save apagado");
     }
@@ -30,12 +30,26 @@ public class SaveResetter : MonoBehaviour
 
         isResetting = true;
 
-        SaveSystem.DeleteSave();
-        await CloudSaveSync.DeleteAsync();
         ClearRuntimeProgress();
+
+        SaveData fresh = CreateFreshSave();
+        SaveSystem.Save(fresh);
+        await CloudSaveSync.SaveAsync(fresh);
 
         Debug.Log("Save apagado, a iniciar jogo novo");
         SceneManager.LoadScene(gameplaySceneIndex);
+    }
+
+    private void OverwriteWithFreshSave()
+    {
+        SaveData fresh = CreateFreshSave();
+        SaveSystem.Save(fresh);
+        _ = CloudSaveSync.SaveAsync(fresh);
+    }
+
+    private SaveData CreateFreshSave()
+    {
+        return new SaveData { lastSavedUtcTicks = DateTime.UtcNow.Ticks };
     }
 
     private void ClearRuntimeProgress()
