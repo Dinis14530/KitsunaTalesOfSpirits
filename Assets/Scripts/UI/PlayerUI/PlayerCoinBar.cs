@@ -20,7 +20,7 @@ public class CoinDisplay : MonoBehaviour
     public void AddCoins(int amount)
     {
         coins += amount;
-        Debug.Log($"Coins changed: {amount} Total: {coins}");
+        GameDebug.Log($"Coins changed: {amount} Total: {coins}");
         UpdateCoinBar();
     }
 

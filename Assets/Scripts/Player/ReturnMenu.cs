@@ -14,7 +14,6 @@ public class ReturnMenu : MonoBehaviour
                 playerSave.SaveGame();
 
             SceneManager.LoadScene(0);
-            Debug.Log(Application.persistentDataPath);
         }
     }
 }

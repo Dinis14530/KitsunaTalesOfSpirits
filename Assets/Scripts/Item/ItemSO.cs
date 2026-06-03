@@ -52,7 +52,7 @@ public class ItemSO : ScriptableObject
             }
             else
             {
-                Debug.Log("Life is already full");
+                GameDebug.Log("Life is already full");
                 return false; // não usado
             }
         }
@@ -64,7 +64,7 @@ public class ItemSO : ScriptableObject
             playerHealth.currentHealth += (int)amountToChangeStat;
 
             playerHealth.healthDisplay.UpdateHealth(playerHealth.currentHealth);
-            Debug.Log($"Max health increased to {playerHealth.maxHealth}");
+            GameDebug.Log($"Max health increased to {playerHealth.maxHealth}");
             return true; // item usado
         }
 

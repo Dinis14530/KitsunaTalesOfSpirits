@@ -155,7 +155,7 @@ public class MapSellerNPC : MonoBehaviour, IInterectable
     {
         if (purchaseUI == null)
         {
-            Debug.Log(soldMessage);
+            GameDebug.Log(soldMessage);
             return;
         }
 

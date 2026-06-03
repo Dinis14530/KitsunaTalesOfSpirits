@@ -24,7 +24,7 @@ public class InteractableTeleport : MonoBehaviour, IInterectable
                 playerObj.transform.position = teleportPoint.position;
             }
 
-            Debug.Log($"{GlobalHelper.GenerateUniqueID(gameObject)} teleportou o jogador!");
+            GameDebug.Log($"{GlobalHelper.GenerateUniqueID(gameObject)} teleportou o jogador!");
         }
     }
 

@@ -128,7 +128,7 @@ public class ShopManager : MonoBehaviour, IInterectable
                     itemsPurchased[itemSO] = 0;
                 itemsPurchased[itemSO]++;
 
-                Debug.Log(
+                GameDebug.Log(
                     $"{itemSO.itemName} comprado com sucesso! Compras: {itemsPurchased[itemSO]}/{itemSO.purchaseLimit}"
                 );
                 return;
@@ -157,7 +157,7 @@ public class ShopManager : MonoBehaviour, IInterectable
             itemsPurchased[itemSO] = 0;
         itemsPurchased[itemSO]++;
 
-        Debug.Log(
+        GameDebug.Log(
             $"{itemSO.itemName} comprado com sucesso! Compras: {itemsPurchased[itemSO]}/{itemSO.purchaseLimit}"
         );
     }

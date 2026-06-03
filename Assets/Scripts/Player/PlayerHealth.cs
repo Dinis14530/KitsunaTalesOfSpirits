@@ -32,7 +32,7 @@ public class PlayerHealth : MonoBehaviour
     public void SetCheckpoint(Vector3 newCheckpoint)
     {
         checkpointPosition = newCheckpoint;
-        Debug.Log("Checkpoint guardado em: " + checkpointPosition);
+        GameDebug.Log("Checkpoint guardado em: " + checkpointPosition);
     }
 
     public void RestoreHealth(float health)
@@ -69,7 +69,7 @@ public class PlayerHealth : MonoBehaviour
 
     void Die()
     {
-        Debug.Log($"{gameObject.name} died");
+        GameDebug.Log($"{gameObject.name} died");
 
         // Volta ao ultimo checkpoint em vez de destruir o player
         transform.position = checkpointPosition;

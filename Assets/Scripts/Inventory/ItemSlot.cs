@@ -111,7 +111,7 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
             }
             else
             {
-                Debug.Log("Item cannot be used right now");
+                GameDebug.Log("Item cannot be used right now");
             }
         }
         else

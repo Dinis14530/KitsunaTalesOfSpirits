@@ -105,7 +105,7 @@ public class FoxBoss : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
 
-        Debug.Log("Shockwave!");
+        GameDebug.Log("Shockwave!");
 
         yield return new WaitForSeconds(1f);
 

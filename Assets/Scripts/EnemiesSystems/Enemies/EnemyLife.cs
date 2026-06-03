@@ -29,7 +29,7 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(int damage)
     {
         health -= damage;
-        Debug.Log(gameObject.name + " took " + damage + " damage. Remaining health: " + health);
+        GameDebug.Log(gameObject.name + " took " + damage + " damage. Remaining health: " + health);
 
         // Pisca quando leva dano
         if (spriteRenderer != null)
@@ -57,7 +57,7 @@ public class Enemy : MonoBehaviour
 
     void Die()
     {
-        Debug.Log(gameObject.name + " died");
+        GameDebug.Log(gameObject.name + " died");
 
         DropLoot();
 
@@ -78,7 +78,7 @@ public class Enemy : MonoBehaviour
             if (randomChance <= loot.dropChance)
             {
                 LootHelper.SpawnLootItem(loot.itemSO, transform.position, loot.quantity);
-                Debug.Log($"{loot.itemSO.itemName} dropped");
+                GameDebug.Log($"{loot.itemSO.itemName} dropped");
             }
         }
     }

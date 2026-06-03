@@ -43,7 +43,7 @@ public class MusicPuzzleManager : MonoBehaviour
 
     private void Success()
     {
-        Debug.Log("Puzzle Complete!");
+        GameDebug.Log("Puzzle Complete!");
         puzzleCompleted = true; // bloqueia futuras interações
 
         // Muda o sprite do objeto
@@ -59,7 +59,7 @@ public class MusicPuzzleManager : MonoBehaviour
 
     private void Fail()
     {
-        Debug.Log("Wrong sequence!");
+        GameDebug.Log("Wrong sequence!");
         // Reinicia a tentativa para permitir nova sequencia limpa
         onPuzzleFailed?.Invoke();
         playerSequence.Clear();

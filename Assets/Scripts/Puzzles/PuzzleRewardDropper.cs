@@ -56,7 +56,7 @@ public class PuzzleRewardDropper : MonoBehaviour
         // Dropa o item
         LootHelper.SpawnLootItem(rewardItem, spawnPosition, 1);
 
-        Debug.Log($"Item '{rewardItem.itemName}' dropado na posição {spawnPosition}!");
+        GameDebug.Log($"Item '{rewardItem.itemName}' dropado na posição {spawnPosition}!");
         hasDropped = true;
     }
 

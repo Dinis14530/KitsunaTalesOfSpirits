@@ -1,18 +1,18 @@
 using System.Collections;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
 [System.Obsolete]
 public class CampfireCheckpoint : MonoBehaviour, IInterectable
 {
-    private static CampfireCheckpoint activeCheckpoint = null; 
+    private static CampfireCheckpoint activeCheckpoint = null;
     private Animator animator;
     private bool isActive = false;
 
     [Header("Áudio")]
-    public AudioSource fireAudioSource;  // Fonte de som do fogo
-    public AudioClip fireClip;           // Som do fogo (loop)
-    public float soundRadius = 5f;       // Distância máxima para ouvir
+    public AudioSource fireAudioSource; // Fonte de som do fogo
+    public AudioClip fireClip; // Som do fogo (loop)
+    public float soundRadius = 5f; // Distância máxima para ouvir
 
     private Transform playerTransform;
 
@@ -94,7 +94,8 @@ public class CampfireCheckpoint : MonoBehaviour, IInterectable
 
     public void Interact()
     {
-        if (isActive) return;
+        if (isActive)
+            return;
 
         if (playerHealth != null)
         {
@@ -109,7 +110,7 @@ public class CampfireCheckpoint : MonoBehaviour, IInterectable
                 playerSave.SaveGameAsync();
             }
 
-            Debug.Log("Checkpoint ativado e jogo guardado");
+            GameDebug.Log("Checkpoint ativado e jogo guardado");
         }
     }
 

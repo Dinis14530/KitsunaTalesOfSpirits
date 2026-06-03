@@ -35,7 +35,7 @@ public class BossHealth : MonoBehaviour
 
         // Gera ID único baseado no nome e posição
         BossID = gameObject.name + "_" + transform.position.ToString();
-        Debug.Log($"Boss criado com ID: {BossID}");
+        GameDebug.Log($"Boss criado com ID: {BossID}");
     }
 
     void Start()
@@ -43,7 +43,7 @@ public class BossHealth : MonoBehaviour
         // Verifica se este boss já foi derrotado
         if (BossManager.Instance != null && BossManager.Instance.IsBossDefeated(BossID))
         {
-            Debug.Log($"Boss {BossID} já foi derrotado, destruindo");
+            GameDebug.Log($"Boss {BossID} já foi derrotado, destruindo");
             Destroy(gameObject);
             return;
         }
@@ -54,12 +54,12 @@ public class BossHealth : MonoBehaviour
         // Só recebe dano quando está no chão
         if (bossController != null && bossController.state != BossState.Grounded)
         {
-            Debug.Log("Boss is immune to damage while flying.");
+            GameDebug.Log("Boss is immune to damage while flying.");
             return;
         }
 
         health -= damage;
-        Debug.Log(gameObject.name + " took " + damage + " damage. Remaining health: " + health);
+        GameDebug.Log(gameObject.name + " took " + damage + " damage. Remaining health: " + health);
 
         if (spriteRenderer != null)
             StartCoroutine(FlashCoroutine());
@@ -78,7 +78,7 @@ public class BossHealth : MonoBehaviour
 
     void Die()
     {
-        Debug.Log(gameObject.name + " died");
+        GameDebug.Log(gameObject.name + " died");
 
         // Marca este boss como derrotado
         if (BossManager.Instance != null)
@@ -102,7 +102,7 @@ public class BossHealth : MonoBehaviour
             if (randomChance <= loot.dropChance)
             {
                 LootHelper.SpawnLootItem(loot.itemSO, transform.position, loot.quantity);
-                Debug.Log($"{loot.itemSO.itemName} dropped");
+                GameDebug.Log($"{loot.itemSO.itemName} dropped");
             }
         }
     }

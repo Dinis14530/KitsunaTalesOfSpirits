@@ -39,7 +39,7 @@ public class PlayerSave : MonoBehaviour
             if (initialLocalData == null)
             {
                 SaveGame();
-                Debug.Log("Primeiro save criado");
+                GameDebug.Log("Primeiro save criado");
             }
 
             yield break;
@@ -60,7 +60,7 @@ public class PlayerSave : MonoBehaviour
     private void OnApplicationQuit()
     {
         SaveGame();
-        Debug.Log("Jogo salvo ao sair");
+        GameDebug.Log("Jogo salvo ao sair");
     }
 
     public void SaveGame()
@@ -92,7 +92,7 @@ public class PlayerSave : MonoBehaviour
             Debug.LogException(cloudTask.Exception);
 
         if (saveTask.Exception == null && cloudTask.Exception == null)
-            Debug.Log("Jogo guardado em segundo plano");
+            GameDebug.Log("Jogo guardado em segundo plano");
     }
 
     public void LoadGame()

@@ -29,7 +29,7 @@ public class Door : MonoBehaviour, IInterectable
     {
         // Gera ID único baseado no nome e posição
         DoorID = gameObject.name + "_" + transform.position.ToString();
-        Debug.Log($"Porta criada com ID: {DoorID}");
+        GameDebug.Log($"Porta criada com ID: {DoorID}");
     }
 
     void Start()
@@ -50,7 +50,7 @@ public class Door : MonoBehaviour, IInterectable
         {
             if (DoorManager.Instance.IsDoorOpened(DoorID))
             {
-                Debug.Log($"Porta {DoorID} já foi aberta, mantendo aberta");
+                GameDebug.Log($"Porta {DoorID} já foi aberta, mantendo aberta");
                 SetOpenedWithoutRemoving();
             }
         }
@@ -75,7 +75,7 @@ public class Door : MonoBehaviour, IInterectable
         }
         else
         {
-            Debug.Log("You need: " + requiredItem.itemName);
+            GameDebug.Log("You need: " + requiredItem.itemName);
             ShowMissingKeyPanel();
         }
     }
@@ -94,7 +94,7 @@ public class Door : MonoBehaviour, IInterectable
         if (DoorManager.Instance != null)
             DoorManager.Instance.MarkDoorAsOpened(DoorID);
 
-        Debug.Log("Door opened");
+        GameDebug.Log("Door opened");
     }
 
     // Versão que não remove item

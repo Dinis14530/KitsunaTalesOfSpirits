@@ -58,7 +58,7 @@ public class InventoryManager : MonoBehaviour
 
         if (remaining > 0)
         {
-            Debug.Log("Inventory full");
+            GameDebug.Log("Inventory full");
         }
 
         return remaining;
@@ -70,7 +70,7 @@ public class InventoryManager : MonoBehaviour
         {
             if (itemSOs[i].itemName == itemName)
             {
-                Debug.Log("Using item: " + itemName);
+                GameDebug.Log("Using item: " + itemName);
                 return itemSOs[i].UseItem();
             }
         }

@@ -27,7 +27,7 @@ public class BossManager : MonoBehaviour
         if (!defeatedBosses.Contains(bossID))
         {
             defeatedBosses.Add(bossID);
-            Debug.Log($"Boss marcado como derrotado: {bossID}");
+            GameDebug.Log($"Boss marcado como derrotado: {bossID}");
         }
     }
 
@@ -54,7 +54,7 @@ public class BossManager : MonoBehaviour
                     defeatedBosses.Add(id);
             }
         }
-        Debug.Log($"Bosses carregados como derrotados: {defeatedBosses.Count}");
+        GameDebug.Log($"Bosses carregados como derrotados: {defeatedBosses.Count}");
     }
 
     public void ClearAllBosses()

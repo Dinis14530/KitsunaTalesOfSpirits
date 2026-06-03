@@ -27,7 +27,7 @@ public class DoorManager : MonoBehaviour
         if (!openedDoors.Contains(doorID))
         {
             openedDoors.Add(doorID);
-            Debug.Log($"Porta marcada como aberta: {doorID}");
+            GameDebug.Log($"Porta marcada como aberta: {doorID}");
         }
     }
 
@@ -54,7 +54,7 @@ public class DoorManager : MonoBehaviour
                     openedDoors.Add(id);
             }
         }
-        Debug.Log($"Portas carregadas: {openedDoors.Count}");
+        GameDebug.Log($"Portas carregadas: {openedDoors.Count}");
     }
 
     public void ClearAllDoors()
