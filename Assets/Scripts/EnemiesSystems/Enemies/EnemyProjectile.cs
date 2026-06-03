@@ -9,7 +9,7 @@ public class EnemyProjectile : MonoBehaviour
     public float force;
     public float bulletTimeInScreen;
     private float timer;
-    public int damage; 
+    public int damage;
     public int health;
 
     private void OnEnable()

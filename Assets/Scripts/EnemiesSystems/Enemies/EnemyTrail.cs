@@ -36,7 +36,8 @@ public class EnemyTrailTilemap : MonoBehaviour
         if (requiredSourceTilemap == null)
         {
             GameObject go = GameObject.Find("Tilemap");
-            if (go) requiredSourceTilemap = go.GetComponent<Tilemap>();
+            if (go)
+                requiredSourceTilemap = go.GetComponent<Tilemap>();
         }
     }
 
@@ -64,8 +65,10 @@ public class EnemyTrailTilemap : MonoBehaviour
         if (cell == lastCell)
             return;
 
-        if (requiredSourceTilemap != null &&
-            requiredSourceTilemap.GetTile(requiredSourceTilemap.WorldToCell(pos)) == null)
+        if (
+            requiredSourceTilemap != null
+            && requiredSourceTilemap.GetTile(requiredSourceTilemap.WorldToCell(pos)) == null
+        )
             return;
 
         lastCell = cell;

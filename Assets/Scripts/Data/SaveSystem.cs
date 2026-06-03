@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
@@ -17,21 +18,45 @@ public static class SaveSystem
     // PUBLIC API
     public static void Save(SaveData data)
     {
-        string json = JsonUtility.ToJson(data, true);
-        WriteSaveFile(json);
+        if (data == null)
+        {
+            Debug.LogWarning("[SaveSystem] Save called with null data, skipping.");
+            return;
+        }
 
-        // DEBUG apenas no Editor
+        try
+        {
+            string json = JsonUtility.ToJson(data, true);
+            WriteSaveFile(json);
+
 #if UNITY_EDITOR
-        Debug.Log("SAVE JSON:\n" + json);
+            Debug.Log("SAVE JSON:\n" + json);
 #endif
-
-        Debug.Log("Jogo guardado em: " + SavePath);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"[SaveSystem] Failed to save: {e}");
+        }
     }
 
     public static Task SaveAsync(SaveData data)
     {
-        string json = JsonUtility.ToJson(data, true);
-        return Task.Run(() => WriteSaveFile(json));
+        if (data == null)
+        {
+            Debug.LogWarning("[SaveSystem] SaveAsync called with null data, skipping.");
+            return Task.CompletedTask;
+        }
+
+        try
+        {
+            string json = JsonUtility.ToJson(data, true);
+            return Task.Run(() => WriteSaveFile(json));
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"[SaveSystem] Failed to start async save: {e}");
+            return Task.CompletedTask;
+        }
     }
 
     public static SaveData Load()
@@ -39,16 +64,22 @@ public static class SaveSystem
         if (!HasSave())
             return null;
 
-        byte[] encryptedData = File.ReadAllBytes(SavePath);
-        string json = Decrypt(encryptedData);
+        try
+        {
+            byte[] encryptedData = File.ReadAllBytes(SavePath);
+            string json = Decrypt(encryptedData);
 
-        // DEBUG
 #if UNITY_EDITOR
-        Debug.Log("LOAD JSON:\n" + json);
+            Debug.Log("LOAD JSON:\n" + json);
 #endif
 
-        Debug.Log("Jogo carregado");
-        return JsonUtility.FromJson<SaveData>(json);
+            return JsonUtility.FromJson<SaveData>(json);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"[SaveSystem] Failed to load save: {e}");
+            return null;
+        }
     }
 
     public static bool HasSave()
@@ -61,7 +92,7 @@ public static class SaveSystem
     {
         using var aes = Aes.Create();
         aes.Key = Encoding.UTF8.GetBytes(EncryptionKey);
-        aes.IV = new byte[16]; 
+        aes.IV = new byte[16];
 
         byte[] plainBytes = Encoding.UTF8.GetBytes(plainText);
 

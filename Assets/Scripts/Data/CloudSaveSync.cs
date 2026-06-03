@@ -43,7 +43,7 @@ public static class CloudSaveSync
         }
         catch (Exception exception)
         {
-            Debug.LogWarning("Cloud save falhou: " + exception.Message);
+            Debug.LogError($"[CloudSaveSync] Cloud save failed: {exception}");
         }
     }
 
@@ -68,7 +68,7 @@ public static class CloudSaveSync
         }
         catch (Exception exception)
         {
-            Debug.LogWarning("Cloud load falhou: " + exception.Message);
+            Debug.LogError($"[CloudSaveSync] Cloud load failed: {exception}");
         }
 
         return null;
@@ -88,7 +88,7 @@ public static class CloudSaveSync
         catch (Exception exception)
         {
             isReady = false;
-            Debug.LogWarning("Unity Services indisponível: " + exception.Message);
+            Debug.LogError($"[CloudSaveSync] Unity Services initialization failed: {exception}");
         }
         finally
         {

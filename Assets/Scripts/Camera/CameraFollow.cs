@@ -49,7 +49,8 @@ public class CameraFollow : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (target == null) return;
+        if (target == null)
+            return;
 
         // Usa a velocidade actual do alvo para antecipar o movimento da camera
         float velX = targetRb != null ? targetRb.linearVelocity.x : 0f;
@@ -61,13 +62,20 @@ public class CameraFollow : MonoBehaviour
         else
             targetLookAhead = 0f;
 
-        currentLookAhead = Mathf.SmoothDamp(currentLookAhead, targetLookAhead, ref lookVel, lookAheadSmooth);
+        currentLookAhead = Mathf.SmoothDamp(
+            currentLookAhead,
+            targetLookAhead,
+            ref lookVel,
+            lookAheadSmooth
+        );
 
         // --- VERTICAL OFFSET ---
         float extraVertical = 0f;
         // Compensa salto ou queda para manter o player melhor enquadrado
-        if (velY > 0.05f) extraVertical = jumpOffset;
-        else if (velY < -0.05f) extraVertical = fallOffset;
+        if (velY > 0.05f)
+            extraVertical = jumpOffset;
+        else if (velY < -0.05f)
+            extraVertical = fallOffset;
 
         // --- POSIÇÃO FINAL (agora com headOffsetY) ---
         Vector3 pos = new Vector3(
@@ -101,4 +109,4 @@ public class CameraFollow : MonoBehaviour
 
         transform.position = pos;
     }
-}  
+}

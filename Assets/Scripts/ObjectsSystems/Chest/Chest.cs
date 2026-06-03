@@ -9,6 +9,7 @@ public class Chest : MonoBehaviour, IInterectable
     public class ChestLoot
     {
         public ItemSO itemSO;
+
         [Range(0, 100)]
         public int dropChance = 100;
         public int quantity = 1;
@@ -18,8 +19,8 @@ public class Chest : MonoBehaviour, IInterectable
     public Sprite openedSprite;
 
     [Header("Áudio")]
-    public AudioSource audioSource;   // Fonte de som do baú
-    public AudioClip openClip;        // Som ao abrir
+    public AudioSource audioSource; // Fonte de som do baú
+    public AudioClip openClip; // Som ao abrir
 
     void Start()
     {
@@ -43,7 +44,8 @@ public class Chest : MonoBehaviour, IInterectable
 
     public void Interact()
     {
-        if (!CanInteract()) return;
+        if (!CanInteract())
+            return;
         OpenChest();
     }
 
@@ -59,7 +61,8 @@ public class Chest : MonoBehaviour, IInterectable
 
         foreach (ChestLoot loot in lootItems)
         {
-            if (loot.itemSO == null) continue;
+            if (loot.itemSO == null)
+                continue;
 
             int chance = Random.Range(0, 101);
 

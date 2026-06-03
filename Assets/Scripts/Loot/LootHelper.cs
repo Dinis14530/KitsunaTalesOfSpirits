@@ -4,6 +4,17 @@ public static class LootHelper
 {
     public static GameObject SpawnLootItem(ItemSO itemSO, Vector3 position, int quantity)
     {
+        if (itemSO == null)
+        {
+            Debug.LogWarning("[LootHelper] Cannot spawn loot: itemSO is null.");
+            return null;
+        }
+
+        if (itemSO.sprite == null)
+        {
+            Debug.LogWarning($"[LootHelper] itemSO '{itemSO.itemName}' has no sprite assigned.");
+        }
+
         GameObject lootObject = new(itemSO.itemName);
         lootObject.transform.position = position;
         lootObject.layer = LayerMask.NameToLayer("Items");

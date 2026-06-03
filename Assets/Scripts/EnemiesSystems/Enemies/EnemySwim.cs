@@ -41,16 +41,15 @@ public class EnemySwim : MonoBehaviour
 
     private void HandleSwimming()
     {
-        if (knockback != null && knockback.isKnockback) return;
+        if (knockback != null && knockback.isKnockback)
+            return;
 
-        if (player == null) return;
+        if (player == null)
+            return;
 
         Vector2 direction = (player.position - transform.position).normalized;
 
-        rb.linearVelocity = new Vector2(
-            direction.x * swimSpeed,
-            direction.y * verticalSwimSpeed
-        );
+        rb.linearVelocity = new Vector2(direction.x * swimSpeed, direction.y * verticalSwimSpeed);
 
         isSwimming = rb.linearVelocity.magnitude > 0.1f;
 
@@ -69,7 +68,4 @@ public class EnemySwim : MonoBehaviour
 
         transform.rotation = Quaternion.Euler(0, 0, angle);
     }
-
-    
 }
-

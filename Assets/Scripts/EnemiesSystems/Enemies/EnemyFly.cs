@@ -17,8 +17,10 @@ public class EnemyFly : MonoBehaviour
 
     void Update()
     {
-        if (player == null) return;
-        if (knockback != null && knockback.isKnockback) return;
+        if (player == null)
+            return;
+        if (knockback != null && knockback.isKnockback)
+            return;
 
         if (isChasing)
             Chase();

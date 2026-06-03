@@ -32,7 +32,18 @@ public class AudioManager : MonoBehaviour
 
     public void PlayMusic(AudioClip clip)
     {
-        // Reinicia o fade anterior para evitar sobreposicao de musicas
+        if (clip == null)
+        {
+            Debug.LogWarning("[AudioManager] PlayMusic called with null clip.");
+            return;
+        }
+
+        if (musicSource == null)
+        {
+            Debug.LogError("[AudioManager] musicSource is not assigned.");
+            return;
+        }
+
         StopAllCoroutines();
         StartCoroutine(FadeMusic(clip));
     }

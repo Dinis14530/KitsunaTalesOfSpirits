@@ -54,7 +54,19 @@ public class FoxBoss : MonoBehaviour
 
     void TeleportToRandomColumn()
     {
+        if (columns == null || columns.Length == 0)
+        {
+            Debug.LogWarning("[FoxBoss] No columns configured for teleport.");
+            return;
+        }
+
         currentColumn = Random.Range(0, columns.Length);
+        if (columns[currentColumn] == null)
+        {
+            Debug.LogWarning($"[FoxBoss] Column {currentColumn} is null.");
+            return;
+        }
+
         transform.position = columns[currentColumn].position;
     }
 
@@ -84,6 +96,15 @@ public class FoxBoss : MonoBehaviour
 
     IEnumerator ProjectileAttack()
     {
+        if (projectilePrefab == null || shootPoint == null || player == null)
+        {
+            Debug.LogWarning(
+                "[FoxBoss] ProjectileAttack missing references (prefab/shootPoint/player)."
+            );
+            isAttacking = false;
+            yield break;
+        }
+
         for (int i = 0; i < 3; i++)
         {
             GameObject proj = Instantiate(
@@ -92,8 +113,16 @@ public class FoxBoss : MonoBehaviour
                 Quaternion.identity
             );
 
-            Vector2 dir = (player.position - shootPoint.position).normalized;
-            proj.GetComponent<Rigidbody2D>().linearVelocity = dir * 8f;
+            Rigidbody2D rb = proj.GetComponent<Rigidbody2D>();
+            if (rb != null)
+            {
+                Vector2 dir = (player.position - shootPoint.position).normalized;
+                rb.linearVelocity = dir * 8f;
+            }
+            else
+            {
+                Debug.LogWarning("[FoxBoss] Projectile prefab is missing Rigidbody2D.");
+            }
 
             yield return new WaitForSeconds(0.3f);
         }
@@ -114,9 +143,19 @@ public class FoxBoss : MonoBehaviour
 
     IEnumerator SummonAttack()
     {
+        if (enemyPrefab == null || summonPoints == null || summonPoints.Length == 0)
+        {
+            Debug.LogWarning(
+                "[FoxBoss] SummonAttack missing references (enemyPrefab/summonPoints)."
+            );
+            isAttacking = false;
+            yield break;
+        }
+
         for (int i = 0; i < summonPoints.Length; i++)
         {
-            Instantiate(enemyPrefab, summonPoints[i].position, Quaternion.identity);
+            if (summonPoints[i] != null)
+                Instantiate(enemyPrefab, summonPoints[i].position, Quaternion.identity);
         }
 
         yield return new WaitForSeconds(1f);
@@ -126,6 +165,13 @@ public class FoxBoss : MonoBehaviour
 
     IEnumerator DashAttack()
     {
+        if (player == null)
+        {
+            Debug.LogWarning("[FoxBoss] DashAttack: player reference is null.");
+            isAttacking = false;
+            yield break;
+        }
+
         Vector2 start = transform.position;
         Vector2 target = player.position;
 

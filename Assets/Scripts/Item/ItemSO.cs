@@ -35,6 +35,11 @@ public class ItemSO : ScriptableObject
     public bool UseItem()
     {
         GameObject player = GameObject.FindWithTag("Player");
+        if (player == null)
+        {
+            Debug.LogWarning($"[ItemSO] Cannot use '{itemName}': Player not found.");
+            return false;
+        }
 
         PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
 
@@ -120,6 +125,13 @@ public class ItemSO : ScriptableObject
         if (isCurrency == true)
         {
             CoinDisplay coinDisplay = FindFirstObjectByType<CoinDisplay>();
+            if (coinDisplay == null)
+            {
+                Debug.LogWarning(
+                    $"[ItemSO] Cannot add coins for '{itemName}': CoinDisplay not found."
+                );
+                return false;
+            }
 
             coinDisplay.AddCoins(coinValue);
             return true;

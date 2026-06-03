@@ -23,13 +23,15 @@ public class ShopManager : MonoBehaviour, IInterectable
 
     private void Start()
     {
-        // Tenta encontrar o CanvasGroup automaticamente se não estiver atribuído
+        if (shopUI == null)
+            shopUI = GetComponentInChildren<CanvasGroup>();
+
         if (shopUI == null)
         {
-            shopUI = GetComponentInChildren<CanvasGroup>();
+            Debug.LogError("[ShopManager] shopUI (CanvasGroup) not found. Shop will not work.");
+            return;
         }
 
-        // Garante que a loja comece fechada
         shopUI.alpha = 0;
         shopUI.blocksRaycasts = false;
         shopUI.interactable = false;
@@ -51,23 +53,42 @@ public class ShopManager : MonoBehaviour, IInterectable
 
     private void OpenShop()
     {
+        if (shopUI == null)
+        {
+            Debug.LogError("[ShopManager] Cannot open shop: shopUI is null.");
+            return;
+        }
+
         isShopOpen = true;
         shopUI.alpha = 1;
         shopUI.blocksRaycasts = true;
         shopUI.interactable = true;
-        player.canMove = false;
-        player.isInDialogue = true;
+
+        if (player != null)
+        {
+            player.canMove = false;
+            player.isInDialogue = true;
+        }
+
         PopulateShopItems();
     }
 
     private void CloseShop()
     {
         isShopOpen = false;
-        shopUI.alpha = 0;
-        shopUI.blocksRaycasts = false;
-        shopUI.interactable = false;
-        player.canMove = true;
-        player.isInDialogue = false;
+
+        if (shopUI != null)
+        {
+            shopUI.alpha = 0;
+            shopUI.blocksRaycasts = false;
+            shopUI.interactable = false;
+        }
+
+        if (player != null)
+        {
+            player.canMove = true;
+            player.isInDialogue = false;
+        }
     }
 
     public void PopulateShopItems()

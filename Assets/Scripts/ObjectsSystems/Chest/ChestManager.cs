@@ -1,10 +1,10 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class ChestManager : MonoBehaviour
 {
     public static ChestManager Instance { get; private set; }
-    
+
     private HashSet<string> openedChests = new HashSet<string>();
 
     private void Awake()

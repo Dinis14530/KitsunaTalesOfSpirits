@@ -97,7 +97,14 @@ public class PlayerSave : MonoBehaviour
 
     public void LoadGame()
     {
-        ApplySaveData(SaveSystem.Load());
+        SaveData data = SaveSystem.Load();
+        if (data == null)
+        {
+            Debug.LogWarning("[PlayerSave] No save data to load.");
+            return;
+        }
+
+        ApplySaveData(data);
     }
 
     private void CacheReferences()

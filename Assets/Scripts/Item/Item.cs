@@ -44,6 +44,12 @@ public class Item : MonoBehaviour
         // Moeda
         if (itemSO.isCurrency)
         {
+            if (coinDisplay == null)
+            {
+                Debug.LogWarning("[Item] CoinDisplay not found, cannot pick up currency.");
+                return;
+            }
+
             PlayPickupSound();
             coinDisplay.AddCoins(itemSO.coinValue * quantity);
             Destroy(gameObject);

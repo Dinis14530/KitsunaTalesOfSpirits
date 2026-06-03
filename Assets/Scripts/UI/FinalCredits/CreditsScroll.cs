@@ -21,7 +21,8 @@ public class CreditsScroll : MonoBehaviour
 
     void Update()
     {
-        if (finished) return;
+        if (finished)
+            return;
 
         rectTransform.anchoredPosition += Vector2.up * speed * Time.deltaTime;
 
