@@ -36,17 +36,27 @@ public class BossHealth : MonoBehaviour
         // Gera ID único baseado no nome e posição
         BossID = gameObject.name + "_" + transform.position.ToString();
         Debug.Log($"Boss criado com ID: {BossID}");
+
+        // Esconde o boss até confirmar que não foi derrotado (evita flash visual)
+        if (spriteRenderer != null)
+            spriteRenderer.enabled = false;
     }
 
-    void Start()
+    IEnumerator Start()
     {
-        // Verifica se este boss já foi derrotado
+        // Espera 1 frame para o PlayerSave ter aplicado os dados do save ao BossManager
+        yield return null;
+
         if (BossManager.Instance != null && BossManager.Instance.IsBossDefeated(BossID))
         {
             Debug.Log($"Boss {BossID} já foi derrotado, destruindo");
             Destroy(gameObject);
-            return;
+            yield break;
         }
+
+        // Boss não foi derrotado — mostrar
+        if (spriteRenderer != null)
+            spriteRenderer.enabled = true;
     }
 
     public void TakeDamage(int damage)
