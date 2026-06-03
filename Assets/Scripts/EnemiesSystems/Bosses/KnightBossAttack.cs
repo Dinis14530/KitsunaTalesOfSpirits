@@ -12,11 +12,11 @@ public class BossAttackHitbox : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        PlayerHealth player = collision.gameObject.GetComponent<PlayerHealth>();
-
         if (collision.CompareTag("Player"))
         {
-            player.TakeDamage(damage);
+            PlayerHealth player = collision.gameObject.GetComponent<PlayerHealth>();
+            if (player != null)
+                player.TakeDamage(damage);
         }
     }
 }

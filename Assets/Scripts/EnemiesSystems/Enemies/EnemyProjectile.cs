@@ -9,7 +9,7 @@ public class EnemyProjectile : MonoBehaviour
     public float force;
     public float bulletTimeInScreen;
     private float timer;
-    public int damage; 
+    public int damage;
     public int health;
 
     private void OnEnable()
@@ -43,24 +43,7 @@ public class EnemyProjectile : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            PlayerHealth player = other.gameObject.GetComponent<PlayerHealth>(); // Vida do jopgador
-            PlayerKnockBack knockback = other.gameObject.GetComponent<PlayerKnockBack>(); // Knockback
-
-            // Aplica dano e empurra o player apenas quando ele ainda nao esta invencivel
-            if (player != null && !player.isInvincible) // Se o jogador nao estiver invencivel
-            {
-                // Aplica dano
-                player.TakeDamage(damage);
-
-                // Aplica knockback no player
-                if (knockback != null)
-                {
-                    // Calcula direção do knockback
-                    Vector2 direction = (other.transform.position - transform.position).normalized;
-
-                    knockback.ApplyKnockback(direction);
-                }
-            }
+            CombatUtils.TryDamagePlayer(other.gameObject, damage, transform.position);
             // O projecil sai de cena assim que acerta ou testa colisao com o player
             ObjectPoolManager.Release(gameObject);
         }

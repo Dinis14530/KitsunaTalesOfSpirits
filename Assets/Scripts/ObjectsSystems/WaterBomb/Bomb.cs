@@ -1,15 +1,14 @@
-using System.Collections;
 using UnityEngine;
 
 public class Bomb : MonoBehaviour
 {
     public int damage = 2; // Dano
-    public Animator animator; // Animator para a animação
-    private bool hasExploded = false; // Flag para evitar múltiplas explosões
+    public Animator animator; // Animator para a animacao
+    private bool hasExploded = false; // Flag para evitar multiplas explosoes
 
-    [Header("Áudio")]
-    public AudioSource audioSource; // Fonte de som da explosão
-    public AudioClip explodeClip; // Som da explosão
+    [Header("Audio")]
+    public AudioSource audioSource; // Fonte de som da explosao
+    public AudioClip explodeClip; // Som da explosao
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -26,21 +25,7 @@ public class Bomb : MonoBehaviour
             // Se for player, aplica dano e knockback
             if (collision.gameObject.CompareTag("Player"))
             {
-                PlayerHealth player = collision.gameObject.GetComponent<PlayerHealth>();
-                PlayerKnockBack knockback = collision.gameObject.GetComponent<PlayerKnockBack>();
-
-                if (player != null && !player.isInvincible)
-                {
-                    player.TakeDamage(damage);
-
-                    if (knockback != null)
-                    {
-                        Vector2 direction = (
-                            collision.transform.position - transform.position
-                        ).normalized;
-                        knockback.ApplyKnockback(direction);
-                    }
-                }
+                CombatUtils.TryDamagePlayer(collision.gameObject, damage, transform.position);
             }
             // Se for enemy, aplica dano e knockback
             else if (collision.gameObject.CompareTag("Enemy"))
@@ -62,23 +47,14 @@ public class Bomb : MonoBehaviour
                 }
             }
 
-            // Toca a animação de explosão
+            // Toca a animacao de explosao
             animator.SetTrigger("Explode");
 
-            // Toca o som de explosão
-            PlayExplosionSound();
+            // Toca o som de explosao
+            AudioHelper.PlayWithRandomPitch(audioSource, explodeClip);
 
-            // Destroi o objeto após 1 segundo
+            // Destroi o objeto apos 1 segundo
             Destroy(gameObject, 1f);
-        }
-    }
-
-    private void PlayExplosionSound()
-    {
-        if (audioSource != null && explodeClip != null)
-        {
-            audioSource.pitch = Random.Range(0.95f, 1.05f); // pitch levemente aleatório
-            audioSource.PlayOneShot(explodeClip);
         }
     }
 }

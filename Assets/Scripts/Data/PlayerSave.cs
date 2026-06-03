@@ -148,13 +148,13 @@ public class PlayerSave : MonoBehaviour
             data.canDash = playerDash.canDash;
 
         if (ChestManager.Instance != null)
-            data.openedChests = ChestManager.Instance.GetOpenedChests();
+            data.openedChests = ChestManager.Instance.GetTrackedIds();
 
         if (DoorManager.Instance != null)
-            data.openedDoors = DoorManager.Instance.GetOpenedDoors();
+            data.openedDoors = DoorManager.Instance.GetTrackedIds();
 
         if (BossManager.Instance != null)
-            data.defeatedBosses = BossManager.Instance.GetDefeatedBosses();
+            data.defeatedBosses = BossManager.Instance.GetTrackedIds();
 
         return data;
     }
@@ -240,13 +240,13 @@ public class PlayerSave : MonoBehaviour
             playerDash.canDash = data.canDash;
 
         if (ChestManager.Instance != null && data.openedChests != null)
-            ChestManager.Instance.SetOpenedChests(data.openedChests);
+            ChestManager.Instance.SetTrackedIds(data.openedChests);
 
         if (DoorManager.Instance != null && data.openedDoors != null)
-            DoorManager.Instance.SetOpenedDoors(data.openedDoors);
+            DoorManager.Instance.SetTrackedIds(data.openedDoors);
 
         if (BossManager.Instance != null && data.defeatedBosses != null)
-            BossManager.Instance.SetDefeatedBosses(data.defeatedBosses);
+            BossManager.Instance.SetTrackedIds(data.defeatedBosses);
     }
 
     private class LoadedSave

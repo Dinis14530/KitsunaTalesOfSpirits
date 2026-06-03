@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class BossHealth : MonoBehaviour
@@ -12,16 +11,6 @@ public class BossHealth : MonoBehaviour
     public int healthMax;
     public string BossID { get; private set; }
 
-    [System.Serializable]
-    public class LootDrop
-    {
-        public ItemSO itemSO;
-
-        [Range(0, 100)]
-        public int dropChance;
-        public int quantity = 1;
-    }
-
     public LootDrop[] lootDrops;
 
     private SpriteRenderer spriteRenderer;
@@ -33,17 +22,17 @@ public class BossHealth : MonoBehaviour
         bossController = GetComponent<BossController>();
         healthMax = health;
 
-        // Gera ID único baseado no nome e posição
+        // Gera ID unico baseado no nome e posicao
         BossID = gameObject.name + "_" + transform.position.ToString();
         Debug.Log($"Boss criado com ID: {BossID}");
     }
 
     void Start()
     {
-        // Verifica se este boss já foi derrotado
-        if (BossManager.Instance != null && BossManager.Instance.IsBossDefeated(BossID))
+        // Verifica se este boss ja foi derrotado
+        if (BossManager.Instance != null && BossManager.Instance.IsTracked(BossID))
         {
-            Debug.Log($"Boss {BossID} já foi derrotado, destruindo");
+            Debug.Log($"Boss {BossID} ja foi derrotado, destruindo");
             Destroy(gameObject);
             return;
         }
@@ -51,7 +40,7 @@ public class BossHealth : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        // Só recebe dano quando está no chão
+        // So recebe dano quando esta no chao
         if (bossController != null && bossController.state != BossState.Grounded)
         {
             Debug.Log("Boss is immune to damage while flying.");
@@ -62,18 +51,10 @@ public class BossHealth : MonoBehaviour
         Debug.Log(gameObject.name + " took " + damage + " damage. Remaining health: " + health);
 
         if (spriteRenderer != null)
-            StartCoroutine(FlashCoroutine());
+            StartCoroutine(SpriteFlash.Flash(spriteRenderer, hitColor, flashDuration));
 
         if (health <= 0)
             Die();
-    }
-
-    private IEnumerator FlashCoroutine()
-    {
-        Color originalColor = spriteRenderer.color;
-        spriteRenderer.color = Color.Lerp(originalColor, hitColor, 0.7f);
-        yield return new WaitForSeconds(flashDuration);
-        spriteRenderer.color = originalColor;
     }
 
     void Die()
@@ -82,28 +63,9 @@ public class BossHealth : MonoBehaviour
 
         // Marca este boss como derrotado
         if (BossManager.Instance != null)
-            BossManager.Instance.MarkBossAsDefeated(BossID);
+            BossManager.Instance.MarkTracked(BossID);
 
-        DropLoot();
+        LootTable.TryDrop(lootDrops, transform.position);
         Destroy(gameObject);
-    }
-
-    void DropLoot()
-    {
-        if (lootDrops == null || lootDrops.Length == 0)
-            return;
-
-        foreach (LootDrop loot in lootDrops)
-        {
-            if (loot.itemSO == null)
-                continue;
-
-            int randomChance = Random.Range(0, 101);
-            if (randomChance <= loot.dropChance)
-            {
-                LootHelper.SpawnLootItem(loot.itemSO, transform.position, loot.quantity);
-                Debug.Log($"{loot.itemSO.itemName} dropped");
-            }
-        }
     }
 }

@@ -1,18 +1,17 @@
-using System.Collections;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
 [System.Obsolete]
 public class CampfireCheckpoint : MonoBehaviour, IInterectable
 {
-    private static CampfireCheckpoint activeCheckpoint = null; 
+    private static CampfireCheckpoint activeCheckpoint = null;
     private Animator animator;
     private bool isActive = false;
 
-    [Header("Áudio")]
-    public AudioSource fireAudioSource;  // Fonte de som do fogo
-    public AudioClip fireClip;           // Som do fogo (loop)
-    public float soundRadius = 5f;       // Distância máxima para ouvir
+    [Header("Audio")]
+    public AudioSource fireAudioSource; // Fonte de som do fogo
+    public AudioClip fireClip; // Som do fogo (loop)
+    public float soundRadius = 5f; // Distancia maxima para ouvir
 
     private Transform playerTransform;
 
@@ -28,7 +27,7 @@ public class CampfireCheckpoint : MonoBehaviour, IInterectable
     private void Awake()
     {
         animator = GetComponent<Animator>();
-        SetInactive(); // começa apagado
+        SetInactive(); // comeca apagado
 
         // Configura o AudioSource
         if (fireAudioSource == null)
@@ -94,7 +93,8 @@ public class CampfireCheckpoint : MonoBehaviour, IInterectable
 
     public void Interact()
     {
-        if (isActive) return;
+        if (isActive)
+            return;
 
         if (playerHealth != null)
         {
@@ -137,35 +137,18 @@ public class CampfireCheckpoint : MonoBehaviour, IInterectable
 
     private void ShowCheckpointPanel()
     {
-        if (checkpointPanel == null)
-            return;
-
-        if (checkpointText != null)
-            checkpointText.text = "Checkpoint ativado!";
-
-        if (checkpointPanelCoroutine != null)
-            StopCoroutine(checkpointPanelCoroutine);
-
-        checkpointPanelCoroutine = StartCoroutine(ShowCheckpointPanelRoutine());
-    }
-
-    private IEnumerator ShowCheckpointPanelRoutine()
-    {
-        checkpointPanel.SetActive(true);
-        yield return new WaitForSeconds(panelDuration);
-        checkpointPanel.SetActive(false);
-        checkpointPanelCoroutine = null;
+        checkpointPanelCoroutine = TimedPanelHelper.Show(
+            this,
+            checkpointPanel,
+            panelDuration,
+            checkpointPanelCoroutine,
+            checkpointText,
+            "Checkpoint ativado!"
+        );
     }
 
     private void OnDisable()
     {
-        if (checkpointPanelCoroutine != null)
-        {
-            StopCoroutine(checkpointPanelCoroutine);
-            checkpointPanelCoroutine = null;
-        }
-
-        if (checkpointPanel != null)
-            checkpointPanel.SetActive(false);
+        TimedPanelHelper.Cleanup(this, checkpointPanel, ref checkpointPanelCoroutine);
     }
 }

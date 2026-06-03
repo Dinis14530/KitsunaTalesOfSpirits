@@ -1,4 +1,3 @@
-using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -14,7 +13,7 @@ public class Door : MonoBehaviour, IInterectable
     private Collider2D doorCollider;
     private InventoryManager inventory;
 
-    [Header("Áudio")]
+    [Header("Audio")]
     public AudioSource audioSource;
     public AudioClip openClip;
 
@@ -27,7 +26,7 @@ public class Door : MonoBehaviour, IInterectable
 
     void Awake()
     {
-        // Gera ID único baseado no nome e posição
+        // Gera ID unico baseado no nome e posicao
         DoorID = gameObject.name + "_" + transform.position.ToString();
         Debug.Log($"Porta criada com ID: {DoorID}");
     }
@@ -41,16 +40,16 @@ public class Door : MonoBehaviour, IInterectable
         if (missingKeyPanel != null)
             missingKeyPanel.SetActive(false);
 
-        // Se não tiver AudioSource, tenta pegar
+        // Se nao tiver AudioSource, tenta pegar
         if (audioSource == null)
             audioSource = GetComponent<AudioSource>();
 
-        // Verifica se esta porta já foi aberta antes
+        // Verifica se esta porta ja foi aberta antes
         if (DoorManager.Instance != null)
         {
-            if (DoorManager.Instance.IsDoorOpened(DoorID))
+            if (DoorManager.Instance.IsTracked(DoorID))
             {
-                Debug.Log($"Porta {DoorID} já foi aberta, mantendo aberta");
+                Debug.Log($"Porta {DoorID} ja foi aberta, mantendo aberta");
                 SetOpenedWithoutRemoving();
             }
         }
@@ -88,16 +87,16 @@ public class Door : MonoBehaviour, IInterectable
         doorCollider.enabled = false;
 
         // Toca som de abertura
-        PlayOpenSound();
+        AudioHelper.PlayWithRandomPitch(audioSource, openClip);
 
         // Registra que esta porta foi aberta
         if (DoorManager.Instance != null)
-            DoorManager.Instance.MarkDoorAsOpened(DoorID);
+            DoorManager.Instance.MarkTracked(DoorID);
 
         Debug.Log("Door opened");
     }
 
-    // Versão que não remove item
+    // Versao que nao remove item
     private void SetOpenedWithoutRemoving()
     {
         isOpen = true;
@@ -105,49 +104,21 @@ public class Door : MonoBehaviour, IInterectable
         doorCollider.enabled = false;
     }
 
-    private void PlayOpenSound()
-    {
-        if (audioSource != null && openClip != null)
-        {
-            audioSource.pitch = Random.Range(0.95f, 1.05f);
-            audioSource.PlayOneShot(openClip);
-        }
-    }
-
     private void ShowMissingKeyPanel()
     {
-        if (missingKeyPanel == null)
-            return;
-
-        if (missingKeyText != null)
-        {
-            string requiredItemName = requiredItem != null ? requiredItem.itemName : "chave";
-            missingKeyText.text = "Precisas da chave: " + requiredItemName;
-        }
-
-        if (missingKeyCoroutine != null)
-            StopCoroutine(missingKeyCoroutine);
-
-        missingKeyCoroutine = StartCoroutine(ShowMissingKeyPanelRoutine());
-    }
-
-    private IEnumerator ShowMissingKeyPanelRoutine()
-    {
-        missingKeyPanel.SetActive(true);
-        yield return new WaitForSeconds(panelDuration);
-        missingKeyPanel.SetActive(false);
-        missingKeyCoroutine = null;
+        string requiredItemName = requiredItem != null ? requiredItem.itemName : "chave";
+        missingKeyCoroutine = TimedPanelHelper.Show(
+            this,
+            missingKeyPanel,
+            panelDuration,
+            missingKeyCoroutine,
+            missingKeyText,
+            "Precisas da chave: " + requiredItemName
+        );
     }
 
     private void OnDisable()
     {
-        if (missingKeyCoroutine != null)
-        {
-            StopCoroutine(missingKeyCoroutine);
-            missingKeyCoroutine = null;
-        }
-
-        if (missingKeyPanel != null)
-            missingKeyPanel.SetActive(false);
+        TimedPanelHelper.Cleanup(this, missingKeyPanel, ref missingKeyCoroutine);
     }
 }
