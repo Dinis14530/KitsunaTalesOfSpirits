@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BossHealth : MonoBehaviour
 {
@@ -10,7 +11,15 @@ public class BossHealth : MonoBehaviour
 
     [HideInInspector]
     public int healthMax;
-    public string BossID { get; private set; }
+
+    [Header("Identificador")]
+    [Tooltip(
+        "ID único do boss. Defina manualmente no Inspector para evitar que o boss seja tratado como já derrotado."
+    )]
+    [SerializeField]
+    private string bossID;
+
+    public string BossID => bossID;
 
     [System.Serializable]
     public class LootDrop
@@ -33,9 +42,26 @@ public class BossHealth : MonoBehaviour
         bossController = GetComponent<BossController>();
         healthMax = health;
 
-        // Gera ID único baseado no nome e posição
-        BossID = gameObject.name + "_" + transform.position.ToString();
+        // Se não houver um ID configurado no Inspector, gera um identificador estável
+        if (string.IsNullOrEmpty(bossID))
+        {
+            string sceneName = SceneManager.GetActiveScene().name;
+            bossID = sceneName + ":" + GetHierarchyPath(transform);
+        }
+
         Debug.Log($"Boss criado com ID: {BossID}");
+    }
+
+    private string GetHierarchyPath(Transform t)
+    {
+        string path = t.name;
+        Transform parent = t.parent;
+        while (parent != null)
+        {
+            path = parent.name + "/" + path;
+            parent = parent.parent;
+        }
+        return path;
     }
 
     void Start()
