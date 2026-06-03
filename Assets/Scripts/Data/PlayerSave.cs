@@ -3,6 +3,7 @@ using System.Collections;
 using System.Threading.Tasks;
 using UnityEngine;
 
+[DefaultExecutionOrder(-50)]
 public class PlayerSave : MonoBehaviour
 {
     public int health = 5;
@@ -16,6 +17,14 @@ public class PlayerSave : MonoBehaviour
     private IEnumerator Start()
     {
         CacheReferences();
+
+        if (SaveResetter.JustReset)
+        {
+            SaveResetter.ConsumeReset();
+            SaveGame();
+            Debug.Log("Save reiniciado pelo reset");
+            yield break;
+        }
 
         SaveData initialLocalData = SaveSystem.HasSave() ? SaveSystem.Load() : null;
         if (initialLocalData != null)
