@@ -5,6 +5,14 @@ using UnityEngine.SceneManagement;
 // Liga os métodos públicos ao OnClick de um botão no menu para apagar o save.
 public class SaveResetter : MonoBehaviour
 {
+    // Flag estática: quando true, PlayerSave ignora qualquer save existente no próximo load.
+    public static bool JustReset { get; private set; }
+
+    public static void ConsumeReset()
+    {
+        JustReset = false;
+    }
+
     [Header("Novo Jogo")]
     public int gameplaySceneIndex = 1;
 
@@ -18,6 +26,7 @@ public class SaveResetter : MonoBehaviour
 
         ClearRuntimeProgress();
         OverwriteWithFreshSave();
+        JustReset = true;
 
         Debug.Log("Save apagado");
     }
@@ -35,6 +44,8 @@ public class SaveResetter : MonoBehaviour
         SaveData fresh = CreateFreshSave();
         SaveSystem.Save(fresh);
         await CloudSaveSync.SaveAsync(fresh);
+
+        JustReset = true;
 
         Debug.Log("Save apagado, a iniciar jogo novo");
         SceneManager.LoadScene(gameplaySceneIndex);
