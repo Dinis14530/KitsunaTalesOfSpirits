@@ -25,17 +25,17 @@ public class FoxBoss : MonoBehaviour
     public float dashSpeed = 15f;
     public float dashDuration = 0.4f;
 
+    [Header("UI")]
+    public GameObject lifeBarUI;
+
     private int currentColumn;
     private bool isAttacking;
-
-    void Start()
-    {
-        StartCoroutine(BossLoop());
-    }
+    private bool isActive;
+    private Coroutine bossLoopCoroutine;
 
     IEnumerator BossLoop()
     {
-        while (true)
+        while (isActive)
         {
             if (!isAttacking)
             {
@@ -54,6 +54,9 @@ public class FoxBoss : MonoBehaviour
 
     void TeleportToRandomColumn()
     {
+        if (columns == null || columns.Length == 0)
+            return;
+
         currentColumn = Random.Range(0, columns.Length);
         transform.position = columns[currentColumn].position;
     }
@@ -84,6 +87,12 @@ public class FoxBoss : MonoBehaviour
 
     IEnumerator ProjectileAttack()
     {
+        if (projectilePrefab == null || shootPoint == null || player == null)
+        {
+            isAttacking = false;
+            yield break;
+        }
+
         for (int i = 0; i < 3; i++)
         {
             GameObject proj = Instantiate(
@@ -93,7 +102,9 @@ public class FoxBoss : MonoBehaviour
             );
 
             Vector2 dir = (player.position - shootPoint.position).normalized;
-            proj.GetComponent<Rigidbody2D>().linearVelocity = dir * 8f;
+            Rigidbody2D rb = proj.GetComponent<Rigidbody2D>();
+            if (rb != null)
+                rb.linearVelocity = dir * 8f;
 
             yield return new WaitForSeconds(0.3f);
         }
@@ -114,8 +125,17 @@ public class FoxBoss : MonoBehaviour
 
     IEnumerator SummonAttack()
     {
+        if (enemyPrefab == null || summonPoints == null)
+        {
+            isAttacking = false;
+            yield break;
+        }
+
         for (int i = 0; i < summonPoints.Length; i++)
         {
+            if (summonPoints[i] == null)
+                continue;
+
             Instantiate(enemyPrefab, summonPoints[i].position, Quaternion.identity);
         }
 
@@ -126,6 +146,12 @@ public class FoxBoss : MonoBehaviour
 
     IEnumerator DashAttack()
     {
+        if (player == null)
+        {
+            isAttacking = false;
+            yield break;
+        }
+
         Vector2 start = transform.position;
         Vector2 target = player.position;
 
@@ -141,5 +167,29 @@ public class FoxBoss : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         isAttacking = false;
+    }
+
+    public void StartBossFight()
+    {
+        if (isActive)
+            return;
+
+        isActive = true;
+
+        if (lifeBarUI != null)
+        {
+            lifeBarUI.SetActive(true);
+            CanvasGroup lifeBarCanvasGroup = lifeBarUI.GetComponent<CanvasGroup>();
+            if (lifeBarCanvasGroup != null)
+                lifeBarCanvasGroup.alpha = 1f;
+        }
+
+        bossLoopCoroutine = StartCoroutine(BossLoop());
+    }
+
+    void OnDisable()
+    {
+        if (bossLoopCoroutine != null)
+            StopCoroutine(bossLoopCoroutine);
     }
 }
