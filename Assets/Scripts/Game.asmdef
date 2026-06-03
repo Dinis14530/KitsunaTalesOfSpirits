@@ -1,0 +1,21 @@
+{
+    "name": "Game",
+    "rootNamespace": "",
+    "references": [
+        "Unity.TextMeshPro",
+        "Unity.VisualScripting.Core",
+        "Unity.InputSystem",
+        "Unity.Services.CloudSave",
+        "Unity.Services.Core",
+        "Unity.Services.Authentication"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
