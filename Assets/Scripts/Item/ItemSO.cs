@@ -5,11 +5,11 @@ public enum StatToChange
 {
     none,
     health,
-    mana,
+    // mana,
     strength,
     velocity,
     dash,
-    keydash,
+    key,
     maxHealth,
     wallJump,
 };
@@ -90,7 +90,7 @@ public class ItemSO : ScriptableObject
             return false;
         }
 
-        if (statToChange == StatToChange.keydash)
+        if (statToChange == StatToChange.key)
         {
             return false;
         }

@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 799449bd4a666194e818c8f73d508a92, type: 3}
-  m_Name: Coins
+  m_Name: KeyFox
   m_EditorClassIdentifier: Assembly-CSharp::ItemSO
-  itemName: Coins
-  statToChange: 0
+  itemName: KeyFox
+  statToChange: 5
   amountToChangeStat: 1
-  sprite: {fileID: -2322180950842035098, guid: d45a1a3200dbf9e46b2af729115b7af0, type: 3}
-  itemDescription: Pode ser usado para comprar itens.
-  isCurrency: 1
+  sprite: {fileID: 7435160424253938556, guid: eea677a7e86c4b34798016d5ccb5a202, type: 3}
+  itemDescription: Possibilita abrir uma porta.
+  isCurrency: 0
   isAbility: 0
-  isKeyItem: 0
-  coinValue: 1
+  isKeyItem: 1
+  coinValue: 0
   purchaseLimit: -1
   pickupSound: {fileID: 8300000, guid: 215dc964bf1a5c4409fdcabd89e6ff02, type: 3}

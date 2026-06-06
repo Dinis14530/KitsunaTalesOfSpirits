@@ -16,7 +16,7 @@ MonoBehaviour:
   statToChange: 7
   amountToChangeStat: 1
   sprite: {fileID: 3407375607703651449, guid: 72846953b27a21d4a99553a9fe2f2cd9, type: 3}
-  itemDescription: 
+  itemDescription: "Aumenta a vida m\xE1xima."
   isCurrency: 0
   isAbility: 0
   isKeyItem: 0

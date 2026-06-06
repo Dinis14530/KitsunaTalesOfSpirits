@@ -17,7 +17,7 @@ MonoBehaviour:
   amountToChangeStat: 1
   sprite: {fileID: 4809573762988303199, guid: 9e1a6adf632d1e34c8491bcad19d673c, type: 3}
   itemDescription: "Um l\xEDquido cintilante recolhido das florestas sagradas do
-    Jap\xE3o antigo. Ao ser bebido restaura uma chama perdida. "
+    Jap\xE3o antigo. Ao ser bebido restaura uma chama perdida.\n+1 vida "
   isCurrency: 0
   isAbility: 0
   isKeyItem: 0

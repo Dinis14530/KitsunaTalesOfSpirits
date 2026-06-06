@@ -17,7 +17,7 @@ MonoBehaviour:
   amountToChangeStat: 10
   sprite: {fileID: -8229276084762733448, guid: 5a12fae0aa7f64f4d988555805f2a0ec, type: 3}
   itemDescription: "O conte\xFAdo vermelho desta po\xE7\xE3o percorre-te ferozmente,
-    como se os antigos esp\xEDritos da floresta te fortalecessem. "
+    como se os antigos esp\xEDritos da floresta te fortalecessem.\nx2 ataque "
   isCurrency: 0
   isAbility: 0
   isKeyItem: 0

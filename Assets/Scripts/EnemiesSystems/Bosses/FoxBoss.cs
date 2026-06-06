@@ -28,9 +28,6 @@ public class FoxBoss : MonoBehaviour
     [Header("UI")]
     public GameObject lifeBarUI;
 
-    [Header("Death")]
-    public GameObject objectToDisappear;
-
     private int currentColumn;
     private bool isAttacking;
     private bool isActive;
@@ -105,9 +102,7 @@ public class FoxBoss : MonoBehaviour
             );
 
             Vector2 dir = (player.position - shootPoint.position).normalized;
-
             Rigidbody2D rb = proj.GetComponent<Rigidbody2D>();
-
             if (rb != null)
                 rb.linearVelocity = dir * 8f;
 
@@ -184,28 +179,12 @@ public class FoxBoss : MonoBehaviour
         if (lifeBarUI != null)
         {
             lifeBarUI.SetActive(true);
-
-            CanvasGroup lifeBarCanvasGroup =
-                lifeBarUI.GetComponent<CanvasGroup>();
-
+            CanvasGroup lifeBarCanvasGroup = lifeBarUI.GetComponent<CanvasGroup>();
             if (lifeBarCanvasGroup != null)
                 lifeBarCanvasGroup.alpha = 1f;
         }
 
         bossLoopCoroutine = StartCoroutine(BossLoop());
-    }
-
-    public void Die()
-    {
-        isActive = false;
-
-        if (bossLoopCoroutine != null)
-            StopCoroutine(bossLoopCoroutine);
-
-        if (objectToDisappear != null)
-            Destroy(objectToDisappear);
-
-        Destroy(gameObject);
     }
 
     void OnDisable()

@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: KeyDash
   m_EditorClassIdentifier: Assembly-CSharp::ItemSO
   itemName: KeyDash
-  statToChange: 6
+  statToChange: 5
   amountToChangeStat: 1
   sprite: {fileID: 2275627015508457346, guid: bc22ba85044b28a44bd2503851f56e51, type: 3}
-  itemDescription: 
+  itemDescription: Possibilita abrir uma porta.
   isCurrency: 0
   isAbility: 0
   isKeyItem: 1
