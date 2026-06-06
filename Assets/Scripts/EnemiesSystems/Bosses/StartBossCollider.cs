@@ -3,7 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class StartBossCollider : MonoBehaviour
 {
-    [SerializeField] private FoxBoss foxBoss;
+    [SerializeField] private PaleWarriorBoss paleWarriorBoss;
 
     private Collider2D startCollider;
     private bool bossStarted;
@@ -13,17 +13,17 @@ public class StartBossCollider : MonoBehaviour
         startCollider = GetComponent<Collider2D>();
         startCollider.isTrigger = true;
 
-        if (foxBoss == null)
-            foxBoss = FindObjectOfType<FoxBoss>();
+        if (paleWarriorBoss == null)
+            paleWarriorBoss = FindObjectOfType<PaleWarriorBoss>();
     }
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (bossStarted || !col.CompareTag("Player") || foxBoss == null)
+        if (bossStarted || !col.CompareTag("Player") || paleWarriorBoss == null)
             return;
 
         bossStarted = true;
-        foxBoss.StartBossFight();
+        paleWarriorBoss.StartBossFight();
         startCollider.enabled = false;
     }
 }

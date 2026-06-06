@@ -1,0 +1,42 @@
+﻿  m_GameObject: {fileID: 348967217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fa810585f1991940a021a936e1013cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BossLifeBar
+  bossHealth: {fileID: 348967226}
+  lifeBarImage: {fileID: 36898709}
+  lifeSprites:
+  - {fileID: -4814867616596296804, guid: 8b09c2120705c6d4f8d770323a22958e, type: 3}
+  - {fileID: -5579259451246235219, guid: e6c8d62740982a24096f88c0fcfbec60, type: 3}
+  - {fileID: 7778334789219567428, guid: d4cb05a408aff8146b7c382fb2449168, type: 3}
+  - {fileID: -6670723197745653434, guid: 51844244a8567e24395eb19c09541eec, type: 3}
+  - {fileID: -6389790267037256581, guid: 4316b5e19b2e728439d3e62b04c28380, type: 3}
+  - {fileID: -7572741535328785172, guid: 42ca274f8be8a294c8d068c6188462ed, type: 3}
+  - {fileID: 4018992110180218740, guid: 526c5057f60c168409a00fe3b7d1f7a5, type: 3}
+  - {fileID: -3768013261444317257, guid: dd6fc21f4895c6d47993898920a05c2a, type: 3}
+  - {fileID: 5712214392243496953, guid: c1c648a433cc6cb47b03dd2523c7cf51, type: 3}
+  - {fileID: -809378297333250826, guid: 2e7742eb02e91f341a9171abd3621da9, type: 3}
+  bossCollider: {fileID: 348967219}
+--- !u!1 &358253079
+  m_GameObject: {fileID: 1834745485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fa810585f1991940a021a936e1013cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BossLifeBar
+  bossHealth: {fileID: 1834745491}
+  lifeBarImage: {fileID: 1834745499}
+  lifeSprites:
+  - {fileID: -4814867616596296804, guid: 8b09c2120705c6d4f8d770323a22958e, type: 3}
+  - {fileID: -5579259451246235219, guid: e6c8d62740982a24096f88c0fcfbec60, type: 3}
+  - {fileID: 7778334789219567428, guid: d4cb05a408aff8146b7c382fb2449168, type: 3}
+  - {fileID: -6670723197745653434, guid: 51844244a8567e24395eb19c09541eec, type: 3}
+  - {fileID: -6389790267037256581, guid: 4316b5e19b2e728439d3e62b04c28380, type: 3}
+  - {fileID: -7572741535328785172, guid: 42ca274f8be8a294c8d068c6188462ed, type: 3}
+  - {fileID: 4018992110180218740, guid: 526c5057f60c168409a00fe3b7d1f7a5, type: 3}
+  - {fileID: -3768013261444317257, guid: dd6fc21f4895c6d47993898920a05c2a, type: 3}
+  - {fileID: 5712214392243496953, guid: c1c648a433cc6cb47b03dd2523c7cf51, type: 3}
+  - {fileID: -809378297333250826, guid: 2e7742eb02e91f341a9171abd3621da9, type: 3}
+  bossCollider: {fileID: 1834745488}
+--- !u!1 &1281951071

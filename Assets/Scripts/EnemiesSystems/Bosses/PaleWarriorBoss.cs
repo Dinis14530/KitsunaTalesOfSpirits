@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class FoxBoss : MonoBehaviour
+public class PaleWarriorBoss : MonoBehaviour
 {
     [Header("Columns")]
     public Transform[] columns;
