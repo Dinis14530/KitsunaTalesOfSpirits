@@ -25,7 +25,7 @@ public class EnemyProjectile : MonoBehaviour
         {
             // Aponta o projecil para a posicao actual do player
             Vector3 direction = player.transform.position - transform.position;
-            rb.linearVelocity = new Vector2(direction.x, direction.y).normalized * force;
+            rb.velocity = new Vector2(direction.x, direction.y).normalized * force;
         }
     }
 
@@ -43,14 +43,14 @@ public class EnemyProjectile : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            PlayerHealth player = other.gameObject.GetComponent<PlayerHealth>(); // Vida do jopgador
+            PlayerHealth playerHealth = other.gameObject.GetComponent<PlayerHealth>(); // Vida do jogador
             PlayerKnockBack knockback = other.gameObject.GetComponent<PlayerKnockBack>(); // Knockback
 
             // Aplica dano e empurra o player apenas quando ele ainda nao esta invencivel
-            if (player != null && !player.isInvincible) // Se o jogador nao estiver invencivel
+            if (playerHealth != null && !playerHealth.isInvincible) // Se o jogador nao estiver invencivel
             {
                 // Aplica dano
-                player.TakeDamage(damage);
+                playerHealth.TakeDamage(damage);
 
                 // Aplica knockback no player
                 if (knockback != null)
