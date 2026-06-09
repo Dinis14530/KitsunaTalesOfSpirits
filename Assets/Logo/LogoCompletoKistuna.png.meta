@@ -1,0 +1,243 @@
+fileFormatVersion: 2
+guid: db70d3d0827f1964daead58f83a491db
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6692536978119872351
+    second: LogoCompletoKistuna_0
+  - first:
+      213: -3373876145853596118
+    second: LogoCompletoKistuna_1
+  - first:
+      213: -5963722554954132533
+    second: LogoCompletoKistuna_2
+  - first:
+      213: 7857444523920131802
+    second: LogoCompletoKistuna_3
+  - first:
+      213: 6690456354607930085
+    second: LogoCompletoKistuna_4
+  - first:
+      213: 8225699299506549591
+    second: LogoCompletoKistuna_5
+  - first:
+      213: 2250103619078220922
+    second: LogoCompletoKistuna_6
+  - first:
+      213: 2886010067477316637
+    second: LogoCompletoKistuna_7
+  - first:
+      213: 8375009821605572283
+    second: LogoCompletoKistuna_8
+  - first:
+      213: 3000297676836218085
+    second: LogoCompletoKistuna_9
+  - first:
+      213: 8699912469708671243
+    second: LogoCompletoKistuna_10
+  - first:
+      213: -5382176151050822864
+    second: LogoCompletoKistuna_11
+  - first:
+      213: 4522052221455699966
+    second: LogoCompletoKistuna_12
+  - first:
+      213: 7695993961463803904
+    second: LogoCompletoKistuna_13
+  - first:
+      213: 6567101563358931341
+    second: LogoCompletoKistuna_14
+  - first:
+      213: 7255070845665437416
+    second: LogoCompletoKistuna_15
+  - first:
+      213: -4183011116013656244
+    second: LogoCompletoKistuna_16
+  - first:
+      213: -5713588197024579841
+    second: LogoCompletoKistuna_17
+  - first:
+      213: -8421207657382595503
+    second: LogoCompletoKistuna_18
+  - first:
+      213: 5474232514294679946
+    second: LogoCompletoKistuna_19
+  - first:
+      213: 1022955430360110327
+    second: LogoCompletoKistuna_20
+  - first:
+      213: 4240710474702792283
+    second: LogoCompletoKistuna_21
+  - first:
+      213: 3786665744498752357
+    second: LogoCompletoKistuna_22
+  - first:
+      213: -5544244668215467564
+    second: LogoCompletoKistuna_23
+  - first:
+      213: -2874070958877802006
+    second: LogoCompletoKistuna_24
+  - first:
+      213: 8402405678701518468
+    second: LogoCompletoKistuna_25
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: LogoCompletoKistuna_0
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 13
+        width: 1096
+        height: 458
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f5f400b4ceaa0ec50800000000000000
+      internalID: 6692536978119872351
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 898377d5e62f3964baab7d2283c8ffc6
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      LogoCompletoKistuna_0: 6692536978119872351
+      LogoCompletoKistuna_1: -3373876145853596118
+      LogoCompletoKistuna_10: 8699912469708671243
+      LogoCompletoKistuna_11: -5382176151050822864
+      LogoCompletoKistuna_12: 4522052221455699966
+      LogoCompletoKistuna_13: 7695993961463803904
+      LogoCompletoKistuna_14: 6567101563358931341
+      LogoCompletoKistuna_15: 7255070845665437416
+      LogoCompletoKistuna_16: -4183011116013656244
+      LogoCompletoKistuna_17: -5713588197024579841
+      LogoCompletoKistuna_18: -8421207657382595503
+      LogoCompletoKistuna_19: 5474232514294679946
+      LogoCompletoKistuna_2: -5963722554954132533
+      LogoCompletoKistuna_20: 1022955430360110327
+      LogoCompletoKistuna_21: 4240710474702792283
+      LogoCompletoKistuna_22: 3786665744498752357
+      LogoCompletoKistuna_23: -5544244668215467564
+      LogoCompletoKistuna_24: -2874070958877802006
+      LogoCompletoKistuna_25: 8402405678701518468
+      LogoCompletoKistuna_3: 7857444523920131802
+      LogoCompletoKistuna_4: 6690456354607930085
+      LogoCompletoKistuna_5: 8225699299506549591
+      LogoCompletoKistuna_6: 2250103619078220922
+      LogoCompletoKistuna_7: 2886010067477316637
+      LogoCompletoKistuna_8: 8375009821605572283
+      LogoCompletoKistuna_9: 3000297676836218085
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
