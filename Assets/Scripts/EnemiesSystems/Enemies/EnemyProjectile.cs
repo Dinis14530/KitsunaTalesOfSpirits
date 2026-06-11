@@ -25,7 +25,7 @@ public class EnemyProjectile : MonoBehaviour
         {
             // Aponta o projecil para a posicao actual do player
             Vector3 direction = player.transform.position - transform.position;
-            rb.velocity = new Vector2(direction.x, direction.y).normalized * force;
+            rb.linearVelocity = new Vector2(direction.x, direction.y).normalized * force;
         }
     }
 
