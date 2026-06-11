@@ -28,6 +28,7 @@ O jogo foca na exploração de um mundo interligado, progressão não linear, aq
 
 	- Opção A — Clonar com Git:
 
+
 	```bash
 	git clone https://github.com/DinisAzevedo/KitsunaTalesOfSpirits.git
 	```
@@ -51,9 +52,9 @@ O jogo foca na exploração de um mundo interligado, progressão não linear, aq
 
 4. Executar no editor
 
-	- Pressionar Play (▶) no Unity Editor para executar a cena dentro do editor.
+	- Pressionar Play no Unity Editor para executar a cena dentro do editor.
 
-## Build (opcional)
+## Build 
 
 - Para gerar um executável, usar `File > Build Settings` no Unity e configurar a plataforma (Windows) antes de clicar em `Build`.
 
@@ -62,4 +63,4 @@ O jogo foca na exploração de um mundo interligado, progressão não linear, aq
 - Ver [docs/BACKLOG.md](docs/BACKLOG.md) para tarefas e prioridades.
 - Abrir issues e pull requests no repositório GitHub para alterações propostas.
 
-## Pedro Dinis Pinto Azevedo
+## <center>Pedro Dinis Pinto Azevedo</center>

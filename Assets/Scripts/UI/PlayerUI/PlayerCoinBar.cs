@@ -7,7 +7,7 @@ public class CoinDisplay : MonoBehaviour
     private int coins;
 
     void Awake()
-    {
+    { 
         if (coinsText == null)
         {
             GameObject go = GameObject.Find("CoinsQuantity");
