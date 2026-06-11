@@ -62,5 +62,3 @@ O jogo foca na exploração de um mundo interligado, progressão não linear, aq
 
 - Ver [docs/BACKLOG.md](docs/BACKLOG.md) para tarefas e prioridades.
 - Abrir issues e pull requests no repositório GitHub para alterações propostas.
-
-## <center>Pedro Dinis Pinto Azevedo</center>
