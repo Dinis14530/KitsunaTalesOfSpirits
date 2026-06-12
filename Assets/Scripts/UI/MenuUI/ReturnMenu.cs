@@ -1,17 +1,26 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class ReturnMenu : MonoBehaviour
 {
-    [System.Obsolete]
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (UnityEngine.InputSystem.Keyboard.current == null)
+            return;
+
+        if (UnityEngine.InputSystem.Keyboard.current.escapeKey.wasPressedThisFrame)
         {
-            // Salva o jogo antes de voltar ao menu
-            var playerSave = FindObjectOfType<PlayerSave>();
-            if (playerSave != null)
-                playerSave.SaveGame();
+            try
+            {
+                var playerSave = FindObjectOfType<PlayerSave>();
+                if (playerSave != null)
+                    playerSave.SaveGame();
+            }
+            catch (Exception exception)
+            {
+                Debug.LogException(exception);
+            }
 
             SceneManager.LoadScene(0);
             Debug.Log(Application.persistentDataPath);

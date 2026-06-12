@@ -8,11 +8,22 @@ public class MenuUI : MonoBehaviour
 
     void Start()
     {
-        menuCanvas.SetActive(true);
+        if (menuCanvas != null)
+            menuCanvas.SetActive(true);
+    }
+
+    void Update()
+    {
+        if (UnityEngine.InputSystem.Keyboard.current == null)
+            return;
+
+        if (UnityEngine.InputSystem.Keyboard.current.escapeKey.wasPressedThisFrame)
+            SceneManager.LoadScene(0);
     }
 
     public void CloseMenu()
     {
-        menuCanvas.SetActive(false);
+        if (menuCanvas != null)
+            menuCanvas.SetActive(false);
     }
 }

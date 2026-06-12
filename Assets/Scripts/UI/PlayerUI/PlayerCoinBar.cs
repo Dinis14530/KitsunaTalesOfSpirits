@@ -28,7 +28,7 @@ public class CoinDisplay : MonoBehaviour
     {
         if (coinsText != null)
             coinsText.text = coins.ToString();
-    }
+    } 
 
     public int GetCoins()
     {
