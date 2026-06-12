@@ -19,8 +19,8 @@ O jogo foca na exploração de um mundo interligado, progressão não linear, aq
 
 - Unity Hub instalado
 - Versão do Unity compatível com o projeto (ex.: 2022.3 LTS)
-- Sistema operativo: Windows (recomendado)
-- Git (opcional, para clonar o repositório)
+- Sistema operativo: Windows 
+- Git 
 
 ## Como executar
 
@@ -28,8 +28,8 @@ O jogo foca na exploração de um mundo interligado, progressão não linear, aq
 
 	- Opção A — Clonar com Git:
 
-
 	```bash
+ 
 	git clone https://github.com/DinisAzevedo/KitsunaTalesOfSpirits.git
 	```
 
