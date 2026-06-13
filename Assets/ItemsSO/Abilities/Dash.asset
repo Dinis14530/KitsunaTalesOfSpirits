@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Dash
   m_EditorClassIdentifier: Assembly-CSharp::ItemSO
   itemName: Dash
-  statToChange: 5
+  statToChange: 4
   amountToChangeStat: 0
   sprite: {fileID: -7848039375673857549, guid: a4278621f6ade4748b1bdca7160eb78b, type: 3}
   itemDescription: 

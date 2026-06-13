@@ -37,7 +37,7 @@ public class PlayerDash : MonoBehaviour
         if (
             canDash
             && !playerController.isDashing
-            && Input.GetKeyDown(KeyCode.R)
+            && IsDashPressedThisFrame()
             && dashCooldownTimer <= 0
         )
             StartDash();
@@ -48,6 +48,16 @@ public class PlayerDash : MonoBehaviour
             if (dashTimeLeft <= 0)
                 EndDash();
         }
+    }
+
+    private bool IsDashPressedThisFrame()
+    {
+        // Preferimos o Input System (igual ao resto dos controlos do player).
+        if (Keyboard.current != null)
+            return Keyboard.current.rKey.wasPressedThisFrame;
+
+        // Fallback para projetos com Input antigo ativo.
+        return Input.GetKeyDown(KeyCode.R);
     }
 
     private void StartDash()

@@ -18,12 +18,22 @@ public class MenuUI : MonoBehaviour
             return;
 
         if (UnityEngine.InputSystem.Keyboard.current.escapeKey.wasPressedThisFrame)
+        {
+            TrySaveBeforeReturn();
             SceneManager.LoadScene(0);
+        }
     }
 
     public void CloseMenu()
     {
         if (menuCanvas != null)
             menuCanvas.SetActive(false);
+    }
+
+    private void TrySaveBeforeReturn()
+    {
+        var playerSave = FindFirstObjectByType<PlayerSave>();
+        if (playerSave != null)
+            playerSave.SaveGame();
     }
 }
