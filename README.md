@@ -1,4 +1,4 @@
-# Kitsuna Tales of Spirits
+# Kitsuna Tales of Spirits 
 
 Projeto desenvolvido no âmbito da Prova de Aptidão Profissional (PAP).
 
